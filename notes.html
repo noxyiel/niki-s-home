@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Niki's Message Board 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Neue', cursive;
+      background-size: cover;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      font-size: 2rem;
+      text-align: center;
+      color: #ff5d8f;
+      font-weight: bold;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    #noteApp {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .note {
+      background-color: #fff7b1;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      transition: all 0.3s ease-in-out;
+      word-wrap: break-word;
+    }
+
+    .note:hover {
+      transform: rotate(-1deg) scale(1.02);
+    }
+
+    .note p {
+      margin: 0;
+    }
+
+    .delete {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background-color: #ff5d5d;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #newNote {
+      padding: 15px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 3px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 1rem;
+      font-family: 'Comic Neue', cursive;
+      resize: none;
+      border: 2px dashed #ff94b4;
+    }
+
+    button#addBtn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #ff94b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button#addBtn:hover {
+      background-color: #ff5d8f;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>Niki's Message Board 💬</header>
+
+  <div id="noteApp">
+    <div id="newNote">
+      <textarea id="noteInput" placeholder="Write your lovely message here... 💖"></textarea>
+      <button id="addBtn">Add Note</button>
+    </div>
+  </div>
+
+  <script>
+    const noteApp = document.getElementById("noteApp");
+    const addBtn = document.getElementById("addBtn");
+    const noteInput = document.getElementById("noteInput");
+
+    function loadNotes() {
+      const notes = JSON.parse(localStorage.getItem("notes")) || [];
+      notes.forEach(text => addNoteToDOM(text));
+    }
+
+    function addNoteToDOM(text) {
+      const note = document.createElement("div");
+      note.className = "note";
+
+      const p = document.createElement("p");
+      p.textContent = text;
+
+      const del = document.createElement("button");
+      del.className = "delete";
+      del.innerHTML = "×";
+      del.onclick = () => {
+        note.remove();
+        saveNotes();
+      };
+
+      note.appendChild(del);
+      note.appendChild(p);
+      noteApp.appendChild(note);
+    }
+
+    function saveNotes() {
+      const notes = [];
+      document.querySelectorAll(".note p").forEach(p => notes.push(p.textContent));
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
+
+    addBtn.addEventListener("click", () => {
+      const text = noteInput.value.trim();
+      if (text) {
+        addNoteToDOM(text);
+        saveNotes();
+        noteInput.value = "";
+      }
+    });
+
+    window.addEventListener("load", loadNotes);
+  </script>
+
+</body>
+
+</html>

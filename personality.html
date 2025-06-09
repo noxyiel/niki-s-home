@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Niki's Personality</title>
+  <style>
+    /* Reset and basics */
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e0f7ff, #e3f2fd);
+      color: #333;
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to right, #82aaff, #c2d9ff);
+      color: white;
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      user-select: none;
+    }
+
+    /* Navbar */
+    nav {
+      background: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 0;
+      box-shadow: 0 3px 8px rgba(176, 218, 255, 0.5);
+    }
+
+    nav a {
+      font-weight: 700;
+      color: #5c8aff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: #82aaff;
+      color: white;
+      outline: none;
+    }
+
+    /* Main content */
+    main {
+      max-width: 1200px;
+      margin: 3.5rem auto 5rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    /* Card styles */
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 25px rgba(176, 218, 255, 0.3);
+      padding: 2rem 2.2rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(130, 170, 255, 0.3);
+    }
+
+    .card h2 {
+      font-size: 1.8rem;
+      color: #5c8aff;
+      margin-bottom: 1.2rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+    }
+
+    .card h2 .icon {
+      margin-right: 1rem;
+      font-size: 2rem;
+    }
+
+    /* List inside cards */
+    .card ul {
+      list-style: none;
+      padding-left: 0;
+      flex-grow: 1;
+    }
+
+    .card ul li {
+      font-size: 1.1rem;
+      color: #444;
+      padding: 0.8rem 0;
+      border-bottom: 2px dashed #eef6ff;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .card ul li:last-child {
+      border-bottom: none;
+    }
+
+    .card ul li:hover {
+      background-color: #f8fbff;
+    }
+
+    .card ul strong {
+      color: #82aaff;
+      min-width: 120px;
+      display: inline-block;
+    }
+
+    /* Special "About Her" card */
+    #about-her-card {
+      grid-column: 1 / -1;
+      /* Make this card span full width */
+      text-align: center;
+    }
+
+    #about-her-card p {
+      font-size: 1.2rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      main {
+        gap: 2rem;
+        padding: 0 1rem;
+      }
+
+      .card h2 {
+        font-size: 1.6rem;
+      }
+
+      .card ul li {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>All About Niki 💖</header>
+
+  <nav>
+    <a href="index.html">Home 🏠</a>
+  </nav>
+
+  <main>
+    <section class="card" id="about-her-card">
+      <h2><span class="icon">🌟</span>The One and Only Niki<span class="icon">🌟</span></h2>
+      <p>
+        This is the whole bioworld that makes Niki. <br />
+        From her favorite little things to her beautiful big dreams, every detail is a piece of the amazing person she
+        is. <br />
+        Dive in and see what makes her shine so brightly!
+      </p>
+    </section>
+
+    <section class="card" id="about-her">
+      <h2><span class="icon">✨</span>About Her</h2>
+      <ul>
+        <li><strong>Age:</strong><span>18</span></li>
+        <li><strong>Height:</strong><span>5'2 2/3"</span></li>
+        <li><strong>Zodiac:</strong><span>Aquarius</span></li>
+        <li><strong>Personality Type:</strong><span>Goofy</span></li>
+        <li><strong>Ambition:</strong><span>Rich Rich lol</span></li>
+        <li><strong>Body:</strong><span>Uff hot</span></li>
+
+      </ul>
+    </section>
+
+    <section class="card" id="her-favorites">
+      <h2><span class="icon">🍔</span>Her Favorites</h2>
+      <ul>
+        <li><strong>Food:</strong><span>Momos</span></li>
+        <li><strong>Color:</strong><span>Lavender & Paster pallete</span></li>
+        <li><strong>Comfort Show:</strong><span>Friends</span></li>
+        <li><strong>Song:</strong><span>"Perfect" By Ed Sheeran</span></li>
+        <li><strong>Flower:</strong><span>Pink lilies</span></li>
+        <li><strong>First Fav Book</strong><span>Thia Stilton</span></li>
+      </ul>
+    </section>
+
+    <section class="card" id="her-likes">
+      <h2><span class="icon">💕</span>She Absolutely Loves...</h2>
+      <ul>
+        <li>Cozy nights in with a good crime documentary</li>
+        <li>The smell of rain on a warm day</li>
+        <li>Finding the perfect vintage elegant dress</li>
+        <li>Cute, fluffy animals (especially racoons)</li>
+        <li>Home chill > Outside</li>
+      </ul>
+    </section>
+
+    <section class="card" id="her-style">
+      <h2><span class="icon">🎨</span>Her Unique Style</h2>
+      <ul>
+        <li><strong>Fashion:</strong><span>Elegant Old Money</span></li>
+        <li><strong>Aesthetic:</strong><span>Pinteresty, Girlies Girl</span></li>
+        <li><strong>Hobby:</strong><span>Shooting,Annoying, Sleeping</span></li>
+        <li><strong>Drink:</strong><span>Bf's Blood</span></li>
+      </ul>
+    </section>
+    <section class="card" id="her-likes">
+      <h2><span class="icon">💕</span>Things She cant stay for a day without</h2>
+      <ul>
+        <li>Boyfriend</li>
+        <li>Momos</li>
+        <li>Besties</li>
+        <li>Books</li>
+        <li>Crime</li>
+      </ul>
+    </section>
+
+    <section class="card" id="about-her">
+      <h2><span class="icon">✨</span>She hates:</h2>
+      <ul>
+        <ul>
+          <li>Spiders</li>
+          <li>Narcissist/Misogynist</li>
+          <li>MultiKid parents</li>
+          <li>Teenage kids</li>
+          <li>Politicians</li>
+        </ul>
+      </ul>
+    </section>
+
+  </main>
+
+</body>
+
+</html>

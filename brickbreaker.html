@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brick Breaker for Niki 💖 - Space Edition</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0c2a;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #ff66aa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    header {
+      font-size: 2.5rem;
+      margin: 15px 0;
+      color: #ff66aa;
+      text-shadow: 0 0 10px #ff66aa;
+      user-select: none;
+    }
+
+    #gameContainer {
+      position: relative;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #ff66aa;
+    }
+
+    canvas#backgroundCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      border-radius: 20px;
+      user-select: none;
+    }
+
+    canvas#gameCanvas {
+      background: #1c114f;
+      display: block;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff66aa;
+      position: relative;
+      z-index: 1;
+    }
+
+    #score,
+    #lives {
+      margin: 10px 0 0;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-shadow: 0 0 5px #ff66aa;
+      user-select: none;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 1.5rem;
+      color: #ff66aa;
+      font-weight: 700;
+      text-shadow: 0 0 15px #ff66aa;
+      height: 2em;
+      user-select: none;
+    }
+
+    #homeButton {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #ff66aa;
+      color: white;
+      font-weight: bold;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(255, 102, 170, 0.6);
+      cursor: pointer;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 10;
+      user-select: none;
+    }
+
+    #homeButton:hover {
+      background-color: #ff3399;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <button id="homeButton" onclick="location.href='games.html'">🏠 Home</button>
+
+  <header>Brick Breaker - Space Edition</header>
+
+  <div id="gameContainer" style="width: 600px; height: 400px;">
+    <canvas id="backgroundCanvas" width="600" height="400"></canvas>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+  </div>
+
+  <div id="score">Score: 0</div>
+  <div id="lives">Lives: 3</div>
+  <div id="message"></div>
+
+  <script>
+    // Setup canvas and contexts
+    const gameCanvas = document.getElementById("gameCanvas");
+    const ctx = gameCanvas.getContext("2d");
+
+    const bgCanvas = document.getElementById("backgroundCanvas");
+    const bgCtx = bgCanvas.getContext("2d");
+
+    // Game variables
+    const paddleHeight = 14;
+    const paddleWidth = 110;
+    let paddleX = (gameCanvas.width - paddleWidth) / 2;
+
+    const ballRadius = 10;
+    let x = gameCanvas.width / 2;
+    let y = gameCanvas.height - 50;
+    let dx = 1.8;    // slower ball speed X
+    let dy = -1.8;   // slower ball speed Y
+
+    let rightPressed = false;
+    let leftPressed = false;
+
+    let score = 0;
+    let lives = 3;
+    let isGameOver = false;
+
+    // Brick variables
+    const brickRowCount = 5;
+    const brickColumnCount = 8;
+    const brickWidth = 60;
+    const brickHeight = 22;
+    const brickPadding = 10;
+    const brickOffsetTop = 50;
+    const brickOffsetLeft = 35;
+
+    let bricks = [];
+
+    for (let c = 0; c < brickColumnCount; c++) {
+      bricks[c] = [];
+      for (let r = 0; r < brickRowCount; r++) {
+        bricks[c][r] = {x: 0, y: 0, status: 1};
+      }
+    }
+
+    // Starfield background variables
+    const stars = [];
+    const starCount = 100;
+
+    for (let i = 0; i < starCount; i++) {
+      stars.push({
+        x: Math.random() * bgCanvas.width,
+        y: Math.random() * bgCanvas.height,
+        radius: Math.random() * 1.2,
+        speed: 0.05 + Math.random() * 0.15,
+      });
+    }
+
+    // Draw starfield (moon + stars background)
+    function drawStars() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+      // Dark gradient for space
+      let gradient = bgCtx.createLinearGradient(0, 0, 0, bgCanvas.height);
+      gradient.addColorStop(0, "#0b0c2a");
+      gradient.addColorStop(1, "#1a1c48");
+      bgCtx.fillStyle = gradient;
+      bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+      // Draw stars (twinkling)
+      stars.forEach(star => {
+        star.x -= star.speed;
+        if (star.x < 0) star.x = bgCanvas.width;
+        bgCtx.beginPath();
+        const alpha = 0.5 + 0.5 * Math.sin(Date.now() / 500 + star.x);
+        bgCtx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+        bgCtx.shadowColor = "white";
+        bgCtx.shadowBlur = 5;
+        bgCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        bgCtx.fill();
+        bgCtx.closePath();
+      });
+
+      // Draw moon
+      const moonX = bgCanvas.width - 100;
+      const moonY = 90;
+      const moonRadius = 50;
+
+      // moon glow
+      let moonGlow = bgCtx.createRadialGradient(moonX, moonY, moonRadius / 2, moonX, moonY, moonRadius);
+      moonGlow.addColorStop(0, "rgba(255, 255, 224, 0.8)");
+      moonGlow.addColorStop(1, "rgba(255, 255, 224, 0)");
+
+      bgCtx.fillStyle = moonGlow;
+      bgCtx.beginPath();
+      bgCtx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+      bgCtx.fill();
+
+      // moon surface
+      bgCtx.fillStyle = "#fff9d9";
+      bgCtx.beginPath();
+      bgCtx.arc(moonX, moonY, moonRadius * 0.85, 0, Math.PI * 2);
+      bgCtx.fill();
+
+      // moon craters
+      const craterPositions = [
+        {x: moonX - 15, y: moonY - 10, r: 8},
+        {x: moonX + 10, y: moonY - 20, r: 6},
+        {x: moonX + 20, y: moonY + 10, r: 7},
+      ];
+      bgCtx.fillStyle = "#d6cba4";
+      craterPositions.forEach(c => {
+        bgCtx.beginPath();
+        bgCtx.ellipse(c.x, c.y, c.r * 1.2, c.r * 0.8, Math.PI / 4, 0, Math.PI * 2);
+        bgCtx.fill();
+      });
+    }
+
+    // Draw ball with glow
+    function drawBall() {
+      // glow
+      let glowGradient = ctx.createRadialGradient(x, y, ballRadius * 0.6, x, y, ballRadius * 1.5);
+      glowGradient.addColorStop(0, "#ff66aa");
+      glowGradient.addColorStop(1, "rgba(204, 51, 102, 0)");
+
+      ctx.fillStyle = glowGradient;
+      ctx.beginPath();
+      ctx.arc(x, y, ballRadius * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // ball
+      ctx.beginPath();
+      let ballGradient = ctx.createRadialGradient(x, y, ballRadius * 0.2, x, y, ballRadius);
+      ballGradient.addColorStop(0, "#ff99cc");
+      ballGradient.addColorStop(1, "#cc3366");
+      ctx.fillStyle = ballGradient;
+      ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    // Draw paddle with glow effect
+    function drawPaddle() {
+      // glow shadow
+      ctx.shadowColor = '#ff66aa';
+      ctx.shadowBlur = 15;
+      ctx.fillStyle = '#ff3399';
+      ctx.beginPath();
+      ctx.roundRect(paddleX, gameCanvas.height - paddleHeight - 20, paddleWidth, paddleHeight, 10);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // paddle details - a gradient
+      let paddleGrad = ctx.createLinearGradient(paddleX, 0, paddleX + paddleWidth, 0);
+      paddleGrad.addColorStop(0, '#ff66aa');
+      paddleGrad.addColorStop(1, '#ff0066');
+      ctx.fillStyle = paddleGrad;
+      ctx.beginPath();
+      ctx.roundRect(paddleX + 5, gameCanvas.height - paddleHeight - 18, paddleWidth - 10, paddleHeight - 4, 8);
+      ctx.fill();
+    }
+
+    // Polyfill for roundRect (for older browsers)
+    if (!CanvasRenderingContext2D.prototype.roundRect) {
+      CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+        if (w < 2 * r) r = w / 2;
+        if (h < 2 * r) r = h / 2;
+        this.beginPath();
+        this.moveTo(x + r, y);
+        this.arcTo(x + w, y, x + w, y + h, r);
+        this.arcTo(x + w, y + h, x, y + h, r);
+        this.arcTo(x, y + h, x, y, r);
+        this.arcTo(x, y, x + w, y, r);
+        this.closePath();
+        return this;
+      }
+    }
+
+    // Draw bricks with space-themed gradient and shine
+    function drawBricks() {
+      for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+          if (bricks[c][r].status == 1) {
+            let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+            let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+            bricks[c][r].x = brickX;
+            bricks[c][r].y = brickY;
+
+            // Brick gradient (purple-pink space style)
+            let brickGradient = ctx.createLinearGradient(brickX, brickY, brickX, brickY + brickHeight);
+            brickGradient.addColorStop(0, '#ff66aa');
+            brickGradient.addColorStop(0.5, '#cc3388');
+            brickGradient.addColorStop(1, '#ff99cc');
+
+            ctx.fillStyle = brickGradient;
+            ctx.beginPath();
+            ctx.roundRect(brickX, brickY, brickWidth, brickHeight, 6);
+            ctx.fill();
+
+            // Shine on brick
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(brickX + 10, brickY + 5);
+            ctx.lineTo(brickX + brickWidth - 10, brickY + 5);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    // Collision detection for bricks
+    function collisionDetection() {
+      for (let c = 0; c < brickColumnCount; c++) {
+        for (let r = 0; r < brickRowCount; r++) {
+          let b = bricks[c][r];
+          if (b.status == 1) {
+            if (x > b.x && x < b.x + brickWidth &&
+              y > b.y && y < b.y + brickHeight) {
+              dy = -dy;
+              b.status = 0;
+              score++;
+              updateScore();
+
+              // Increase ball speed slightly on hit, capped max speed
+              if (Math.abs(dx) < 4) dx *= 1.05;
+              if (Math.abs(dy) < 4) dy *= 1.05;
+
+              if (score == brickRowCount * brickColumnCount) {
+                isGameOver = true;
+                document.getElementById("message").textContent = "🎉 You Won, Niki! 🎉";
+                setTimeout(() => {
+                  document.location.reload();
+                }, 3000);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    function updateScore() {
+      document.getElementById("score").textContent = `Score: ${score}`;
+    }
+
+    function updateLives() {
+      document.getElementById("lives").textContent = `Lives: ${lives}`;
+    }
+
+    function resetBallAndPaddle() {
+      x = gameCanvas.width / 2;
+      y = gameCanvas.height - 50;
+      dx = 1.8;
+      dy = -1.8;
+      paddleX = (gameCanvas.width - paddleWidth) / 2;
+    }
+
+    function draw() {
+      // Draw background stars & moon
+      drawStars();
+
+      // Clear game canvas for game draw
+      ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+      drawBricks();
+      drawBall();
+      drawPaddle();
+      collisionDetection();
+
+      // Ball collision with walls
+      if (x + dx > gameCanvas.width - ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+      }
+      if (y + dy < ballRadius) {
+        dy = -dy;
+      } else if (y + dy > gameCanvas.height - ballRadius - paddleHeight - 20) {
+        // Ball hits paddle or bottom
+        if (x > paddleX && x < paddleX + paddleWidth) {
+          dy = -dy;
+
+          // Add some angle variation based on where the ball hits the paddle
+          let hitPos = x - (paddleX + paddleWidth / 2);
+          dx = hitPos * 0.12;
+
+          // Slightly increase ball speed gradually but capped
+          if (Math.abs(dx) < 4) dx *= 1.03;
+          if (Math.abs(dy) < 4) dy *= 1.03;
+        } else {
+          lives--;
+          updateLives();
+
+          if (!lives) {
+            isGameOver = true;
+            document.getElementById("message").textContent = "Game Over 😢 Try again!";
+            setTimeout(() => {
+              document.location.reload();
+            }, 3000);
+            return;
+          } else {
+            resetBallAndPaddle();
+          }
+        }
+      }
+
+      if (rightPressed && paddleX < gameCanvas.width - paddleWidth) {
+        paddleX += 6;
+      } else if (leftPressed && paddleX > 0) {
+        paddleX -= 6;
+      }
+
+      if (!isGameOver) {
+        x += dx;
+        y += dy;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    // Event listeners for key press
+    document.addEventListener("keydown", function (e) {
+      if (e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = true;
+      } else if (e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = true;
+      }
+    });
+
+    document.addEventListener("keyup", function (e) {
+      if (e.key == "Right" || e.key == "ArrowRight") {
+        rightPressed = false;
+      } else if (e.key == "Left" || e.key == "ArrowLeft") {
+        leftPressed = false;
+      }
+    });
+
+    // Start the game loop
+    draw();
+
+  </script>
+</body>
+
+</html>0

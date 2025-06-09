@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Whack-a-Mole for Niki 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(-45deg, #ffe6f2, #ffcce0, #ffd6ec, #ffe6f2);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #cc3366;
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    h1 {
+      color: #ff66aa;
+      text-shadow: 1px 1px 4px #ff99cc;
+      font-size: 2.2em;
+    }
+
+    #homeBtn {
+      margin-bottom: 15px;
+      background-color: #ff66aa;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 4px 12px #ff3399;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    #homeBtn:hover {
+      background-color: #ff3388;
+      transform: scale(1.05);
+    }
+
+    #game {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 18px;
+      margin-top: 15px;
+    }
+
+    .hole {
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, #ffe0f0 0%, #ffcce0 100%);
+      border-radius: 20px;
+      box-shadow: inset 0 0 15px #ff99cc;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .mole {
+      width: 70px;
+      height: 70px;
+      background: #ff66aa;
+      border-radius: 50%;
+      position: absolute;
+      top: 115%;
+      left: 15px;
+      box-shadow: 0 0 12px #ff3388;
+      transition: top 0.4s ease;
+      background-image: url('https://emojicdn.elk.sh/🐹');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .mole.active {
+      top: 15px;
+    }
+
+    #score {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #cc3366;
+      text-shadow: 0 0 8px #ff99cc;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #startBtn {
+      background: #ff66aa;
+      border: none;
+      padding: 10px 25px;
+      color: white;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 1em;
+      box-shadow: 0 4px 10px #ff3399;
+      transition: background 0.3s ease;
+    }
+
+    #startBtn:hover {
+      background: #ff3388;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px white;
+      animation: sparkleMove 1s ease-out forwards;
+    }
+
+    @keyframes sparkleMove {
+      to {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Whack-a-Mole</h1>
+  <button id="homeBtn" onclick="location.href='games.html'">🏠 Home</button>
+  <div id="game">
+    <!-- 9 Holes -->
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+    <div class="hole">
+      <div class="mole"></div>
+    </div>
+  </div>
+  <div id="score">Score: 0</div>
+  <button id="startBtn">Start Game</button>
+
+  <script>
+    const holes = document.querySelectorAll(".hole");
+    const moles = document.querySelectorAll(".mole");
+    const scoreDisplay = document.getElementById("score");
+    const startBtn = document.getElementById("startBtn");
+
+    let score = 0;
+    let activeIndex = null;
+    let gameInterval;
+    let gameTime = 20000; // 20 seconds
+    let gameRunning = false;
+
+    function sparkle(x, y) {
+      const spk = document.createElement("div");
+      spk.className = "sparkle";
+      spk.style.left = `${x}px`;
+      spk.style.top = `${y}px`;
+      document.body.appendChild(spk);
+      setTimeout(() => spk.remove(), 1000);
+    }
+
+    function showMole() {
+      if (activeIndex !== null) {
+        moles[activeIndex].classList.remove("active");
+      }
+      let idx = Math.floor(Math.random() * holes.length);
+      activeIndex = idx;
+      moles[idx].classList.add("active");
+    }
+
+    function startGame() {
+      if (gameRunning) return;
+      score = 0;
+      updateScore();
+      gameRunning = true;
+      showMole();
+      gameInterval = setInterval(showMole, 1000);
+
+      setTimeout(() => {
+        clearInterval(gameInterval);
+        if (activeIndex !== null) {
+          moles[activeIndex].classList.remove("active");
+        }
+        gameRunning = false;
+        alert(`⏰ Time's up, Niki! Your score is ${score} 💖`);
+      }, gameTime);
+    }
+
+    function updateScore() {
+      scoreDisplay.textContent = "Score: " + score;
+    }
+
+    holes.forEach((hole, i) => {
+      hole.addEventListener("click", (e) => {
+        if (gameRunning && i === activeIndex) {
+          score++;
+          updateScore();
+          const rect = hole.getBoundingClientRect();
+          sparkle(rect.left + 50, rect.top + 30);
+          moles[activeIndex].classList.remove("active");
+          activeIndex = null;
+        }
+      });
+    });
+
+    startBtn.addEventListener("click", startGame);
+  </script>
+</body>
+
+</html>

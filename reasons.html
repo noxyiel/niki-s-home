@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reasons I Love You</title>
+    <style>
+        /* Import a better handwriting font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        /* --- Core Styles & Fonts --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            overflow: hidden;
+            color: #4f3a4b;
+            position: relative;
+        }
+
+        /* Sparkle hearts behind the main hearts */
+        .sparkles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: visible;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff0f5;
+            border-radius: 50%;
+            box-shadow: 0 0 8px 3px #ffafbd;
+            opacity: 0.8;
+            animation: sparkleTwinkle 3s infinite;
+        }
+
+        @keyframes sparkleTwinkle {
+
+            0%,
+            100% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.2;
+                transform: scale(0.5);
+            }
+        }
+
+        /* --- Animated Background Container --- */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            color: #ff6f91;
+            opacity: 0;
+            animation: floatUp 5s linear infinite;
+            transform-origin: center bottom;
+            filter: drop-shadow(0 0 3px #ff6f91);
+            will-change: transform, opacity;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 10px;
+            height: 16px;
+            background: currentColor;
+            border-radius: 10px 10px 0 0;
+            transform-origin: 0 100%;
+        }
+
+        .heart::before {
+            transform: rotate(-45deg);
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(50vh) scale(1) rotate(15deg);
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(-10deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Main Content Structure --- */
+        main {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90vw;
+        }
+
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: #ff3c78;
+            font-weight: 700;
+            text-shadow:
+                0 0 5px #ffb6c1,
+                0 0 15px #ff3c78;
+            margin-bottom: 1.5rem;
+            user-select: none;
+        }
+
+        /* --- The Glass Card --- */
+        .reason-card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            color: #66334d;
+            font-size: 1.7rem;
+            line-height: 1.6;
+            font-weight: 500;
+            min-height: 230px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease-in-out;
+            user-select: none;
+            text-shadow: 0 0 3px #fff0f5;
+        }
+
+        /* --- Fade Animation Class --- */
+        .fade-out {
+            opacity: 0;
+        }
+
+        /* --- The Button --- */
+        #generator-btn {
+            font-family: 'Georgia', serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, #ff6f91, #ffafbd);
+            padding: 1.1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow:
+                0 4px 15px rgba(255, 105, 180, 0.5),
+                inset 0 -3px 10px #ff3c78;
+            transition: all 0.3s ease;
+            animation: pulse 2.5s infinite;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            user-select: none;
+            text-shadow: 0 0 5px #ffbad2;
+        }
+
+        #generator-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow:
+                0 12px 30px rgba(255, 105, 180, 0.7),
+                inset 0 -5px 15px #ff2a5c;
+            animation-play-state: paused;
+        }
+
+        #generator-btn:active {
+            transform: translateY(-3px) scale(0.98);
+        }
+
+        /* Heart icon in button */
+        #generator-btn .heart-icon {
+            font-size: 1.5rem;
+            animation: bounce 1.5s infinite;
+            color: #fff0f5;
+            text-shadow: 0 0 5px #ff3c78;
+            user-select: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2.8rem;
+            }
+
+            .reason-card {
+                padding: 2rem 1.5rem;
+                font-size: 1.3rem;
+                min-height: 180px;
+            }
+
+            #generator-btn {
+                padding: 0.9rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sparkles-container" aria-hidden="true"></div>
+    <div class="hearts-container" aria-hidden="true"></div>
+
+    <main>
+        <header>
+            <h1>A Few Reasons Why...</h1>
+        </header>
+
+        <div class="reason-card" aria-live="polite" aria-atomic="true">
+            <p id="reason-text">I love you more than words can say.</p>
+        </div>
+
+        <button id="generator-btn" aria-label="Generate a new reason why I love you">
+            Tell me another reason <span class="heart-icon">❤️</span>
+        </button>
+    </main>
+
+    <script>
+        // --- Reasons array (same as before) ---
+        const reasons = [
+            "I love the way you smile when you see me.",
+            "You make me feel like I'm home.",
+            "I love your passion for your hobbies.",
+            "You have the kindest and most beautiful heart.",
+            "I love how you can make me laugh even on the worst days.",
+            "You always know how to comfort me.",
+            "I love listening to you talk about things you're excited about.",
+            "You're the most intelligent person I know.",
+            "I love the little face you make when you're concentrating.",
+            "You inspire me to be a better person every single day.",
+            "I love holding your hand.",
+            "You're my best friend and my soulmate.",
+            "Your hugs can fix anything.",
+            "I love how your eyes light up when you're happy.",
+            "You are the best thing that has ever happened to me.",
+            "We are the coziest team.",
+            "Your taste in music is amazing.",
+            "I love planning our future with you.",
+            "You always support my dreams, no matter how big or small.",
+            "Every moment with you is a memory I cherish.",
+            "Our love story is my favorite to tell.",
+            "Together, we create magic every day.",
+            "You're the rhythm to my heartbeat.",
+            "Loving you feels like the most natural thing in the world.",
+            "Every moment with you is a treasure.",
+            "You make my life more beautiful just by being in it.",
+            "Our bond grows stronger with every sunrise.",
+            "You are my forever kind of love.",
+            "With you, I’ve found my truest home.",
+            "Your love is my greatest comfort.",
+            "We fit together like pieces of a perfect puzzle.",
+            "You're the calm in my chaos.",
+            "Loving you has made me a better person.",
+            "I never want to imagine life without you.",
+            "You are the light that guides me through the darkest times.",
+            "Together, we are unstoppable.",
+            "Our love is a journey, not a destination.",
+            "You're the reason I believe in miracles.",
+            "I love how we dream the same dreams.",
+            "With you, even silence speaks volumes.",
+            "Your love wraps around me like a warm blanket.",
+            "We are each other’s safe place.",
+            "You make ordinary moments extraordinary.",
+            "Our hearts speak a language only we understand.",
+            "Loving you feels like coming home after a long day.",
+            "You are the best part of my every day.",
+            "Together, we shine brighter than the stars.",
+            "Our love story is written in the stars.",
+            "I cherish the way you look at me with endless love.",
+            "You make my soul sing.",
+            "Every day with you is a beautiful new chapter.",
+            "You are my favorite hello and my hardest goodbye.",
+            "Our love is my greatest adventure.",
+            "I love how you complete me in every way.",
+            "You are the answer to my heart’s deepest prayers.",
+            "We make each other whole.",
+            "Your love is the soundtrack of my life.",
+            "Together, we have a love that others only dream of.",
+            "You are my forever best friend and lover.",
+            "I am grateful for every moment we share.",
+            "Your smile brightens even my darkest days.",
+            "We are a team, through every high and low.",
+            "I love how our souls connect beyond words.",
+            "You make my heart feel full and alive.",
+            "Our love is timeless and true.",
+            "You are my constant, my forever.",
+            "I love that we can be ourselves with each other.",
+            "You inspire me to love deeper every day.",
+            "Together, we create a world of our own.",
+            "Your love is my greatest strength.",
+            "I fall in love with you more every day.",
+            "You are the joy I never knew I needed.",
+            "Our hearts beat in perfect harmony.",
+            "I love the way we support and uplift each other.",
+            "You make my dreams brighter just by being in them.",
+            "Our love is a beautiful journey, full of growth and grace.",
+            "You are my heart’s home.",
+            "I love how you bring out the best in me.",
+            "Together, we face every challenge with love.",
+            "Your love fills the spaces I never knew were empty.",
+            "You are my sunshine on cloudy days.",
+            "I love how you hold my heart so gently.",
+            "Our love is the greatest gift I’ve ever received.",
+            "You make every day worth waking up for.",
+            "Together, we are a story worth telling.",
+            "You are my forever and always.",
+            "I love the way you make me laugh without trying.",
+            "Our love is a beautiful dance of two souls.",
+            "You are my rock, my refuge, my love.",
+            "I am blessed to share this life with you.",
+            "You make the impossible feel possible.",
+            "I love how we grow stronger through every storm.",
+            "Our love is patient, kind, and true.",
+            "You are my favorite chapter in this book of life.",
+            "I cherish every smile, every touch, every moment with you.",
+            "Together, we make life sweeter.",
+            "Your love is the light that brightens my path.",
+            "I love how we can be silly and serious all at once.",
+            "You are my heart’s greatest treasure.",
+            "Our love story is written in every breath we take.",
+            "I love how you believe in us even when things get tough.",
+            "You are my dream come true.",
+            "Together, we build a love that lasts forever.",
+            "You make my soul feel alive and free.",
+            "I love how you make me feel understood and accepted.",
+            "Our love is a beautiful promise we keep every day.",
+            "You are my heart’s safe harbor.",
+            "I love how we support each other’s dreams.",
+            "Together, we make the ordinary extraordinary.",
+            "Your love is my favorite melody.",
+            "I love how your presence makes everything better.",
+            "You are my forever sunshine.",
+            "Our love is a beautiful tapestry woven with trust and care.",
+            "You make my heart smile.",
+            "I love how we share our hopes, fears, and dreams.",
+            "Together, we create a lifetime of memories.",
+            "You are my greatest inspiration.",
+            "I love the way you make my heart feel at home.",
+            "Our love is a journey I want to walk forever.",
+            "You are my everything, today and always.",
+            "You make even the simplest moments feel magical.",
+            "I love the way your laughter fills the room.",
+            "You always know how to brighten my darkest days.",
+            "Your kindness inspires me to be better.",
+            "I feel safe and cherished when I'm with you.",
+            "You have the most beautiful soul I've ever known.",
+            "I love your curious mind and adventurous spirit.",
+            "Your smile melts my heart every time.",
+            "You make me feel seen and understood.",
+            "Your hugs are my favorite place to be.",
+            "I love the way you look at me with so much love.",
+            "You have a heart full of generosity and warmth.",
+            "Your voice is the sweetest melody to my ears.",
+            "You make me want to be the best version of myself.",
+            "I cherish every moment we spend together.",
+            "You are my sunshine on a cloudy day.",
+            "I love how you make me laugh even when I don’t want to.",
+            "Your passion for life is contagious.",
+            "You have the most incredible way of showing love.",
+            "I love the little quirks that make you uniquely you.",
+            "You are my favorite hello and hardest goodbye.",
+            "Your presence makes everything better.",
+            "I love dreaming about our future together.",
+            "You bring out the best in me without even trying.",
+            "I am grateful for your endless patience with me.",
+            "You are my calm in the chaos.",
+            "I love how we can talk about anything and everything.",
+            "Your creativity amazes me every day.",
+            "You inspire me to see the world differently.",
+            "I love the way your eyes sparkle when you're excited.",
+            "You make my heart skip a beat.",
+            "I cherish the way you support me unconditionally.",
+            "You are my greatest adventure.",
+            "I love how you never give up on us.",
+            "Your smile is my favorite thing to see in the morning.",
+            "You have an incredible ability to make me feel special.",
+            "I love the way you listen so attentively.",
+            "You are my partner in every sense of the word.",
+            "I feel like I can be myself around you.",
+            "Your laughter is the soundtrack of my happiest moments.",
+            "I love how you challenge me to grow.",
+            "You are my rock and my safe place.",
+            "I adore how you always remember the little things.",
+            "You make ordinary days feel extraordinary.",
+            "I love how you care deeply for the people around you.",
+            "Your optimism gives me hope.",
+            "You make my life richer just by being in it.",
+            "I love the way you hold my hand in public.",
+            "You are my favorite person to share secrets with.",
+            "Your passion for your dreams inspires me daily.",
+            "I love how you can turn any moment into a celebration.",
+            "You are my constant source of joy.",
+            "I am amazed by your strength and resilience.",
+            "I love how your eyes light up when you see me.",
+            "You make me believe in true love.",
+            "I cherish the quiet moments we spend together.",
+            "You bring warmth and light into my life.",
+            "I love the way you encourage me to be brave.",
+            "You are my best friend and soulmate.",
+            "I am so lucky to call you mine.",
+            "I love how you make me feel so loved and valued.",
+            "You are the answer to all my prayers.",
+            "I adore your sense of humor and wit.",
+            "You make my heart feel full and happy.",
+            "I love how we can be silly and serious together.",
+            "You are my forever and always.",
+            "I love how you stand by me through thick and thin.",
+            "You inspire me to love more deeply.",
+            "I am grateful for every laugh we share.",
+            "You make every day brighter just by being you.",
+            "I love how you always know what I need.",
+            "You are my favorite person to come home to.",
+            "I admire your kindness and compassion.",
+            "I love the way you make time for us.",
+            "You make me want to dance through life with you.",
+            "You are my heart’s greatest treasure.",
+            "I love how you make me feel alive.",
+            "You are my partner in all of life’s adventures.",
+            "I cherish the memories we’re making.",
+            "I love your adventurous spirit and open heart.",
+            "You are my forever home.",
+            "I love how your love makes me stronger.",
+            "You make me smile just by thinking of you.",
+            "I admire your honesty and integrity.",
+            "I love how you make the little things so special.",
+            "You are my favorite hello and last thought at night.",
+            "I am blessed to have you in my life.",
+            "I love how you make me feel understood.",
+            "You are the light in my darkest moments.",
+            "I adore your passion for life and love.",
+            "You make me feel cherished every day.",
+            "I love how you support my dreams.",
+            "You are my forever best friend.",
+            "I love how you make me laugh uncontrollably.",
+            "You are my sunshine after the rain.",
+            "I love your gentle touch and warm embrace.",
+            "You are the reason my heart beats faster.",
+            "I cherish your thoughtfulness and care.",
+            "I love how you believe in us.",
+            "You make every day a beautiful adventure.",
+            "You are my dream come true.",
+            "I love how you hold me when I need it most.",
+            "You inspire me to be my best self.",
+            "I am grateful for your unwavering love.",
+            "I love the way you make life feel easier.",
+            "You are my heart’s safe harbor.",
+            "I adore the way you smile at me.",
+            "You make me feel like the luckiest person alive.",
+            "I love how you make ordinary moments extraordinary.",
+            "You are my partner in crime and love.",
+            "I cherish the way you look at me.",
+            "I love how you make me feel special every day.",
+            "You are my forever and always.",
+            "I love your beautiful soul.",
+            "You make my life a beautiful journey.",
+            "I adore your endless patience with me.",
+            "I love the way you encourage my dreams.",
+            "You are my rock and my safe place.",
+            "I love the way you hold my hand.",
+            "You are the best thing that ever happened to me.",
+            "I love how you make me smile for no reason.",
+            "You are my favorite person in the whole world.",
+            "I love the way you light up my life.",
+            "You are my forever home and happiness.",
+            "I adore your loving heart.",
+            "You make every day worth living.",
+            "I love how you understand me like no one else.",
+            "You are my partner, my lover, my friend.",
+            "I cherish every moment spent with you.",
+            "I love how you inspire me every day.",
+            "You are my sunshine on cloudy days.",
+            "I love how you make my heart sing.",
+            "You are my forever and always.",
+            "I love your kindness and generosity.",
+            "You make my life complete.",
+            "I adore the way you love me.",
+            "You are the best part of my every day.",
+            "I love how you make me feel beautiful.",
+            "You are my forever best friend.",
+            "I love your sweet and caring nature.",
+            "You make my world a better place.",
+            "I cherish your love and support.",
+            "I love the way you make me laugh.",
+            "You are my heart’s greatest treasure.",
+            "I love how you stand by me through everything.",
+            "You make me feel safe and loved.",
+            "I adore your loving smile.",
+            "You are my forever and always.",
+            "I love the way you hold me close.",
+            "You make my dreams come true.",
+            "I cherish every moment with you.",
+            "I love your beautiful heart.",
+            "You are my sunshine and my love.",
+            "I love how you make me feel special.",
+            "You are my best friend and soulmate.",
+            "I adore your sweet kisses.",
+            "You make my heart skip a beat.",
+            "I love the way you look at me.",
+            "You are my forever happiness.",
+            "I love your loving spirit.",
+            "You make every day magical.",
+            "I cherish your warm hugs.",
+            "I love the way you love me.",
+            "You are my everything.",
+            "I love your gentle touch.",
+            "You make my life beautiful.",
+            "I adore your sweet words.",
+            "You are my forever love.",
+            "I love how you complete me.",
+            "You make my heart full.",
+            "I cherish your tender care.",
+            "I love the way you support me.",
+            "You are my best part.",
+            "I love your caring heart.",
+            "You make me feel alive.",
+            "I adore your beautiful smile.",
+            "You are my forever friend.",
+            "I love the way you inspire me.",
+            "You make every moment special.",
+            "I cherish your endless love.",
+            "I love your kind soul.",
+            "You are my heart’s desire.",
+            "I love how you make me happy.",
+            "You make life worth living.",
+            "I adore your sweet nature.",
+            "You are my forever angel.",
+            "I love your tender heart.",
+            "You make my dreams real.",
+            "I cherish every kiss.",
+            "I love the way you hold me tight.",
+            "You are my forever happiness.",
+            "I love your beautiful eyes.",
+            "You make me feel loved.",
+            "I adore your gentle ways.",
+            "You are my everything forever.",
+            "I love the way you care for me.",
+            "You make my heart sing.",
+            "I cherish your warm embrace.",
+            "I love your sweet smile.",
+            "You are my forever soulmate.",
+            "I love how you make me feel whole.",
+            "You make every day brighter.",
+            "I adore your loving touch.",
+            "You are my best friend forever.",
+            "I love the way you love me back.",
+            "You make my life complete.",
+            "I cherish your kind heart.",
+            "I love your sweet voice.",
+            "You are my forever love.",
+            "I love how you make me smile every day.",
+            "You make my heart beat faster.",
+            "I adore your endless patience.",
+            "You are my sunshine and my stars.",
+            "I love your beautiful laughter.",
+            "You make life worth every moment.",
+            "I cherish your endless love.",
+            "I love your gentle soul.",
+            "You are my forever and always.",
+            "I love how you hold me close every night.",
+            "You make me feel special and loved.",
+            "I adore your caring ways.",
+            "You are my forever dream.",
+            "I love your sweet heart.",
+            "You make my life magical.",
+            "I cherish your endless support.",
+            "I love the way you look at me with love.",
+            "You are my forever happiness.",
+            "I love your beautiful spirit.",
+            "You make my heart full of joy.",
+            "I adore your kind soul.",
+            "You are my everything and more.",
+            "I love how you make me feel alive every day.",
+            "You make life beautiful and bright.",
+            "I cherish your loving heart.",
+            "I love your sweet kisses and hugs.",
+            "You are my forever love story.",
+            "I love the way you complete me in every way.",
+            "You make my dreams come true every day.",
+            "I adore your endless love and care.",
+            "You are my heart’s greatest gift.",
+            "I love how you make me smile for no reason.",
+            "You make my life full of happiness and joy.",
+            "I cherish your loving presence.",
+            "I love your kind and gentle heart.",
+            "You are my forever and always true love.",
+            "I love the way you hold my hand and never let go.",
+            "You make every day worth living and loving.",
+            "I adore your beautiful soul and loving nature.",
+            "You are my best friend and soulmate forever.",
+            "I love how you make me feel special and valued every day.",
+            "You make my heart sing with joy and happiness.",
+            "I cherish every moment we share together.",
+            "I love your passion for life and love.",
+            "You are my forever sunshine and light.",
+            "I love the way you support and encourage me.",
+            "You make me a better person just by being you.",
+            "I adore your sweet smile and loving eyes.",
+            "You are my everything, my love, and my life.",
+            "I love how you make me feel safe and cherished.",
+            "You make my dreams brighter and my days happier.",
+            "I cherish your endless love and unwavering support.",
+            "I love your beautiful heart and kind soul.",
+            "You are my forever happiness and peace.",
+            "I love the way you love me unconditionally and truly.",
+            "You make every moment with you a precious memory.",
+            "I adore your gentle touch and caring ways.",
+            "You are my forever and always true love.",
+            "I love how you make me laugh and smile every day.",
+            "You make my heart full of love and gratitude.",
+            "I cherish your loving spirit and beautiful soul.",
+            "I love your sweet words and thoughtful gestures.",
+            "You are my best friend, my lover, and my soulmate.",
+            "I love how you make me feel like I belong.",
+            "You make my life complete and full of joy.",
+            "I adore your endless patience and loving heart.",
+            "You are my forever and always, now and forevermore."
+        ];
+
+        const reasonText = document.getElementById('reason-text');
+        const generatorBtn = document.getElementById('generator-btn');
+        let lastReasonIndex = -1;
+
+        function generateReason() {
+            reasonText.classList.add('fade-out');
+
+            setTimeout(() => {
+                let newReasonIndex;
+                do {
+                    newReasonIndex = Math.floor(Math.random() * reasons.length);
+                } while (newReasonIndex === lastReasonIndex);
+
+                lastReasonIndex = newReasonIndex;
+                reasonText.textContent = reasons[newReasonIndex];
+                reasonText.classList.remove('fade-out');
+            }, 400);
+        }
+
+        generatorBtn.addEventListener('click', generateReason);
+
+        // Hearts animation
+        const heartsContainer = document.querySelector('.hearts-container');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '&#x2764;';
+            heart.className = 'heart';
+
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 seconds
+            heart.style.opacity = Math.random() * 0.5 + 0.5;
+            heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Sparkles animation
+        const sparklesContainer = document.querySelector('.sparkles-container');
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.animationDelay = (Math.random() * 3) + 's';
+
+            sparklesContainer.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 4000);
+        }
+
+        setInterval(createSparkle, 400);
+
+        window.onload = generateReason;
+    </script>
+</body>
+
+</html>

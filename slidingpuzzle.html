@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sliding Puzzle for Niki 💖</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+    body {
+      font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+      background: #e6f2e6;
+      color: #27632a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px;
+      margin: 0;
+      min-height: 100vh;
+      user-select: none;
+    }
+
+    h1 {
+      color: #3a8e3a;
+      text-shadow: 1px 1px 3px #a4d5a4;
+      font-size: 2.4rem;
+      margin-bottom: 10px;
+    }
+
+    #puzzle {
+      display: grid;
+      grid-template-columns: repeat(4, 90px);
+      grid-template-rows: repeat(4, 90px);
+      gap: 12px;
+      margin-top: 20px;
+      background: #b2d8b2;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #8bc78b;
+      position: relative;
+    }
+
+    .tile {
+      background: #4caf50;
+      color: #d0f0c0;
+      font-weight: 700;
+      font-size: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px #367f36;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .tile:hover:not(.empty) {
+      background-color: #66bb66;
+      transform: scale(1.1);
+      box-shadow: 0 6px 15px #2e6f2e;
+      z-index: 1;
+    }
+
+    .empty {
+      background: transparent;
+      box-shadow: none;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    #message {
+      margin-top: 25px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #2d662d;
+      min-height: 2rem;
+      text-align: center;
+      position: relative;
+      user-select: none;
+    }
+
+    button {
+      background: #4caf50;
+      border: none;
+      padding: 10px 25px;
+      color: #d0f0c0;
+      font-weight: 700;
+      border-radius: 15px;
+      cursor: pointer;
+      margin-top: 25px;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 15px #367f36;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    button:hover {
+      background: #3a8e3a;
+    }
+
+    /* Sparkle animation */
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #d0f0c0;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #d0f0c0;
+      animation: sparkleMove 1.2s ease forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes sparkleMove {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-40px) scale(0.3);
+      }
+    }
+
+    #homeBtn {
+      background: #a5d6a7;
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px #5aaf5a;
+      transition: background-color 0.3s ease, transform 0.2s;
+      margin-bottom: 10px;
+    }
+
+    #homeBtn:hover {
+      background: #81c784;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Sliding Puzzle</h1>
+  <a href="games.html" id="homeBtn">🏡 Home</a>
+  <div id="puzzle"></div>
+  <div id="message"></div>
+  <button id="restart">Restart</button>
+
+  <script>
+    const size = 4;
+    let puzzle = [];
+    const puzzleDiv = document.getElementById("puzzle");
+    const message = document.getElementById("message");
+    const restartBtn = document.getElementById("restart");
+
+    // Shuffle with Fisher-Yates
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Check solvability of the puzzle
+    function isSolvable(array) {
+      let inversions = 0;
+      for (let i = 0; i < array.length; i++) {
+        for (let j = i + 1; j < array.length; j++) {
+          if (array[i] && array[j] && array[i] > array[j]) inversions++;
+        }
+      }
+      const emptyRowFromBottom = size - Math.floor(array.indexOf(0) / size);
+      if (size % 2 === 1) {
+        return inversions % 2 === 0;
+      } else {
+        return (inversions + emptyRowFromBottom) % 2 === 0;
+      }
+    }
+
+    // Check if solved
+    function isSolved() {
+      for (let i = 0; i < puzzle.length - 1; i++) {
+        if (puzzle[i] !== i + 1) return false;
+      }
+      return puzzle[puzzle.length - 1] === 0;
+    }
+
+    // Generate puzzle ensuring solvability
+    function generatePuzzle() {
+      do {
+        puzzle = shuffle([...Array(size * size).keys()]);
+      } while (!isSolvable(puzzle) || isSolved());
+      drawPuzzle();
+      message.textContent = "";
+    }
+
+    // Draw puzzle tiles with animation
+    function drawPuzzle() {
+      puzzleDiv.innerHTML = "";
+      for (let i = 0; i < puzzle.length; i++) {
+        const tile = document.createElement("div");
+        tile.className = "tile";
+        if (puzzle[i] === 0) {
+          tile.classList.add("empty");
+          tile.textContent = "";
+        } else {
+          tile.textContent = puzzle[i];
+          tile.addEventListener("click", () => moveTile(i));
+        }
+        puzzleDiv.appendChild(tile);
+      }
+    }
+
+    // Sparkle effect on success
+    function sparkleEffect() {
+      for (let i = 0; i < 20; i++) {
+        const spk = document.createElement("div");
+        spk.className = "sparkle";
+        spk.style.left = `${Math.random() * puzzleDiv.clientWidth}px`;
+        spk.style.top = `${Math.random() * puzzleDiv.clientHeight}px`;
+        puzzleDiv.appendChild(spk);
+        setTimeout(() => spk.remove(), 1200);
+      }
+    }
+
+    // Move tile if adjacent to empty
+    function moveTile(index) {
+      const emptyIndex = puzzle.indexOf(0);
+      const validMoves = [
+        emptyIndex - 1,
+        emptyIndex + 1,
+        emptyIndex - size,
+        emptyIndex + size
+      ];
+
+      // Prevent wrap around moves on grid edges
+      if (
+        validMoves.includes(index) &&
+        !(
+          (emptyIndex % size === 0 && index === emptyIndex - 1) ||
+          (emptyIndex % size === size - 1 && index === emptyIndex + 1)
+        )
+      ) {
+        [puzzle[emptyIndex], puzzle[index]] = [puzzle[index], puzzle[emptyIndex]];
+        drawPuzzle();
+        if (isSolved()) {
+          message.textContent = "🎉 You solved it, Niki! 🎉";
+          sparkleEffect();
+        } else {
+          message.textContent = "";
+        }
+      }
+    }
+
+    restartBtn.addEventListener("click", generatePuzzle);
+
+    // Initial load
+    generatePuzzle();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vintage Flappy Plane for Niki 💖</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f5f0e6;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      user-select: none;
+    }
+
+    header {
+      width: 100%;
+      background: #f5f0e6;
+      box-sizing: border-box;
+      padding: 12px 20px;
+      color: #704214;
+      text-shadow: 1px 1px 0 #e0d6c3;
+      font-size: 2rem;
+      font-weight: bold;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #score {
+      font-size: 1rem;
+      color: #704214;
+      text-shadow: 1px 1px 0 #e0d6c3;
+      margin-right: 15px;
+      min-width: 75px;
+      text-align: right;
+    }
+
+    #homeBtn {
+      background: #6b4c3b;
+      color: #f5f0e6;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.9rem;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease;
+    }
+
+    #homeBtn:hover {
+      background: #8a6f52;
+    }
+
+    #instructions {
+      color: #705c41;
+      margin: 10px 0;
+      font-style: italic;
+    }
+
+    canvas {
+      background: #a3b8af;
+      border: 4px solid #6b4c3b;
+      border-radius: 8px;
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div>Flappy Plane</div>
+    <div style="display: flex; align-items: center;">
+      <div id="score">Score: 0</div>
+      <button id="homeBtn" onclick="goHome()">Home</button>
+    </div>
+  </header>
+
+  <div id="instructions">Press SPACE or click to fly the plane!</div>
+  <canvas id="game" width="400" height="600"></canvas>
+
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+
+    // Plane properties - smaller size
+    const plane = {
+      x: 80,
+      y: 300,
+      width: 28,
+      height: 14,
+      gravity: 0.25,
+      lift: -6,
+      velocity: 0,
+      propellerAngle: 0
+    };
+
+    const buildingWidth = 70;
+    const buildingGap = 170;
+    const buildingSpeed = 2;
+
+    let buildings = [];
+    let frameCount = 0;
+    let score = 0;
+    let gameOver = false;
+
+    function resetGame() {
+      plane.y = 300;
+      plane.velocity = 0;
+      buildings = [];
+      frameCount = 0;
+      score = 0;
+      gameOver = false;
+      document.getElementById('score').textContent = 'Score: 0';
+    }
+
+    function createBuilding() {
+      const minHeight = 100;
+      const maxHeight = canvas.height - buildingGap - 100;
+      const topHeight = Math.floor(Math.random() * (maxHeight - minHeight)) + minHeight;
+      buildings.push({x: canvas.width, top: topHeight, scored: false});
+    }
+
+    function drawPlane() {
+      ctx.save();
+      ctx.translate(plane.x, plane.y);
+      ctx.rotate(Math.min(Math.max(plane.velocity / 10, -0.4), 0.6));
+
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = '#888888';
+      ctx.lineWidth = 2;
+
+      // Fuselage ellipse smaller
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 17, 7, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Cockpit bubble smaller
+      ctx.fillStyle = '#ddddee';
+      ctx.beginPath();
+      ctx.ellipse(5, -3, 7, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Wings smaller and tapered
+      ctx.fillStyle = '#eeeeee';
+      ctx.beginPath();
+      ctx.moveTo(-10, -7);
+      ctx.lineTo(7, -17);
+      ctx.lineTo(12, -13);
+      ctx.lineTo(-7, -4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(-10, 7);
+      ctx.lineTo(7, 17);
+      ctx.lineTo(12, 13);
+      ctx.lineTo(-7, 4);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Tail fin smaller
+      ctx.fillStyle = '#dddddd';
+      ctx.beginPath();
+      ctx.moveTo(-14, 0);
+      ctx.lineTo(-20, -7);
+      ctx.lineTo(-17, 0);
+      ctx.lineTo(-20, 7);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Propeller smaller
+      ctx.save();
+      ctx.translate(17, 0);
+      ctx.rotate(plane.propellerAngle);
+      ctx.fillStyle = '#999999';
+      ctx.fillRect(-1.5, -14, 3, 28);
+      ctx.fillRect(-14, -1.5, 28, 3);
+      ctx.restore();
+
+      ctx.restore();
+
+      plane.propellerAngle += 0.5;
+    }
+
+    function drawBuilding(building) {
+      const baseColor = '#7f7f7f';
+      const windowColor = '#cdd7df';
+      const windowShadow = '#aeb7be';
+      const ledgeColor = '#5e5e5e';
+
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(building.x, 0, buildingWidth, building.top);
+
+      const windowWidth = 12;
+      const windowHeight = 18;
+      const paddingX = 8;
+      const paddingY = 15;
+      const windowsPerCol = Math.floor((building.top - paddingY) / (windowHeight + 8));
+
+      ctx.fillStyle = windowColor;
+      ctx.strokeStyle = windowShadow;
+      ctx.lineWidth = 1;
+
+      for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < windowsPerCol; row++) {
+          let wx = building.x + paddingX + col * (windowWidth + 5);
+          let wy = paddingY + row * (windowHeight + 8);
+          ctx.fillRect(wx, wy, windowWidth, windowHeight);
+          ctx.strokeRect(wx, wy, windowWidth, windowHeight);
+        }
+      }
+
+      ctx.fillStyle = ledgeColor;
+      ctx.fillRect(building.x, building.top - 8, buildingWidth, 8);
+
+      const bottomStart = building.top + buildingGap;
+      const bottomHeight = canvas.height - bottomStart;
+      ctx.fillStyle = baseColor;
+      ctx.fillRect(building.x, bottomStart, buildingWidth, bottomHeight);
+
+      const windowsPerColBottom = Math.floor((bottomHeight - paddingY) / (windowHeight + 8));
+
+      ctx.fillStyle = windowColor;
+      ctx.strokeStyle = windowShadow;
+
+      for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < windowsPerColBottom; row++) {
+          let wx = building.x + paddingX + col * (windowWidth + 5);
+          let wy = bottomStart + paddingY + row * (windowHeight + 8);
+          ctx.fillRect(wx, wy, windowWidth, windowHeight);
+          ctx.strokeRect(wx, wy, windowWidth, windowHeight);
+        }
+      }
+
+      ctx.fillStyle = ledgeColor;
+      ctx.fillRect(building.x, bottomStart - 8, buildingWidth, 8);
+    }
+
+    function update() {
+      if (gameOver) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      plane.velocity += plane.gravity;
+      plane.y += plane.velocity;
+
+      const margin = 5;
+      const topLimit = plane.height / 2 + margin;
+      const bottomLimit = canvas.height - plane.height / 2 - margin;
+
+      if (plane.y > bottomLimit) {
+        plane.y = bottomLimit;
+        gameOver = true;
+      }
+      if (plane.y < topLimit) {
+        plane.y = topLimit;
+        plane.velocity = 0;
+      }
+
+      drawPlane();
+
+      if (frameCount % 110 === 0) {
+        createBuilding();
+      }
+
+      for (let i = buildings.length - 1; i >= 0; i--) {
+        let b = buildings[i];
+        b.x -= buildingSpeed;
+        drawBuilding(b);
+
+        if (
+          plane.x + plane.width / 2 > b.x && plane.x - plane.width / 2 < b.x + buildingWidth &&
+          (plane.y - plane.height / 2 < b.top || plane.y + plane.height / 2 > b.top + buildingGap)
+        ) {
+          gameOver = true;
+        }
+
+        if (b.x + buildingWidth < plane.x && !b.scored) {
+          score++;
+          b.scored = true;
+          document.getElementById('score').textContent = 'Score: ' + score;
+        }
+
+        if (b.x + buildingWidth < 0) {
+          buildings.splice(i, 1);
+        }
+      }
+
+      if (gameOver) {
+        ctx.fillStyle = '#704214';
+        ctx.font = '48px Courier New';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over!', canvas.width / 2, canvas.height / 2 - 20);
+        ctx.font = '24px Courier New';
+        ctx.fillText('Press SPACE or Click to Restart', canvas.width / 2, canvas.height / 2 + 20);
+      }
+
+      frameCount++;
+      requestAnimationFrame(update);
+    }
+
+    function fly() {
+      if (gameOver) {
+        resetGame();
+        update();
+      } else {
+        plane.velocity = plane.lift;
+      }
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        fly();
+      }
+    });
+
+    canvas.addEventListener('click', fly);
+
+    function goHome() {
+      window.location.href = 'games.html';
+    }
+
+    resetGame();
+    update();
+  </script>
+</body>
+
+</html>

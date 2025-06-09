@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>How Well Do You Know Me?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+      color: #333;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: rgba(240, 248, 255, 0.9);
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    header a {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      display: inline-block;
+      text-decoration: none;
+      color: #0077b6;
+      background: #e0f7fa;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px;
+      border: 1px solid #90e0ef;
+      transition: all 0.3s ease;
+    }
+
+    header a:hover {
+      background-color: #caf0f8;
+      color: #03045e;
+    }
+
+    #quiz-container {
+      max-width: 700px;
+      margin: 3rem auto;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.5s;
+    }
+
+    .question {
+      font-size: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .option {
+      flex: 1 1 calc(50% - 1rem);
+      background: #d0f4f7;
+      padding: 1rem;
+      border-radius: 15px;
+      border: 2px solid #90e0ef;
+      cursor: pointer;
+      text-align: center;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+
+    .option:hover {
+      background: #b5e4ef;
+      transform: scale(1.05);
+    }
+
+    #result {
+      display: none;
+      text-align: center;
+      font-size: 1.3rem;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    #result button {
+      margin-top: 1rem;
+      background: #ade8f4;
+      border: none;
+      padding: 0.7rem 1.3rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #result button:hover {
+      background: #48cae4;
+      color: white;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .option,
+    .question {
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    💙 How Well Do You Know Me? 💙<br>
+    <a href="index.html">🏠 Home</a>
+  </header>
+
+  <div id="quiz-container">
+    <div id="question-box">
+      <div class="question" id="question">Loading...</div>
+      <div class="options" id="options"></div>
+    </div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {q: "My favorite weather?", a: "rainy", options: ["sunny", "windy", "foggy"]},
+      {q: "Dream superpower?", a: "teleportation", options: ["flying", "time travel", "mind reading"]},
+      {q: "Biggest fear?", a: "loosing someone i love", options: ["heights", "spiders", "dark"]},
+      {q: "Favorite vibe?", a: "frost", options: ["sunset", "storm", "mist"]},
+      {q: "City I'd visit?", a: "kyoto", options: ["paris", "new york", "rome"]},
+      {q: "Junk food of choice?", a: "burger", options: ["fries", "pizza", "tacos"]},
+      {q: "Favorite time of day?", a: "night", options: ["dawn", "noon", "evening"]},
+      {q: "Favorite movie?", a: "interstellar", options: ["tenet", "dune", "gravity"]},
+      {q: "What describes me?", a: "dumb", options: ["wise", "smart", "creative"]},
+
+      {q: "Favorite music genre?", a: "souls", options: ["jazz", "blues", "r&b"]},
+      {q: "Favorite season of the year?", a: "rainy", options: ["summer", "winter", "spring"]},
+      {q: "Go-to drink?", a: "cold coffee", options: ["iced tea", "lemonade", "smoothie"]},
+      {q: "Favorite type of movie?", a: "thriller", options: ["comedy", "sci-fi", "drama"]},
+      {q: "Favorite type of pet?", a: "cats", options: ["dogs", "birds", "fish"]},
+      {q: "Favorite hobby?", a: "gaming", options: ["reading", "painting", "sports"]},
+      {q: "Favorite music instrument?", a: "piano", options: ["guitar", "violin", "drums"]},
+      {q: "Favorite vacation type?", a: "city", options: ["beach", "mountains", "countryside"]},
+      {q: "Favorite dessert?", a: "pudding", options: ["cake", "ice cream", "brownies"]},
+      {q: "Favorite sport to watch or play?", a: "tennis", options: ["football", "basketball", "cricket"]},
+
+      {q: "Favorite book genre?", a: "slice of life", options: ["fantasy", "mystery", "biography"]},
+      {q: "Favorite kind of tea or coffee flavor?", a: "frappuccino", options: ["chai", "espresso", "green tea"]},
+      {q: "Favorite kind of weather (besides rainy)?", a: "stormy", options: ["sunny", "foggy", "windy"]},
+      {q: "Favorite video game genre?", a: "FPS", options: ["RPG", "puzzle", "strategy"]},
+      {q: "Favorite type of cuisine?", a: "Italian", options: ["Japanese", "Mexican", "Indian"]},
+      {q: "Favorite way to relax?", a: "sleep", options: ["listening to music", "meditation", "reading"]},
+      {q: "Favorite color?", a: "frosty", options: ["midnight blue", "lavender", "mint green"]},
+      {q: "Favorite type of exercise?", a: "crunches", options: ["running", "yoga", "cycling"]},
+      {q: "Favorite kind of movie soundtrack?", a: "orchestral", options: ["electronic", "acoustic", "jazz"]},
+      {q: "Favorite type of footwear?", a: "sneakers", options: ["boots", "sandals", "loafers"]},
+
+      {q: "Favorite way to spend a weekend?", a: "gaming", options: ["hiking", "watching movies", "socializing"]},
+      {q: "Favorite podcast or audiobook genre?", a: "life experiences", options: ["true crime", "comedy", "science"]},
+      {q: "Favorite type of art?", a: "contrast", options: ["abstract", "realism", "impressionism"]},
+      {q: "Favorite social media platform?", a: "Instagram", options: ["Twitter", "TikTok", "Snapchat"]},
+      {q: "Favorite kind of fruit?", a: "litchi", options: ["mango", "banana", "apple"]},
+      {q: "Favorite genre of music to dance to?", a: "slow", options: ["pop", "hip-hop", "electronic"]},
+      {q: "Favorite breakfast food?", a: "cereals", options: ["pancakes", "omelette", "toast"]},
+      {q: "Favorite way to commute?", a: "cab", options: ["walking", "biking", "public transport"]},
+      {q: "Favorite genre of TV show?", a: "mystery", options: ["drama", "comedy", "documentary"]},
+      {q: "Favorite snack?", a: "chocos", options: ["chips", "popcorn", "nuts"]},
+
+      {q: "Favorite way to learn something new?", a: "watching videos", options: ["reading", "hands-on", "listening to podcasts"]},
+      {q: "Favorite type of flower?", a: "lilies", options: ["roses", "tulips", "daisies"]},
+      {q: "Favorite holiday destination?", a: "mountains", options: ["beach", "city", "countryside"]},
+      {q: "Favorite kind of pizza topping?", a: "pepperoni", options: ["mushrooms", "onions", "olives"]},
+      {q: "Favorite social activity?", a: "gaming", options: ["parties", "quiet hangouts", "watching movies"]},
+
+      {q: "What’s a personal value you refuse to compromise on?", a: "stay on your ideals", options: ["honesty", "loyalty", "respect"]},
+      {q: "What do you believe is the meaning of success?", a: "work life balance", options: ["wealth", "fame", "happiness"]},
+      {q: "What emotion do you find hardest to express?", a: "depression", options: ["anger", "fear", "vulnerability"]},
+      {q: "What’s something you wish people understood better about you?", a: "hardwork", options: ["kindness", "patience", "anxiety"]},
+      {q: "If you could change one thing about the world, what would it be?", a: "poverty", options: ["war", "ignorance", "pollution"]},
+      {q: "What’s your biggest motivation during tough times?", a: "my people", options: ["personal growth", "success", "hope"]},
+      {q: "What do you fear losing the most?", a: "my people", options: ["freedom", "health", "identity"]},
+      {q: "What quality do you admire most in others?", a: "honesty", options: ["empathy", "courage", "humility"]},
+      {q: "What does true happiness mean to you?", a: "no regret decision", options: ["peace of mind", "love", "freedom"]},
+      {q: "What’s your biggest lesson learned so far?", a: "observe", options: ["patience", "resilience", "acceptance"]},
+      {q: "What motivates you to keep going when things get hard?", a: "money", options: ["passion", "family", "dreams"]},
+      {q: "What’s your biggest source of inspiration?", a: "money", options: ["nature", "art", "people"]},
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const resultEl = document.getElementById("result");
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function showQuestion() {
+      const data = quizData[current];
+      questionEl.textContent = `${current + 1}. ${data.q}`;
+      const shuffled = shuffle([data.a, ...data.options]);
+      optionsEl.innerHTML = "";
+      shuffled.forEach(option => {
+        const btn = document.createElement("div");
+        btn.className = "option";
+        btn.textContent = option;
+        btn.onclick = () => {
+          if (option === data.a) {
+            score++;
+            current++;
+            if (current < quizData.length) {
+              showQuestion();
+            } else {
+              showResult();
+            }
+          } else {
+            alert("you don't even know him lol");
+          }
+        };
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function showResult() {
+      document.getElementById("question-box").style.display = "none";
+      resultEl.style.display = "block";
+      resultEl.innerHTML = `
+        <p>You scored <strong>${score}</strong> out of <strong>${quizData.length}</strong> 💙</p>
+        <button onclick="location.reload()">Play Again</button>
+      `;
+    }
+
+    // Start quiz
+    showQuestion();
+  </script>
+</body>
+
+</html>

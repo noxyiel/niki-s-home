@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Niki's Home</title>
+  <style>
+    /* Reset and basics */
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(145deg, #ffe0f0, #ffeae3);
+      color: #333;
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      /* prevent horizontal scroll */
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to right, #ff85a2, #ffafbd);
+      color: white;
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 900;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      user-select: none;
+    }
+
+    /* Navbar */
+    nav {
+      background: #fff0f5;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 0;
+      box-shadow: 0 3px 8px rgba(255, 182, 193, 0.5);
+    }
+
+    nav a {
+      font-weight: 700;
+      color: #ff5c8a;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background: #ffafbd;
+      color: white;
+      outline: none;
+    }
+
+    /* Main content - clean Pinterest style collage */
+    main {
+      max-width: 900px;
+      margin: 3.5rem auto 5rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2.8rem 2rem;
+    }
+
+    /* Card styles */
+    section.card {
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 10px 20px rgba(255, 182, 193, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 1.8rem 2rem 2.5rem;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    section.card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 18px 35px rgba(255, 105, 180, 0.3);
+    }
+
+    /* Card headings */
+    section.card h2 {
+      font-size: 1.6rem;
+      color: #ff5c8a;
+      margin-bottom: 0.8rem;
+      font-weight: 900;
+    }
+
+    /* Card text */
+    section.card p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+      white-space: pre-line;
+      /* respect line breaks */
+      flex-grow: 1;
+      margin-bottom: 1rem;
+    }
+
+    /* Card images */
+    section.card img {
+      width: 100%;
+      max-height: 180px;
+      border-radius: 14px;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(255, 182, 193, 0.25);
+      user-select: none;
+      transition: transform 0.3s ease;
+    }
+
+    section.card img:hover {
+      transform: scale(1.04);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      main {
+        gap: 2rem 0;
+        padding: 0 0.8rem;
+      }
+
+      section.card {
+        padding: 1.4rem 1.6rem 2rem;
+      }
+
+      section.card h2 {
+        font-size: 1.4rem;
+      }
+
+      section.card p {
+        font-size: 0.95rem;
+      }
+
+      section.card img {
+        max-height: 120px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>Welcome to Niki's Comfort Space 💖</header>
+
+  <nav>
+    <a href="games.html">Games 🎮</a>
+    <a href="quiz.html">Quizzes 🧠</a>
+    <a href="personality.html">Personality 🌈</a>
+    <a href="reasons.html">Reasons Why I love You 💕</a>
+    <a href="coupons.html">Coupons ✨</a>
+    <a href="notes.html">Notes <3 </a>
+        <a href="garden.html">Niki's Garden 🌴 </a>
+  </nav>
+
+  <main>
+    <section class="card" id="love-poetry">
+      <h2>Hi Niki! 💌</h2>
+      <p>
+        This is your personal space, made just for you. Here you can find games we can play together, quizzes about us,
+        and sweet little paragraphs about you that I’ve written. I hope you smile every time you visit this!
+      </p>
+      <img src="s.png" />
+    </section>
+
+    <section class="card" id="mini-love-note">
+      <h2>Mini Love Note 💕</h2>
+      <p>
+        I made this site because you're special to me and I wanted to make something unique and cozy—just like you!
+        You're the sunshine in my everyday, Niki 🌞
+      </p>
+      <img src="g.png" alt="Sunshine" />
+    </section>
+
+    <section class="card" id="our-adventures">
+      <h2>Our Adventures</h2>
+      <p>
+        Through games, quizzes, laughs and more,<br />
+        Memories we both adore.<br />
+        Side by side, come what may,<br />
+        In this world, we’ll find our way.
+      </p>
+      <img src="us2.png" alt="Adventure" />
+    </section>
+
+    <section class="card" id="sweet-paragraphs">
+      <h2>We Core</h2>
+      <p>
+        Honestly niki , we together are a great team and the most coziest any couple could be lmao. everytime im with
+        you i get the feeling of "my home" and no one else can replace you. You are the best thing that has ever
+        happened.
+      </p>
+      <img src="us.png" alt="US" />
+    </section>
+  </main>
+
+  <div class="hearts"></div>
+
+  <script>
+    const heartsContainer = document.querySelector('.hearts');
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+
+      // Keep hearts inside the container (0 to container size - heart size)
+      const maxX = heartsContainer.clientWidth - 18;
+      const maxY = heartsContainer.clientHeight - 18;
+      heart.style.left = Math.random() * maxX + 'px';
+      heart.style.top = Math.random() * maxY + 'px';
+
+      heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+      heartsContainer.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+</body>
+
+</html>

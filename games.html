@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Niki's Game Room</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Comic Sans MS', cursive, sans-serif !important;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Loading screen styles */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffe0f0, #ffeae3);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #loading-screen p {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      color: #ff5c8a;
+    }
+
+    .heart {
+      width: 50px;
+      height: 50px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+      position: relative;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      width: 50px;
+      height: 50px;
+      background: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -25px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 25px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1) rotate(-45deg);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(-45deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+
+    /* Main content */
+    body {
+      margin: 0;
+      background: linear-gradient(145deg, #ffe0f0, #ffeae3);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(to right, #ff85a2, #ffafbd);
+      color: white;
+      padding: 2.5rem 1rem 2rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header p {
+      font-size: 1rem;
+      margin: 0.5rem 0 0;
+      color: #ffeef3;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .game-card {
+      background: #fff;
+      border: 3px solid #ffb3c6;
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(255, 192, 203, 0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 12px 24px rgba(255, 128, 160, 0.35);
+      background: linear-gradient(145deg, #fff0f5, #ffffff);
+    }
+
+    .game-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1rem;
+      animation: glow 2s infinite ease-in-out;
+      color: white;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        transform: scale(1.1);
+      }
+
+      100% {
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        transform: scale(1);
+      }
+    }
+
+    /* Game-specific icon colors */
+    .tetris {
+      background: #ff9aa2;
+    }
+
+    .flappy {
+      background: #8ecae6;
+    }
+
+    .snake {
+      background: #b5ead7;
+    }
+
+    .pong {
+      background: #f7b267;
+    }
+
+    .brick {
+      background: #cdb4db;
+    }
+
+    .memory {
+      background: #fdffb6;
+    }
+
+    .mole {
+      background: #e0bbff;
+    }
+
+    .puzzle {
+      background: #a0c4ff;
+    }
+
+    .twenty48 {
+      background: #ffd6a5;
+    }
+
+    .hangman {
+      background: #d0f4de;
+    }
+
+    .bubble {
+      background: #ffadad;
+    }
+
+    .game-title {
+      font-size: 1.3rem;
+      color: #222;
+      margin-bottom: 0.5rem;
+    }
+
+    .game-desc {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+      padding: 2rem 0;
+      background: #fff0f5;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Loading screen -->
+  <div id="loading-screen">
+    <div class="heart"></div>
+    <p>Loading Niki's Game Room... 💖</p>
+  </div>
+
+  <!-- Main content hidden initially -->
+  <div id="content" style="display:none;">
+    <header>
+      <a href="index.html"
+        style="position: absolute; left: 20px; top: 20px; font-size: 1rem; background: #fff0f5; color: #ff5c8a; padding: 0.5rem 1rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); font-weight: bold;">🏠
+        Home</a>
+
+      🌸 Niki's Game Room 🌸
+      <p>Handmade with love — play anytime, anywhere 💕</p>
+    </header>
+
+    <main>
+      <a href="flappy-bird.html" class="game-card">
+        <div class="game-icon flappy">🐦</div>
+        <div class="game-title">Flappy Bird</div>
+        <div class="game-desc">Fly through the pipes!</div>
+      </a>
+      <a href="tetris.html" class="game-card">
+        <div class="game-icon tetris">🔷</div>
+        <div class="game-title">Tetris</div>
+        <div class="game-desc">Stack the falling blocks!</div>
+      </a>
+      <a href="snake.html" class="game-card">
+        <div class="game-icon snake">🐍</div>
+        <div class="game-title">Snake</div>
+        <div class="game-desc">Eat, grow, don’t crash!</div>
+      </a>
+      <a href="pong.html" class="game-card">
+        <div class="game-icon pong">🏓</div>
+        <div class="game-title">Pong</div>
+        <div class="game-desc">Bounce to beat your opponent!</div>
+      </a>
+      <a href="brickbreaker.html" class="game-card">
+        <div class="game-icon brick">🧱</div>
+        <div class="game-title">Brick Breaker</div>
+        <div class="game-desc">Break them all with a ball!</div>
+      </a>
+      <a href="memory-match.html" class="game-card">
+        <div class="game-icon memory">🧠</div>
+        <div class="game-title">Memory Match</div>
+        <div class="game-desc">Find the hidden pairs!</div>
+      </a>
+      <a href="whackamole.html" class="game-card">
+        <div class="game-icon mole">🐹</div>
+        <div class="game-title">Whack-a-Mole</div>
+        <div class="game-desc">Quick! Hit those moles!</div>
+      </a>
+      <a href="slidingpuzzle.html" class="game-card">
+        <div class="game-icon puzzle">🧩</div>
+        <div class="game-title">Sliding Puzzle</div>
+        <div class="game-desc">Slide to solve the image!</div>
+      </a>
+      <a href="2048.html" class="game-card">
+        <div class="game-icon twenty48">🔢</div>
+        <div class="game-title">2048</div>
+        <div class="game-desc">Merge numbers to win!</div>
+      </a>
+      <a href="tic-tac-toe.html" class="game-card">
+        <div class="game-icon hangman">✏️</div>
+        <div class="game-title">TicTacToe</div>
+        <div class="game-desc">X and O for the win!</div>
+      </a>
+      <a href="catchtheheart.html" class="game-card">
+        <div class="game-icon bubble">🫧</div>
+        <div class="game-title">Catch The Heart</div>
+        <div class="game-desc">Catch the falling Hearts</div>
+      </a>
+    </main>
+
+    <footer>
+      🌟 Created for Niki with love by Dhruv | Copyright Trademark | &copy; 2025
+    </footer>
+  </div>
+
+  <!-- Show content after loading -->
+  <script>
+    window.addEventListener("load", function () {
+      setTimeout(() => {
+        document.getElementById("loading-screen").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 2000); // 2 second delay
+    });
+  </script>
+</body>
+
+</html>

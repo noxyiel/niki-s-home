@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tic-Tac-Toe for Niki 💖</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Extra styles for Tic-Tac-Toe */
+    .ttt-board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin: 30px auto;
+    }
+
+    .ttt-cell {
+      background: #ffccdd;
+      font-size: 3em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      border-radius: 15px;
+      box-shadow: 0 0 5px #ff99cc;
+      user-select: none;
+      transition: background 0.3s;
+    }
+
+    .ttt-cell:hover {
+      background: #ff99cc;
+      color: white;
+    }
+
+    .ttt-status {
+      text-align: center;
+      font-size: 1.3em;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #cc3377;
+    }
+
+    .ttt-reset {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 30px;
+      background: #ff66aa;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 4px 10px #ff3399;
+      transition: background 0.3s;
+    }
+
+    .ttt-reset:hover {
+      background: #ff3399;
+    }
+  </style>
+</head>
+
+<body>
+  <header>Tic-Tac-Toe</header>
+  <div class="content">
+    <div class="ttt-board" id="board">
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+      <div class="ttt-cell" data-cell></div>
+    </div>
+    <div class="ttt-status" id="status">Your turn, Niki! (X)</div>
+    <button class="ttt-reset" id="reset">Restart Game</button>
+  </div>
+
+  <footer>Made with 💖 for Niki’s smile.</footer>
+
+  <script>
+    const X = "X";
+    const O = "O";
+    let turn = X;
+    const board = document.getElementById('board');
+    const cells = document.querySelectorAll('[data-cell]');
+    const status = document.getElementById('status');
+    const resetButton = document.getElementById('reset');
+
+    const winningCombinations = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+
+    function checkWin(player) {
+      return winningCombinations.some(combination => {
+        return combination.every(index => {
+          return cells[index].textContent === player;
+        });
+      });
+    }
+
+    function checkDraw() {
+      return [...cells].every(cell => cell.textContent !== "");
+    }
+
+    function handleClick(e) {
+      const cell = e.target;
+      if (cell.textContent !== "") return;
+
+      cell.textContent = turn;
+      if (checkWin(turn)) {
+        status.textContent = `${turn} wins! Congrats, Niki! 🎉`;
+        board.removeEventListener('click', handleClick);
+      } else if (checkDraw()) {
+        status.textContent = "It's a draw! Try again 😊";
+      } else {
+        turn = turn === X ? O : X;
+        status.textContent = `Your turn, Niki! (${turn})`;
+      }
+    }
+
+    function resetGame() {
+      cells.forEach(cell => (cell.textContent = ""));
+      turn = X;
+      status.textContent = `Your turn, Niki! (${turn})`;
+      board.addEventListener('click', handleClick);
+    }
+
+    board.addEventListener('click', handleClick);
+    resetButton.addEventListener('click', resetGame);
+  </script>
+</body>
+
+</html>

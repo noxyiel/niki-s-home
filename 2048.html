@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2048 for Niki 💖</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #fff3e0;
+      color: #bf360c;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h1 {
+      color: #e65100;
+      text-shadow: 1px 1px 3px #ffcc80;
+      margin-bottom: 10px;
+    }
+
+    #homeBtn {
+      background: #ffcc80;
+      color: #bf360c;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px #ffb74d;
+      transition: background-color 0.3s ease, transform 0.2s;
+      margin-bottom: 15px;
+    }
+
+    #homeBtn:hover {
+      background: #ffe0b2;
+      transform: scale(1.05);
+    }
+
+    #game {
+      background: #ffe0b2;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ffa726;
+      display: inline-block;
+    }
+
+    .row {
+      display: flex;
+    }
+
+    .tile {
+      width: 70px;
+      height: 70px;
+      margin: 6px;
+      background: #fff8e1;
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 70px;
+      text-align: center;
+      color: #bf360c;
+      box-shadow: inset 0 0 5px #ffcc80;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .tile[data-value="2"] {
+      background: #ffecb3;
+    }
+
+    .tile[data-value="4"] {
+      background: #ffd180;
+    }
+
+    .tile[data-value="8"] {
+      background: #ffab40;
+      color: white;
+    }
+
+    .tile[data-value="16"] {
+      background: #ff9100;
+      color: white;
+    }
+
+    .tile[data-value="32"] {
+      background: #ff6d00;
+      color: white;
+    }
+
+    .tile[data-value="64"] {
+      background: #ff5722;
+      color: white;
+    }
+
+    .tile[data-value="128"] {
+      background: #e64a19;
+      color: white;
+      font-size: 20px;
+    }
+
+    .tile[data-value="256"] {
+      background: #d84315;
+      color: white;
+      font-size: 20px;
+    }
+
+    .tile[data-value="512"] {
+      background: #bf360c;
+      color: white;
+      font-size: 18px;
+    }
+
+    .tile[data-value="1024"],
+    .tile[data-value="2048"] {
+      background: #8d2800;
+      color: white;
+      font-size: 18px;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #e65100;
+    }
+
+    button {
+      background: #fb8c00;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #f57c00;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>2048</h1>
+  <a id="homeBtn" href="games.html">🏡 Home</a>
+  <div id="game"></div>
+  <div id="message"></div>
+  <button id="restart">Restart</button>
+
+  <script>
+    const size = 4;
+    let board = [];
+    let score = 0;
+
+    const gameContainer = document.getElementById("game");
+    const message = document.getElementById("message");
+    const restartBtn = document.getElementById("restart");
+
+    function initBoard() {
+      board = [];
+      for (let i = 0; i < size; i++) {
+        board.push(new Array(size).fill(0));
+      }
+      addRandomTile();
+      addRandomTile();
+      score = 0;
+      message.textContent = "";
+      drawBoard();
+    }
+
+    function drawBoard() {
+      gameContainer.innerHTML = "";
+      for (let r = 0; r < size; r++) {
+        const rowDiv = document.createElement("div");
+        rowDiv.className = "row";
+        for (let c = 0; c < size; c++) {
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          let val = board[r][c];
+          if (val) {
+            tile.textContent = val;
+            tile.dataset.value = val;
+          } else {
+            tile.textContent = "";
+            tile.dataset.value = "";
+          }
+          rowDiv.appendChild(tile);
+        }
+        gameContainer.appendChild(rowDiv);
+      }
+    }
+
+    function addRandomTile() {
+      let empty = [];
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (board[r][c] === 0) empty.push({r, c});
+        }
+      }
+      if (empty.length === 0) return;
+      let {r, c} = empty[Math.floor(Math.random() * empty.length)];
+      board[r][c] = Math.random() < 0.9 ? 2 : 4;
+    }
+
+    function slide(row) {
+      let arr = row.filter(val => val);
+      let missing = size - arr.length;
+      let zeros = new Array(missing).fill(0);
+      return arr.concat(zeros);
+    }
+
+    function combine(row) {
+      for (let i = 0; i < size - 1; i++) {
+        if (row[i] !== 0 && row[i] === row[i + 1]) {
+          row[i] *= 2;
+          row[i + 1] = 0;
+          score += row[i];
+          if (row[i] === 2048) {
+            message.textContent = "🎉 You reached 2048! You win, Niki! 🎉";
+          }
+        }
+      }
+      return row;
+    }
+
+    function operate(row) {
+      row = slide(row);
+      row = combine(row);
+      row = slide(row);
+      return row;
+    }
+
+    function rotateBoard() {
+      let newBoard = [];
+      for (let c = 0; c < size; c++) {
+        newBoard[c] = [];
+        for (let r = size - 1; r >= 0; r--) {
+          newBoard[c].push(board[r][c]);
+        }
+      }
+      board = newBoard;
+    }
+
+    function moveLeft() {
+      let oldBoard = JSON.stringify(board);
+      for (let r = 0; r < size; r++) {
+        board[r] = operate(board[r]);
+      }
+      if (JSON.stringify(board) !== oldBoard) {
+        addRandomTile();
+        drawBoard();
+      }
+    }
+
+    function moveRight() {
+      let oldBoard = JSON.stringify(board);
+      for (let r = 0; r < size; r++) {
+        board[r] = board[r].reverse();
+        board[r] = operate(board[r]);
+        board[r] = board[r].reverse();
+      }
+      if (JSON.stringify(board) !== oldBoard) {
+        addRandomTile();
+        drawBoard();
+      }
+    }
+
+    function moveUp() {
+      let oldBoard = JSON.stringify(board);
+      rotateBoard();
+      for (let r = 0; r < size; r++) {
+        board[r] = operate(board[r]);
+      }
+      rotateBoard();
+      rotateBoard();
+      rotateBoard();
+      if (JSON.stringify(board) !== oldBoard) {
+        addRandomTile();
+        drawBoard();
+      }
+    }
+
+    function moveDown() {
+      let oldBoard = JSON.stringify(board);
+      rotateBoard();
+      rotateBoard();
+      rotateBoard();
+      for (let r = 0; r < size; r++) {
+        board[r] = operate(board[r]);
+      }
+      rotateBoard();
+      if (JSON.stringify(board) !== oldBoard) {
+        addRandomTile();
+        drawBoard();
+      }
+    }
+
+    function canMove() {
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (board[r][c] === 0) return true;
+          if (c !== size - 1 && board[r][c] === board[r][c + 1]) return true;
+          if (r !== size - 1 && board[r][c] === board[r + 1][c]) return true;
+        }
+      }
+      return false;
+    }
+
+    window.addEventListener("keydown", function (e) {
+      if (message.textContent.includes("win")) return;
+      switch (e.key) {
+        case "ArrowLeft":
+          moveLeft();
+          break;
+        case "ArrowRight":
+          moveRight();
+          break;
+        case "ArrowUp":
+          moveDown();
+          break;
+        case "ArrowDown":
+          moveUp();
+          break;
+      }
+      if (!canMove() && !message.textContent.includes("win")) {
+        message.textContent = "Game Over 😢 Try again!";
+      }
+    });
+
+    restartBtn.onclick = () => {
+      initBoard();
+    };
+
+    initBoard();
+  </script>
+</body>
+
+</html>
