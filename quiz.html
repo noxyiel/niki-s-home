@@ -3,147 +3,527 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How Well Do You Know Me?</title>
+  <!-- Importing modern and bold fonts for a playful yet clean look -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
   <style>
+    /* --- Global Reset & Core Styles --- */
     * {
       box-sizing: border-box;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-    }
-
-    body {
       margin: 0;
-      background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
-      color: #333;
       padding: 0;
     }
 
-    header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: rgba(240, 248, 255, 0.9);
-      font-size: 2rem;
-      font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    header a {
-      font-size: 1rem;
-      margin-top: 0.5rem;
-      display: inline-block;
-      text-decoration: none;
-      color: #0077b6;
-      background: #e0f7fa;
-      padding: 0.5rem 1.2rem;
-      border-radius: 20px;
-      border: 1px solid #90e0ef;
-      transition: all 0.3s ease;
-    }
-
-    header a:hover {
-      background-color: #caf0f8;
-      color: #03045e;
-    }
-
-    #quiz-container {
-      max-width: 700px;
-      margin: 3rem auto;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 20px;
-      padding: 2rem;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-      transition: transform 0.5s;
-    }
-
-    .question {
-      font-size: 1.4rem;
-      margin-bottom: 1.5rem;
-      color: #333;
-      text-align: center;
-    }
-
-    .options {
+    body {
+      font-family: 'Inter', sans-serif;
+      /* Default font for body text */
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      /* Vibrant and inviting gradient background */
+      background: linear-gradient(135deg, #a7e9ff, #c5f0ff);
+      /* Light blue to a slightly darker light blue */
+      color: #2c3e50;
+      /* Darker text for readability */
+      overflow: hidden;
+      /* Hide scrollbars for a cleaner look */
+      user-select: none;
+      /* Prevent text selection for a more app-like feel */
+      -webkit-font-smoothing: antialiased;
+      /* Smoother font rendering */
+      -moz-osx-font-smoothing: grayscale;
+      /* Smoother font rendering */
     }
 
-    .option {
-      flex: 1 1 calc(50% - 1rem);
-      background: #d0f4f7;
-      padding: 1rem;
-      border-radius: 15px;
-      border: 2px solid #90e0ef;
-      cursor: pointer;
-      text-align: center;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      min-width: 120px;
-    }
-
-    .option:hover {
-      background: #b5e4ef;
-      transform: scale(1.05);
-    }
-
-    #result {
-      display: none;
-      text-align: center;
-      font-size: 1.3rem;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-
-    #result button {
-      margin-top: 1rem;
-      background: #ade8f4;
-      border: none;
-      padding: 0.7rem 1.3rem;
+    /* --- Quiz Container Structure --- */
+    .quiz-container {
+      background-color: #ffffff;
+      /* Clean white card background */
       border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.3s;
+      /* Softly rounded corners */
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      /* Prominent, elegant shadow */
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+      /* Max width for readability on larger screens */
+      text-align: center;
+      opacity: 0;
+      /* Hidden by default, will fade in with JS */
+      transform: translateY(20px);
+      /* Slightly move up on fade-in */
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      /* Smooth entrance animation */
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      /* Spacing between internal elements */
     }
 
-    #result button:hover {
-      background: #48cae4;
-      color: white;
+    /* State for when the quiz container is active (visible) */
+    .quiz-container.active {
+      opacity: 1;
+      transform: translateY(0);
     }
 
+    /* --- Screen Specific Styles (Start, Question, Results) --- */
+    .quiz-screen {
+      display: none;
+      /* Hide screens by default */
+      animation: fadeIn 0.5s ease-out forwards;
+      /* Fade in animation for active screens */
+      width: 100%;
+      /* Ensure screens take full width of container */
+    }
+
+    .quiz-screen.active {
+      display: flex;
+      /* Use flex for internal layout of screen content */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      /* Default gap for screen content */
+    }
+
+    /* Keyframes for screen fading in */
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.95);
+        transform: translateY(10px);
       }
 
       to {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(0);
       }
     }
 
-    .option,
-    .question {
-      animation: fadeIn 0.5s ease;
+    /* --- Header / Title Styles --- */
+    h1,
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      /* Poppins for all main headings */
+      color: #007bff;
+      /* Bright blue for main titles */
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+      /* Margin below main title */
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      /* Margin below question text */
+    }
+
+    /* Home link in header */
+    .header-link {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      margin-top: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      text-decoration: none;
+      color: #007bff;
+      background: #e9f5ff;
+      padding: 0.4rem 1rem;
+      border-radius: 25px;
+      border: 1px solid #b3d9ff;
+      transition: all 0.3s ease;
+    }
+
+    .header-link:hover {
+      background-color: #d1e7ff;
+      color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    /* --- General Paragraphs --- */
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555555;
+      margin-bottom: 1rem;
+      /* Spacing for general paragraphs */
+    }
+
+    /* --- Quiz Progress Bar --- */
+    .progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      /* Light grey background for the bar */
+      border-radius: 10px;
+      height: 12px;
+      /* Slightly thicker progress bar */
+      margin-bottom: 2rem;
+      /* More space below progress bar */
+      overflow: hidden;
+      /* Ensure inner bar stays within rounded corners */
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      /* Inner shadow for depth */
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      /* Starts at 0% */
+      background: linear-gradient(90deg, #32e0c1, #007bff);
+      /* Teal to blue gradient for progress */
+      border-radius: 10px;
+      transition: width 0.5s ease-out;
+      /* Smooth animation for width changes */
+    }
+
+    /* --- Question Area --- */
+    .question-text {
+      font-size: 1.6rem;
+      /* Larger question text */
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      /* More space below question */
+      color: #333333;
+      line-height: 1.4;
+    }
+
+    /* --- Options Grid (2 in one row - Kahoot Style) --- */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      /* Two columns, equal width */
+      gap: 1.2rem;
+      /* Spacing between grid items */
+      width: 100%;
+      /* Ensure grid takes full width */
+      margin-bottom: 2rem;
+      /* Space below options */
+    }
+
+    .option-item {
+      /* Distinct colors for Kahoot-like options */
+      --default-bg: #e0f2f7;
+      /* Placeholder, overridden by JS */
+      --hover-bg: #c1e8ff;
+      /* Placeholder, overridden by JS */
+      --border-color: #90caf9;
+      /* Placeholder, overridden by JS */
+      --text-color: #333333;
+      /* Placeholder, overridden by JS */
+
+      background-color: var(--default-bg);
+      border: 2px solid var(--border-color);
+      /* Thicker border for prominence */
+      border-radius: 15px;
+      /* Slightly more rounded */
+      padding: 1.2rem 1.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      /* Smooth transitions for hover/selection */
+      text-align: center;
+      /* Center text within option */
+      color: var(--text-color);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      /* Subtle shadow for depth */
+      display: flex;
+      /* Flex for content centering in option */
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      /* Minimum height for options */
+    }
+
+    .option-item:hover {
+      background-color: var(--hover-bg);
+      border-color: var(--border-color);
+      /* Keep the border color consistent on hover */
+      transform: translateY(-5px);
+      /* More pronounced lift on hover */
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      /* More pronounced shadow */
+    }
+
+    /* Styles for selected option */
+    .option-item.selected {
+      transform: scale(0.98);
+      /* Slight press down */
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow when selected */
+      border-color: #007bff;
+      /* Default selected border */
+    }
+
+    /* Styles for correct answer feedback */
+    .option-item.correct {
+      background-color: #e6ffed;
+      /* Very light green */
+      border-color: #28a745;
+      /* Bright green border */
+      color: #1a6d2c;
+      /* Dark green text */
+      font-weight: 700;
+      animation: highlightCorrect 0.6s ease-out forwards;
+      /* Highlight animation */
+      transform: scale(1.02);
+      /* Pop out slightly */
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+      /* Green glow */
+    }
+
+    /* Styles for incorrect answer feedback */
+    .option-item.incorrect {
+      background-color: #ffebe9;
+      /* Very light red */
+      border-color: #dc3545;
+      /* Bright red border */
+      color: #92202c;
+      /* Dark red text */
+      font-weight: 700;
+      animation: shake 0.5s ease-out forwards;
+      /* Shake animation for incorrect */
+      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+      /* Red glow */
+    }
+
+    /* --- Keyframe Animations for Feedback --- */
+    @keyframes highlightCorrect {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.03);
+        /* More pronounced pop */
+      }
+
+      100% {
+        transform: scale(1.02);
+        /* Settle slightly larger */
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      10%,
+      30%,
+      50%,
+      70%,
+      90% {
+        transform: translateX(-8px);
+      }
+
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(8px);
+      }
+    }
+
+    /* --- Buttons (General Styling) --- */
+    .btn {
+      font-family: 'Poppins', sans-serif;
+      /* Poppins for button text */
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 1rem 2.2rem;
+      border: none;
+      border-radius: 35px;
+      /* More rounded pill shape */
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+      /* Smoother transitions */
+      text-transform: uppercase;
+      /* Uppercase text */
+      letter-spacing: 0.08em;
+      /* More prominent letter spacing */
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      /* Good shadow */
+      display: inline-flex;
+      /* Allow icon to sit next to text */
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      /* Space between text and icon */
+    }
+
+    .btn:hover {
+      transform: translateY(-6px);
+      /* More pronounced lift on hover */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      /* More pronounced shadow */
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      /* Press effect */
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Primary button for actions like "Start Quiz" and "Next" */
+    .btn-primary {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      /* Strong blue gradient */
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Tertiary button for "Play Again" - outlined style */
+    .btn-tertiary {
+      background-color: transparent;
+      color: #007bff;
+      border: 2px solid #007bff;
+      /* Blue border */
+      box-shadow: none;
+      /* No box shadow for outlined look */
+    }
+
+    .btn-tertiary:hover {
+      background-color: #e0f2ff;
+      /* Light blue background on hover */
+      color: #0056b3;
+      transform: translateY(-3px);
+      /* Slightly less lift for tertiary */
+      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+    }
+
+    .btn-tertiary:active {
+      transform: translateY(0);
+      background-color: #cce0ff;
+    }
+
+    /* --- Results Screen Styles --- */
+    #result-screen h2 {
+      margin-bottom: 1.5rem;
+      color: #28a745;
+      /* Green for success message */
+    }
+
+    #result-screen p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 768px) {
+      .quiz-container {
+        padding: 1.8rem;
+        border-radius: 15px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+      }
+
+      .question-text {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .options-grid {
+        grid-template-columns: 1fr;
+        /* Stack options vertically on smaller screens */
+        gap: 1rem;
+      }
+
+      .option-item {
+        font-size: 1rem;
+        padding: 1rem 1.2rem;
+        min-height: 60px;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 0.9rem 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .quiz-container {
+        padding: 1.2rem;
+        border-radius: 12px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .option-item {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+        min-height: 50px;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+        padding: 0.8rem 1.5rem;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <header>
-    💙 How Well Do You Know Me? 💙<br>
-    <a href="index.html">🏠 Home</a>
-  </header>
-
-  <div id="quiz-container">
-    <div id="question-box">
-      <div class="question" id="question">Loading...</div>
-      <div class="options" id="options"></div>
+  <div class="quiz-container" id="quiz-container">
+    <!-- Start Screen -->
+    <div id="start-screen" class="quiz-screen active">
+      <h1>💙Know Your Man?💙</h1>
+      <p>Test your knowledge about me!</p>
+      <button class="btn btn-primary" id="start-quiz-btn">Start Quiz</button>
+      <a href="index.html" class="header-link">🏠 Home</a>
     </div>
-    <div id="result"></div>
+
+    <!-- Question Screen -->
+    <div id="question-screen" class="quiz-screen">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <h2 class="question-text" id="question">Loading...</h2>
+      <div class="options-grid" id="options">
+        <!-- Options will be dynamically loaded here -->
+      </div>
+      <button class="btn btn-primary" id="next-question-btn" style="display:none;">Next Question</button>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="result-screen" class="quiz-screen">
+      <h2 id="result-message"></h2>
+      <p>You scored <strong id="score-display"></strong> out of <strong id="total-questions"></strong></p>
+      <button class="btn btn-tertiary" id="play-again-btn">Play Again</button>
+    </div>
   </div>
 
   <script>
+    // Quiz Data - Array of objects, each representing a question
     const quizData = [
       {q: "My favorite weather?", a: "rainy", options: ["sunny", "windy", "foggy"]},
       {q: "Dream superpower?", a: "teleportation", options: ["flying", "time travel", "mind reading"]},
@@ -208,54 +588,222 @@
       {q: "What’s your biggest source of inspiration?", a: "money", options: ["nature", "art", "people"]},
     ];
 
-    let current = 0;
-    let score = 0;
+    // DOM Element References
+    const quizContainer = document.getElementById('quiz-container');
+    const startScreen = document.getElementById('start-screen');
+    const questionScreen = document.getElementById('question-screen');
+    const resultScreen = document.getElementById('result-screen');
 
+    const startQuizBtn = document.getElementById('start-quiz-btn');
     const questionEl = document.getElementById("question");
     const optionsEl = document.getElementById("options");
-    const resultEl = document.getElementById("result");
+    const progressBar = document.getElementById('progress-bar');
+    const nextQuestionBtn = document.getElementById('next-question-btn');
 
-    function shuffle(array) {
-      return array.sort(() => Math.random() - 0.5);
+    const resultMessageEl = document.getElementById('result-message');
+    const scoreDisplayEl = document.getElementById('score-display');
+    const totalQuestionsEl = document.getElementById('total-questions');
+    const playAgainBtn = document.getElementById('play-again-btn');
+
+    // Quiz State Variables
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedOption = null; // To keep track of the selected option
+    let quizActive = false; // Flag to prevent multiple selections
+
+    // Kahoot-inspired color palette for options
+    const optionColors = [
+      {default: '#a8d8ea', hover: '#97d0e4', border: '#7cbcd4', text: '#1a546c'}, // Blue
+      {default: '#b9e0a5', hover: '#a3d68c', border: '#8cc770', text: '#316823'}, // Green
+      {default: '#ffe08a', hover: '#ffd66b', border: '#e6c24f', text: '#7d5d0a'}, // Yellow
+      {default: '#ffafb0', hover: '#ff9899', border: '#e87c7e', text: '#8b2b2d'}  // Red
+    ];
+
+    /**
+     * Shuffles an array in place using the Fisher-Yates (Knuth) algorithm.
+     * @param {Array} array The array to shuffle.
+     * @returns {Array} The shuffled array.
+     */
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+      }
+      return array;
     }
 
-    function showQuestion() {
-      const data = quizData[current];
-      questionEl.textContent = `${current + 1}. ${data.q}`;
-      const shuffled = shuffle([data.a, ...data.options]);
-      optionsEl.innerHTML = "";
-      shuffled.forEach(option => {
-        const btn = document.createElement("div");
-        btn.className = "option";
-        btn.textContent = option;
-        btn.onclick = () => {
-          if (option === data.a) {
-            score++;
-            current++;
-            if (current < quizData.length) {
-              showQuestion();
-            } else {
-              showResult();
-            }
-          } else {
-            alert("you don't even know him lol");
-          }
-        };
-        optionsEl.appendChild(btn);
+    /**
+     * Displays the specified screen and hides others.
+     * @param {HTMLElement} screenToShow The screen element to make active.
+     */
+    function showScreen(screenToShow) {
+      [startScreen, questionScreen, resultScreen].forEach(screen => {
+        screen.classList.remove('active');
       });
+      screenToShow.classList.add('active');
+      quizContainer.classList.add('active'); // Ensure main container is visible
     }
 
-    function showResult() {
-      document.getElementById("question-box").style.display = "none";
-      resultEl.style.display = "block";
-      resultEl.innerHTML = `
-        <p>You scored <strong>${score}</strong> out of <strong>${quizData.length}</strong> 💙</p>
-        <button onclick="location.reload()">Play Again</button>
-      `;
+    /**
+     * Initializes and starts the quiz.
+     */
+    function startQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      selectedOption = null;
+      quizActive = true;
+      showScreen(questionScreen);
+      loadQuestion();
     }
 
-    // Start quiz
-    showQuestion();
+    /**
+     * Loads and displays the current question and its options.
+     */
+    function loadQuestion() {
+      // Hide the next button until an option is selected
+      nextQuestionBtn.style.display = 'none';
+
+      // Ensure quiz is still active
+      if (!quizActive) return;
+
+      // If all questions are answered, show results
+      if (currentQuestionIndex >= quizData.length) {
+        showResults();
+        return;
+      }
+
+      const currentQuestion = quizData[currentQuestionIndex];
+      questionEl.textContent = `${currentQuestionIndex + 1}. ${currentQuestion.q}`;
+      optionsEl.innerHTML = ''; // Clear previous options
+
+      // Combine correct answer with incorrect options and shuffle them
+      const allOptions = [currentQuestion.a, ...currentQuestion.options];
+      const shuffledOptions = shuffleArray(allOptions);
+
+      shuffledOptions.forEach((optionText, index) => {
+        const optionItem = document.createElement('div');
+        optionItem.className = 'option-item';
+        optionItem.textContent = optionText;
+
+        // Apply unique Kahoot-inspired colors
+        const color = optionColors[index % optionColors.length]; // Cycle through colors
+        optionItem.style.setProperty('--default-bg', color.default);
+        optionItem.style.setProperty('--hover-bg', color.hover);
+        optionItem.style.setProperty('--border-color', color.border);
+        optionItem.style.setProperty('--text-color', color.text);
+
+        // Add click listener to check the answer
+        optionItem.addEventListener('click', () => selectOption(optionItem, optionText, currentQuestion.a));
+        optionsEl.appendChild(optionItem);
+      });
+
+      updateProgressBar();
+    }
+
+    /**
+     * Handles the selection of an option, provides feedback, and prepares for the next question.
+     * @param {HTMLElement} selectedOptionElement The DOM element of the selected option.
+     * @param {string} selectedAnswer The text content of the selected answer.
+     * @param {string} correctAnswer The correct answer for the current question.
+     */
+    function selectOption(selectedOptionElement, selectedAnswer, correctAnswer) {
+      // Prevent re-selection if an option is already chosen for the current question
+      if (selectedOption !== null) {
+        return;
+      }
+
+      selectedOption = selectedOptionElement; // Store the selected option element
+
+      // Add 'selected' class immediately for visual feedback on click
+      selectedOption.classList.add('selected');
+
+      // Disable all options to prevent further clicks for this question
+      Array.from(optionsEl.children).forEach(option => {
+        option.style.pointerEvents = 'none'; // Disable pointer events
+      });
+
+      if (selectedAnswer === correctAnswer) {
+        score++;
+        selectedOption.classList.add('correct');
+        // No alert for correct answers
+      } else {
+        selectedOption.classList.add('incorrect');
+        // Show the "you don't even know him lol" alert for incorrect answers
+        alert("you don't even know him lol");
+
+        // Highlight the correct answer
+        Array.from(optionsEl.children).forEach(option => {
+          if (option.textContent === correctAnswer) {
+            option.classList.add('correct'); // Highlight correct answer
+          }
+        });
+      }
+
+      // Show the next button after a short delay to allow animations to play
+      setTimeout(() => {
+        nextQuestionBtn.textContent = (currentQuestionIndex + 1 < quizData.length) ? 'Next Question' : 'View Results';
+        nextQuestionBtn.style.display = 'block';
+      }, 800); // Give time for shake/highlight animations
+    }
+
+    /**
+     * Moves to the next question or shows results if the quiz is over.
+     */
+    function goToNextQuestion() {
+      currentQuestionIndex++;
+      selectedOption = null; // Reset selected option for the next question
+
+      // Re-enable pointer events for options for the next question
+      Array.from(optionsEl.children).forEach(option => {
+        option.style.pointerEvents = 'auto';
+      });
+
+      if (currentQuestionIndex < quizData.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    /**
+     * Updates the visual progress bar based on current question index.
+     */
+    function updateProgressBar() {
+      const progress = ((currentQuestionIndex) / quizData.length) * 100;
+      progressBar.style.width = `${progress}%`;
+    }
+
+    /**
+     * Displays the final results screen.
+     */
+    function showResults() {
+      quizActive = false; // Mark quiz as inactive
+      showScreen(resultScreen);
+      scoreDisplayEl.textContent = score;
+      totalQuestionsEl.textContent = quizData.length;
+
+      if (score === quizData.length) {
+        resultMessageEl.textContent = "🥳 You know me perfectly! 🥳";
+        resultMessageEl.style.color = '#28a745'; // Green for perfect score
+      } else if (score >= quizData.length / 2) {
+        resultMessageEl.textContent = "🤩 You know me pretty well! 🤩";
+        resultMessageEl.style.color = '#ffc107'; // Yellow for good score
+      } else {
+        resultMessageEl.textContent = "😅 Better luck next time! 😅";
+        resultMessageEl.style.color = '#dc3545'; // Red for lower score
+      }
+    }
+
+    // Event Listeners
+    startQuizBtn.addEventListener('click', startQuiz);
+    nextQuestionBtn.addEventListener('click', goToNextQuestion);
+    playAgainBtn.addEventListener('click', startQuiz); // Reset and start again
+
+    // Initial setup on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      showScreen(startScreen); // Show the start screen initially
+      quizContainer.classList.add('active'); // Activate container for initial fade-in
+    });
   </script>
 </body>
 
