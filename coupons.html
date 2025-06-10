@@ -5,255 +5,331 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Love's Elegant Book of Treats</title>
+    <!-- Importing elegant & playful fonts: Allura & Fredoka One for headings, Nunito for body -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lora:wght@400;700&family=Quicksand:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@300;400;600;700&family=Allura&display=swap"
         rel="stylesheet">
+    <!-- Custom Heart Favicon -->
     <link rel="icon"
-        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23880808' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FF6B6B' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E"
         type="image/svg+xml">
 
     <style>
+        /* --- Root Variables for Consistent Theming --- */
         :root {
-            --primary-color: #880808;
-            /* Deep Rose Red */
-            --secondary-color: #B56576;
-            /* Muted Rose */
-            --accent-color-1: #FFD700;
-            /* Gold */
-            --accent-color-2: #36454F;
-            /* Charcoal */
-            --text-color-dark: #333;
-            --text-color-light: #F8F8F8;
-            --background-soft: #FDF7F7;
-            /* Very light, warm off-white */
-            --card-background: #FFFFFF;
-            --border-radius: 12px;
-            --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.18);
+            /* Main Color Palette (Soft, Elegant, Cartoony) */
+            --primary-burgundy: #A52A2A;
+            /* Rich, classic burgundy */
+            --secondary-dusty-rose: #DDA0DD;
+            /* Muted plum/dusty rose */
+            --soft-gold: #DAA520;
+            /* Goldenrod for accents */
+            --dark-charcoal: #36454F;
+            /* Deep charcoal for main text */
+            --light-cream: #FBF8F6;
+            /* Very light, creamy background */
+            --pure-white: #FFFFFF;
+            /* Pure white for card interiors */
+
+            /* Coupon Card Background Colors (Soft Pastels) */
+            --coupon-bg-1: #FFDDE2;
+            /* Soft Pink */
+            --coupon-bg-2: #D4F8E8;
+            /* Mint Green */
+            --coupon-bg-3: #FFE8D4;
+            /* Peach */
+            --coupon-bg-4: #F0E6F7;
+            /* Lavender */
+            --coupon-bg-5: #E0FFFF;
+            /* Light Cyan */
+            --coupon-bg-6: #FFFACD;
+            /* Lemon Chiffon */
+
+
+            /* General Styles */
+            --border-radius-card: 18px;
+            /* More rounded card corners */
+            --border-radius-small: 8px;
+            /* Smaller radius for buttons/tags */
+            --shadow-subtle: 0 6px 20px rgba(0, 0, 0, 0.08);
+            /* Softer, diffused shadow */
+            --shadow-lift: 0 12px 30px rgba(0, 0, 0, 0.15);
+            /* Pronounced lift shadow */
+        }
+
+        /* --- Global Styles & Reset --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Nunito', sans-serif;
+            /* Clean, friendly sans-serif for body text */
             margin: 0;
             padding: 0;
-            background-color: var(--background-soft);
-            color: var(--text-color-dark);
+            background-color: var(--light-cream);
+            /* Soft, creamy background */
+            color: var(--dark-charcoal);
             line-height: 1.6;
             overflow-x: hidden;
+            /* Prevents horizontal scrollbar */
             scroll-behavior: smooth;
-            /* Smooth scrolling for potential anchor links */
+            /* Smooth scrolling for anchor links */
         }
 
-        /* Header Styles */
+        /* --- Main Header Styles --- */
         .main-header {
-            background-color: var(--primary-color);
-            color: var(--text-color-light);
+            background-color: var(--primary-burgundy);
+            /* Rich burgundy for header background */
+            color: var(--light-text-color);
+            /* White text for contrast */
             padding: 50px 20px;
             text-align: center;
             box-shadow: var(--shadow-subtle);
             animation: fadeInDown 1s ease-out;
             position: relative;
             z-index: 100;
-            /* Ensure header is above everything */
             overflow: hidden;
-            border-bottom: 5px solid var(--accent-color-1);
-            /* Gold accent line */
+            border-bottom: 5px solid var(--soft-gold);
+            /* Soft gold accent line */
         }
 
         .main-header h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 4.5em;
+            font-family: 'Allura', cursive;
+            /* Thin, light, cursive font as requested */
+            font-size: 5.5em;
+            /* Larger size for readability with cursive font */
             margin-bottom: 10px;
             letter-spacing: 2px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            color: var(--pure-white);
+            /* Ensure it's white/light against the dark background */
+            text-shadow: none;
+            /* Remove harsh text shadow */
+            font-weight: 400;
+            /* Allura is naturally light/thin */
         }
 
         .main-header p {
-            font-size: 1.3em;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
             opacity: 0.95;
             font-weight: 300;
+            /* Light font weight */
+            color: var(--pure-white);
+            /* Ensure it's white/light */
         }
 
-        /* Coupon Container */
+        /* --- Coupon Container Grid Layout --- */
         .coupon-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 35px;
+            /* Default to 2 columns on medium screens, scale down for mobile */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
             padding: 50px 40px;
-            max-width: 1300px;
+            max-width: 1400px;
+            /* Max width to comfortably fit 4 columns */
             margin: 30px auto;
         }
 
-        /* Individual Coupon Card */
+        /* --- Responsive Grid Adjustments --- */
+        @media (min-width: 1200px) {
+
+            /* Force 4 columns on larger desktops */
+            .coupon-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+
+            /* 3 columns for tablets */
+            .coupon-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            /* 2 columns for smaller tablets */
+            .coupon-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+
+            /* Single column for mobile */
+            .coupon-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+
+        /* --- Individual Coupon Card Styles --- */
         .coupon-card {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
+            background-color: var(--pure-white);
+            border-radius: var(--border-radius-card);
+            box-shadow: var(--shadow-soft);
             padding: 30px;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
-            /* Important for perforated edges */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            animation: fadeInUp 0.8s ease-out forwards;
+
+            /* Initial state for card entrance animation */
             opacity: 0;
-            /* Hidden initially, revealed by JS */
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 
-            /* Perforated Edges */
-            /* Using mask-image for more reliable perforation effect */
-            -webkit-mask-image: radial-gradient(circle at 10px 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px calc(100% - 10px), transparent 10px, black 10.5px);
-            mask-image: radial-gradient(circle at 10px 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px calc(100% - 10px), transparent 10px, black 10.5px);
-            -webkit-mask-size: 100% 20px;
-            /* Adjust dot size and spacing */
-            mask-size: 100% 20px;
-            -webkit-mask-repeat: repeat-y;
-            mask-repeat: repeat-y;
-            -webkit-mask-position: top left, bottom left;
-            mask-position: top left, bottom left;
+            /* Realistic Perforated Edges using masks */
+            /* Ensure background does not extend beyond padding box */
+            background-clip: padding-box;
+            border: none;
+            /* Remove any default borders as masks create the edge */
 
-            /* Add right side perforations */
-            -webkit-mask-image: radial-gradient(circle at 100% 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 100% calc(100% - 10px), transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px calc(100% - 10px), transparent 10px, black 10.5px);
-            mask-image: radial-gradient(circle at 100% 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 100% calc(100% - 10px), transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px 10px, transparent 10px, black 10.5px),
-                radial-gradient(circle at 10px calc(100% - 10px), transparent 10px, black 10.5px);
-            -webkit-mask-size: 20px 100%;
-            mask-size: 20px 100%;
-            -webkit-mask-repeat: repeat-x;
-            mask-repeat: repeat-x;
-            -webkit-mask-position: top right, top left, top left, bottom left;
-            mask-position: top right, top left, top left, bottom left;
-            border: 1px dashed var(--secondary-color);
-            /* Fallback/additional border */
+            /* Combine multiple radial gradients to create the "holes" on all sides */
+            -webkit-mask-image:
+                /* Top holes */
+                radial-gradient(circle at 10px 0, transparent 9px, black 9px) 0 0 / 20px 20px repeat-x,
+                /* Bottom holes */
+                radial-gradient(circle at 10px 100%, transparent 9px, black 9px) 0 100% / 20px 20px repeat-x,
+                /* Left holes */
+                radial-gradient(circle at 0 10px, transparent 9px, black 9px) 0 0 / 20px 20px repeat-y,
+                /* Right holes */
+                radial-gradient(circle at 100% 10px, transparent 9px, black 9px) 100% 0 / 20px 20px repeat-y;
+            mask-image:
+                radial-gradient(circle at 10px 0, transparent 9px, black 9px) 0 0 / 20px 20px repeat-x,
+                radial-gradient(circle at 10px 100%, transparent 9px, black 9px) 0 100% / 20px 20px repeat-x,
+                radial-gradient(circle at 0 10px, transparent 9px, black 9px) 0 0 / 20px 20px repeat-y,
+                radial-gradient(circle at 100% 10px, transparent 9px, black 9px) 100% 0 / 20px 20px repeat-y;
 
-            /* More refined perforated edges for top/bottom */
-            border-image: url('data:image/svg+xml,%3Csvg width="10" height="3" viewBox="0 0 10 3" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M0 1.5H10" stroke="%23B56576" stroke-dasharray="2 1"%3E%3C/path%3E%3C/svg%3E') 1;
-            border-top: 1px dashed var(--secondary-color);
-            border-bottom: 1px dashed var(--secondary-color);
-            border-left: 1px dashed var(--secondary-color);
-            border-right: 1px dashed var(--secondary-color);
-            background-color: var(--card-background);
-            /* Override default background */
-            position: relative;
+            /* How masks combine (standard property, -webkit- prefix for older safari) */
+            -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+
+            /* Fallback for older WebKit (if `source-in` is not supported) */
+            @supports not (-webkit-mask-composite: source-in) {
+                -webkit-mask-composite: border-box;
+            }
+        }
+
+
+        /* Class added by JS when card is visible */
+        .coupon-card.card-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: var(--card-delay, 0s);
+            /* Staggered delay */
         }
 
         .coupon-card:hover {
             transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: var(--shadow-lift);
         }
 
         .coupon-card.redeemed {
-            opacity: 0.5;
+            opacity: 0.6;
             pointer-events: none;
-            filter: grayscale(90%);
+            filter: grayscale(80%);
             position: relative;
-            border-color: var(--accent-color-2);
-            /* Darker border for redeemed */
+            /* No direct border-color change here, as mask handles it */
             background-color: #f0f0f0;
-            /* Slight gray background */
         }
 
+        /* "REDEEMED WITH LOVE!" Stamp */
         .coupon-card.redeemed::after {
             content: 'REDEEMED WITH LOVE!';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-15deg);
-            background-color: rgba(136, 8, 8, 0.85);
-            /* Deep Rose with transparency */
-            color: var(--text-color-light);
+            background-color: rgba(165, 42, 42, 0.9);
+            /* Rich burgundy with transparency for stamp */
+            color: var(--light-text-color);
             padding: 12px 25px;
-            border-radius: 8px;
-            font-family: 'Dancing Script', cursive;
+            border-radius: var(--border-radius-small);
+            font-family: 'Fredoka One', cursive;
             font-size: 1.8em;
             white-space: nowrap;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             z-index: 10;
-            border: 2px solid var(--accent-color-1);
-            /* Gold border for stamp */
+            border: 3px solid var(--soft-gold);
+            /* Soft gold border for stamp */
         }
 
         .coupon-card h2 {
-            font-family: 'Lora', serif;
-            /* Elegant serif font for titles */
-            font-size: 2em;
-            color: var(--primary-color);
+            font-family: 'Allura', cursive;
+            /* Thin, light, little cursive font for coupon titles */
+            font-size: 2.8em;
+            /* Increased size for readability with cursive font */
+            color: var(--primary-burgundy);
+            /* Rich burgundy for coupon titles */
             margin-top: 0;
             margin-bottom: 15px;
             line-height: 1.2;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+            /* Very subtle text shadow */
         }
 
         .coupon-card p {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Nunito', sans-serif;
+            /* Clean, readable font for descriptions */
             font-size: 1.05em;
-            color: var(--text-color-dark);
+            color: var(--dark-charcoal);
             flex-grow: 1;
             margin-bottom: 25px;
             font-weight: 400;
         }
 
         .coupon-card .btn {
-            background-color: var(--accent-color-1);
-            /* Gold Button */
-            color: var(--text-color-dark);
+            background-color: var(--soft-gold);
+            /* Soft gold button */
+            color: var(--dark-charcoal);
+            /* Dark charcoal text for button */
             border: none;
             padding: 14px 30px;
-            border-radius: 8px;
+            border-radius: var(--border-radius-small);
             font-size: 1.15em;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             font-weight: 700;
-            /* Bold button text */
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .coupon-card .btn:hover {
-            background-color: #EBD700;
+            background-color: #CCAA00;
             /* Slightly darker gold */
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        /* 18+ Tag Styles */
         .coupon-card .tag-18plus {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            background-color: rgba(136, 8, 8, 0.9);
-            /* Deep Rose */
-            color: var(--text-color-light);
-            font-family: 'Quicksand', sans-serif;
-            font-size: 0.95em;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(165, 42, 42, 0.9);
+            /* Burgundy with transparency */
+            color: var(--light-text-color);
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9em;
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: var(--border-radius-small);
             font-weight: bold;
             z-index: 5;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            border: 1px solid var(--accent-color-1);
-            /* Gold border */
+            border: 1px solid var(--secondary-dusty-rose);
+            /* Dusty rose border */
         }
 
-        /* Footer Styles */
-        .main-footer {
-            background-color: var(--primary-color);
-            color: var(--text-color-light);
-            text-align: center;
-            padding: 25px;
-            font-size: 1em;
-            box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        /* Modal Styles */
+        /* --- Modal Styles --- */
         .modal {
             display: none;
             position: fixed;
@@ -264,35 +340,34 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            /* Blurred background */
             justify-content: center;
             align-items: center;
             animation: fadeIn 0.3s ease-out;
         }
 
         .modal-content {
-            background-color: var(--card-background);
+            background-color: var(--pure-white);
             padding: 40px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-hover);
+            border-radius: var(--border-radius-card);
+            box-shadow: var(--shadow-lift);
             width: 90%;
             max-width: 450px;
             text-align: center;
             position: relative;
             animation: zoomIn 0.3s ease-out;
-            border: 3px solid var(--accent-color-1);
-            /* Gold border for modal */
+            border: 3px solid var(--secondary-dusty-rose);
+            /* Dusty rose border for modal */
         }
 
         .modal-content p {
             font-size: 1.3em;
             margin-bottom: 30px;
-            color: var(--text-color-dark);
+            color: var(--dark-charcoal);
             font-weight: 500;
         }
 
         .close-button {
-            color: var(--accent-color-2);
+            color: var(--dark-charcoal);
             font-size: 35px;
             font-weight: bold;
             position: absolute;
@@ -304,20 +379,20 @@
 
         .close-button:hover,
         .close-button:focus {
-            color: var(--primary-color);
+            color: var(--primary-burgundy);
         }
 
         .modal-buttons .btn {
             padding: 12px 25px;
             font-size: 1.1em;
             margin: 0 12px;
-            border-radius: 6px;
+            border-radius: var(--border-radius-small);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .modal-buttons .btn-secondary {
             background-color: #ccc;
-            color: var(--text-color-dark);
+            color: var(--dark-charcoal);
         }
 
         .modal-buttons .btn-secondary:hover {
@@ -326,7 +401,7 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Animations */
+        /* --- Animations --- */
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -372,46 +447,6 @@
                 opacity: 1;
             }
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-header h1 {
-                font-size: 3.2em;
-            }
-
-            .main-header p {
-                font-size: 1.1em;
-            }
-
-            .coupon-container {
-                padding: 30px 20px;
-                grid-template-columns: 1fr;
-            }
-
-            .coupon-card {
-                padding: 25px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-header h1 {
-                font-size: 2.5em;
-            }
-
-            .modal-content {
-                padding: 30px;
-            }
-
-            .modal-content p {
-                font-size: 1.1em;
-            }
-
-            .modal-buttons .btn {
-                padding: 10px 20px;
-                font-size: 1em;
-                margin: 0 5px;
-            }
-        }
     </style>
 </head>
 
@@ -422,13 +457,16 @@
     </header>
 
     <main class="coupon-container">
+        <!-- Coupons will be dynamically inserted here by JavaScript -->
     </main>
 
-    <footer class="main-footer">
-        <p>&copy; 2025 Crafted with infinite love and magic.</p>
-        <p><small>Life is Small Get freaky</small></p>
+    <!-- Footer with inline CSS as requested -->
+    <footer
+        style="text-align: center; background-color: #FFECF0; padding: 20px; color: #8B0000; font-family: 'Nunito', sans-serif; font-size: 0.95em; box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.05); margin-top: 50px;">
+        Made with 💖 by someone who adores Niki | &copy; 2025 Crafted with infinite love and magic.
     </footer>
 
+    <!-- Redemption Confirmation Modal -->
     <div id="redeemModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -536,510 +574,252 @@
                 {id: 'c79', title: 'Bag/Purse Organization', description: 'Redeem for my assistance in organizing your handbag or backpack, making it tidy and functional.', is18Plus: false},
                 {id: 'c80', title: 'Digital Decluttering Session', description: 'Redeem for our joint effort to delete old emails, clear desktop icons, or organize digital files.', is18Plus: false},
                 {id: 'c81', title: 'Vacuuming the Whole Place', description: 'Redeem for a thorough vacuuming of every room in our home, leaving it spotless.', is18Plus: false},
-                {id: 'c82', title: 'Plant Watering Service (for a week)', description: 'Redeem for a week of me taking care of all your indoor and outdoor plant watering duties.', is18Plus: false},
-                {id: 'c83', title: 'Window Cleaning (One Room)', description: 'Redeem for me to clean the windows in a room of your choice, sparkling clean.', is18Plus: false},
-                {id: 'c84', title: 'Change Sheets & Make Bed', description: 'Redeem for me to change all the bed sheets and make the bed perfectly for you.', is18Plus: false},
-                {id: 'c85', title: 'Recycling Sort & Take Out', description: 'Redeem for me to sort through all the recycling and take it out for you.', is18Plus: false},
-                {id: 'c86', title: 'Fix a Broken Item', description: 'Redeem for me to try and fix a small broken item around the house that\'s been bothering you.', is18Plus: false},
-                {id: 'c87', title: 'Tech Cable Management', description: 'Redeem for me to organize and tidy up all the messy cables behind your computer/TV.', is18Plus: false},
-                {id: 'c88', title: 'Kitchen Counter Wipe-Down', description: 'Redeem for a thorough wipe-down and cleaning of all kitchen counters.', is18Plus: false},
-                {id: 'c89', title: 'Bathroom Mirror Shine', description: 'Redeem for a spotless and gleaming bathroom mirror, cleaned by me.', is18Plus: false},
-                {id: 'c90', title: 'Empty Dishwasher & Put Away', description: 'Redeem for me to empty the dishwasher and put all the clean dishes away.', is18Plus: false},
-                {id: 'c91', title: 'Meal Plan Helper', description: 'Redeem for my assistance in planning out meals for the week, taking your preferences into account.', is18Plus: false},
-                {id: 'c92', title: 'Closet Light Dusting', description: 'Redeem for me to dust and wipe down the shelves and surfaces inside your closet.', is18Plus: false},
-                {id: 'c93', title: 'Furniture Polishing', description: 'Redeem for me to polish and clean any wooden furniture pieces you have.', is18Plus: false},
-                {id: 'c94', title: 'Indoor Plant Repotting', description: 'Redeem for my help repotting any indoor plants that have outgrown their current pots.', is18Plus: false},
-                {id: 'c95', title: 'Sofa Cushion Fluff & Arrange', description: 'Redeem for me to fluff and arrange all the sofa cushions for maximum comfort and neatness.', is18Plus: false},
-                {id: 'c96', title: 'Gutter/Drain Check (if applicable)', description: 'Redeem for me to check and clear any clogged gutters or drains around the house.', is18Plus: false},
-                {id: 'c97', title: 'Vehicle Fuel-Up', description: 'Redeem for me to fill up your vehicle\'s gas tank for you.', is18Plus: false},
-                {id: 'c98', title: 'Battery Disposal Service', description: 'Redeem for me to take all your old batteries to a proper recycling facility.', is18Plus: false},
-                {id: 'c99', title: 'Lightbulb Changing Service', description: 'Redeem for me to change any burnt-out lightbulbs around the house, even the tricky ones.', is18Plus: false},
-                {id: 'c100', title: 'Dusting Blinds/Curtains', description: 'Redeem for me to meticulously dust and clean all the blinds or curtains in a room.', is18Plus: false},
+                {id: 'c82', title: 'Plant Watering Service (for a week)', description: 'Redeem for a week where I lovingly take care of all your houseplants, ensuring they thrive.', is18Plus: false},
+                {id: 'c83', title: 'Warm Towel After Shower', description: 'Redeem for a perfectly warmed towel waiting for you right after your shower or bath.', is18Plus: false},
+                {id: 'c84', title: 'Breakfast in Bed (Your Choice)', description: 'Redeem for a delicious breakfast, made to your specifications, and served to you in bed.', is18Plus: false},
+                {id: 'c85', title: 'Tech Gadget Cleaning', description: 'Redeem for a meticulous cleaning of your phone, tablet, or laptop screen and exterior.', is18Plus: false},
+                {id: 'c86', title: 'Personal Chef for a Night', description: 'Redeem for me to cook a special dinner of your choice, from appetizer to dessert, just for you.', is18Plus: false},
+                {id: 'c87', title: 'Remote Control Retrieval', description: 'Redeem for me to find and bring you any missing remote control, no matter where it\'s hiding.', is18Plus: false},
+                {id: 'c88', title: 'Blanket Fort Building', description: 'Redeem for a cozy, elaborate blanket fort setup, perfect for movie watching or reading.', is18Plus: false},
+                {id: 'c89', title: 'Hair Washing & Scalp Massage', description: 'Redeem for a relaxing hair wash and invigorating scalp massage.', is18Plus: false},
+                {id: 'c90', title: 'Tidy Up One Room', description: 'Redeem for me to fully tidy and organize one room of your choice, leaving it pristine.', is18Plus: false},
+                {id: 'c91', title: 'Window Cleaning (Interior)', description: 'Redeem for sparkling clean interior windows in one room, letting the sunshine in.', is18Plus: false},
+                {id: 'c92', title: 'Dust Bunnies Extermination', description: 'Redeem for a full sweep and removal of all dust bunnies from under furniture and corners.', is18Plus: false},
+                {id: 'c93', title: 'Backpack/Bag Cleaning', description: 'Redeem for a thorough cleaning and organization of your most-used bag.', is18Plus: false},
+                {id: 'c94', title: 'Charger Cable Management', description: 'Redeem for me to organize all your charging cables, preventing tangles and mess.', is18Plus: false},
+                {id: 'c95', title: 'Quick Fix-It Service', description: 'Redeem for me to take care of any quick, small fix-it tasks around the house.', is18Plus: false},
+                {id: 'c96', title: 'Wardrobe Planning Assistance', description: 'Redeem for my help planning outfits for a specific event or trip.', is18Plus: false},
+                {id: 'c97', title: 'Pillow Fluffing Service', description: 'Redeem for a perfectly fluffed pillow whenever you need extra comfort.', is18Plus: false},
+                {id: 'c98', title: 'Personal Playlist Creation', description: 'Redeem for me to create a new music playlist tailored to your current mood or a specific activity.', is18Plus: false},
+                {id: 'c99', title: 'Snack Prep Station', description: 'Redeem for a beautifully arranged snack station with all your favorite treats readily available.', is18Plus: false},
+                {id: 'c100', title: '"Anything You Need" Hour', description: 'Redeem for one hour where I am entirely at your service for any non-demanding task or help you require.', is18Plus: false},
 
-                // FUN & PLAYFUL (50 Coupons)
-                {id: 'c101', title: 'Ultimate Netflix & Chill Night', description: 'Redeem for a cozy night of binge-watching your chosen series or movies, complete with all your favorite snacks and no interruptions.', is18Plus: false},
-                {id: 'c102', title: '"Yes, Dear" for a Day', description: 'Redeem for 24 hours where my default response to you is "Yes, dear" (within reason and safety, of course!).', is18Plus: false},
-                {id: 'c103', title: 'Board Game Bonanza', description: 'Redeem for a fun evening dedicated to playing all your favorite board or card games, with competitive spirit and laughter.', is18Plus: false},
-                {id: 'c104', title: 'Outdoor Adventure of Her Choice', description: 'Redeem for an activity like a scenic hike, a relaxing beach day, or exploring a beautiful nature trail together.', is18Plus: false},
-                {id: 'c105', title: 'Build a Cozy Blanket Fort', description: 'Redeem for a nostalgic evening building a giant, cozy fort with blankets and pillows, then snuggling inside with fairy lights.', is18Plus: false},
-                {id: 'c106', title: 'A Day of Non-Stop Compliments', description: 'Redeem for a day where I make a conscious effort to give you a genuine, heartfelt compliment every time I see you.', is18Plus: false},
-                {id: 'c107', title: 'Bake Your Favorite Cookies Together', description: 'Redeem for a sweet and fun baking session where we make your go-to comfort cookies from scratch.', is18Plus: false},
-                {id: 'c108', title: '"No Decision" Day (for you)', description: 'Redeem for a day where I make all the big and small decisions, so you don\'t have to think about a thing and can just relax.', is18Plus: false},
-                {id: 'c109', title: 'Your Favorite Snack Run', description: 'Redeem for an immediate trip to get your absolute favorite snack, no matter the time of day or night.', is18Plus: false},
-                {id: 'c110', title: 'Personalized Story Time', description: 'Redeem for me to read you a story, or even make one up on the spot about our adventures and silliness.', is18Plus: false},
-                {id: 'c111', title: 'Create a Couple\'s Bucket List', description: 'Redeem for a fun session brainstorming and writing down all the amazing things we want to do and experience together.', is18Plus: false},
-                {id: 'c112', title: 'A Day of "Me Time" for You', description: 'Redeem for a day where I handle everything so you can have uninterrupted relaxation, self-care, and pure "me time."', is18Plus: false},
-                {id: 'c113', title: 'Explore a New Coffee Shop', description: 'Redeem for a cozy and quiet date exploring a new, quaint coffee shop in town, trying out their specialties.', is18Plus: false},
-                {id: 'c114', title: 'Goofball Hour', description: 'Redeem for an hour dedicated to pure silliness, telling absurd jokes, making funny faces, and laughing out loud without inhibition.', is18Plus: false},
-                {id: 'c115', title: 'Teach Me a Dance Move', description: 'Redeem for you to teach me a specific dance move or a short choreography you love, and I\'ll learn it with enthusiasm.', is18Plus: false},
-                {id: 'c116', title: 'A Long, Uninterrupted Phone Call/Video Chat', description: 'Redeem for a long, dedicated call or video chat, perfect for when we\'re apart, with no distractions.', is18Plus: false},
-                {id: 'c117', title: 'Write a Song/Poem Together', description: 'Redeem for a creative session where we collaborate on writing a song or poem about our love, memories, or dreams.', is18Plus: false},
-                {id: 'c118', title: 'Custom Digital Portrait of Us', description: 'Redeem for me to create a cute and unique digital illustration or portrait of us, capturing our essence.', is18Plus: false},
-                {id: 'c119', title: 'A Surprise Picnic Lunch', description: 'Redeem for a spontaneous picnic lunch prepared by me, enjoyed wherever you like – park, backyard, or living room.', is18Plus: false},
-                {id: 'c120', title: '"Worry Jar" Release Session', description: 'Redeem for a session where you can write down any worries, and we\'ll symbolically "destroy" them together, letting them go.', is18Plus: false},
-                {id: 'c121', title: 'A Themed Dress-Up Night', description: 'Redeem for a fun night where we both dress up according to a silly or romantic theme of your choosing.', is18Plus: false},
-                {id: 'c122', title: 'Water Balloon Fight (Weather Permitting)', description: 'Redeem for a playful and refreshing water balloon fight on a warm day, with no mercy!', is18Plus: false},
-                {id: 'c123', title: 'Miniature Golf Challenge', description: 'Redeem for a competitive and fun round of miniature golf, with bragging rights for the winner.', is18Plus: false},
-                {id: 'c124', title: 'Arcade Game Showdown', description: 'Redeem for a visit to an arcade for a fun showdown on all your favorite games, new and old.', is18Plus: false},
-                {id: 'c125', title: 'Visit to a Theme Park/Amusement Park', description: 'Redeem for a thrilling day at a theme park or amusement park, riding all the rides and eating all the treats.', is18Plus: false},
-                {id: 'c126', title: 'Build a LEGO/Block Creation Together', description: 'Redeem for a collaborative session of building something awesome with LEGOs or other building blocks.', is18Plus: false},
-                {id: 'c127', title: 'Go-Kart Racing Challenge', description: 'Redeem for an adrenaline-filled go-kart racing challenge, seeing who\'s the fastest driver.', is18Plus: false},
-                {id: 'c128', title: 'Visit a Trampoline Park', description: 'Redeem for a bouncy, fun time at a trampoline park, letting out our inner kids.', is18Plus: false},
-                {id: 'c129', title: 'Painting/Art Night (Fun, Not Serious)', description: 'Redeem for a relaxed art night where we paint or draw for fun, no pressure for masterpieces.', is18Plus: false},
-                {id: 'c130', title: 'Cook a Meal Together (Your Recipe)', description: 'Redeem for a fun cooking session where we make a meal following one of your favorite recipes.', is18Plus: false},
-                {id: 'c131', title: 'Video Game Tournament (Just Us)', description: 'Redeem for a mini video game tournament where we compete head-to-head on several games.', is18Plus: false},
-                {id: 'c132', title: 'DIY Craft Project Together', description: 'Redeem for a creative afternoon tackling a DIY craft project you\'ve been wanting to try.', is18Plus: false},
-                {id: 'c133', title: 'Costume Party for Two', description: 'Redeem for a silly and intimate costume party just for the two of us, dressing up as anything we want.', is18Plus: false},
-                {id: 'c134', title: 'Blindfolded Food Tasting Game', description: 'Redeem for a fun game where one of us is blindfolded and tries to guess different foods/drinks.', is18Plus: false},
-                {id: 'c135', title: 'Themed Movie Marathon', description: 'Redeem for a movie marathon centered around a specific theme, director, or genre you love.', is18Plus: false},
-                {id: 'c136', title: 'Photo Scavenger Hunt', description: 'Redeem for a fun outdoor scavenger hunt where we find and take photos of specific things on a list.', is18Plus: false},
-                {id: 'c137', title: 'Picnic in the Living Room', description: 'Redeem for a charming indoor picnic experience, complete with a blanket, snacks, and a cozy atmosphere.', is18Plus: false},
-                {id: 'c138', title: 'Build a Tower of Cards/Jenga', description: 'Redeem for a challenging and fun session trying to build the tallest card tower or Jenga tower possible.', is18Plus: false},
-                {id: 'c139', title: '"Bad Art" Night', description: 'Redeem for a hilarious night where we intentionally try to create the "worst" or funniest art possible.', is18Plus: false},
-                {id: 'c140', title: 'Learn a Viral Dance Together', description: 'Redeem for a fun session learning a popular dance from social media, no matter how silly it looks.', is18Plus: false},
-                {id: 'c141', title: 'A Day of Inside Jokes', description: 'Redeem for a day where we constantly use and create new inside jokes, just for us to enjoy.', is18Plus: false},
-                {id: 'c142', title: 'Play Video Games from Our Childhood', description: 'Redeem for a nostalgic gaming session playing classic video games from our childhoods.', is18Plus: false},
-                {id: 'c143', title: 'Try a New Dessert Cafe', description: 'Redeem for an adventurous outing to a new dessert cafe to sample their sweetest treats.', is18Plus: false},
-                {id: 'c144', title: 'Visit a Botanical Garden', description: 'Redeem for a peaceful and beautiful stroll through a botanical garden or arboretum.', is18Plus: false},
-                {id: 'c145', title: 'Write a Joint Story', description: 'Redeem for a creative session where we collaboratively write a short story, each taking turns.', is18Plus: false},
-                {id: 'c146', title: 'Solve a Rubik\'s Cube (or similar puzzle) Together', description: 'Redeem for a challenging session trying to solve a Rubik\'s Cube or another complex puzzle together.', is18Plus: false},
-                {id: 'c147', title: 'Have a "Would You Rather" Marathon', description: 'Redeem for a long session of asking each other "Would You Rather" questions, getting to know each other better.', is18Plus: false},
-                {id: 'c148', title: 'Create a Fun Stop-Motion Video', description: 'Redeem for a creative project making a short stop-motion animation video together.', is18Plus: false},
-                {id: 'c149', title: 'Build a Paper Airplane Fleet', description: 'Redeem for a fun afternoon folding and launching various designs of paper airplanes.', is18Plus: false},
-                {id: 'c150', title: 'A Day of Spontaneous Laughter', description: 'Redeem for a day where I actively try to make you laugh as much as possible with jokes, stories, or silly actions.', is18Plus: false},
-
-                // PAMPERING & RELAXATION (50 Coupons)
-                {id: 'c151', title: 'Full Body Relaxation Massage', description: 'Redeem for a long, stress-melting full-body relaxation massage to soothe your muscles and calm your mind.', is18Plus: false},
-                {id: 'c152', title: 'Deluxe Home Spa Treatment', description: 'Redeem for a complete home spa experience, including face masks, hair treatment, and tranquil ambiance.', is18Plus: false},
-                {id: 'c153', title: 'Deep Scalp Massage & Hair Wash', description: 'Redeem for a deeply relaxing scalp massage followed by a gentle hair wash, leaving you refreshed.', is18Plus: false},
-                {id: 'c154', title: 'Quiet Reading Time with Tea/Coffee', description: 'Redeem for dedicated, uninterrupted quiet time for you to read, with your favorite warm beverage prepared.', is18Plus: false},
-                {id: 'c155', title: 'Relaxing Foot Soak & Rub', description: 'Redeem for a warm, soothing foot soak followed by a gentle foot rub to ease tired feet.', is18Plus: false},
-                {id: 'c156', title: 'The Ultimate Back Scratch', description: 'Redeem for an extended, satisfying back scratch session for maximum comfort and relaxation.', is18Plus: false},
-                {id: 'c157', title: 'Warm Blanket & Cozy Corner', description: 'Redeem for a perfectly prepared cozy corner with a warm blanket, pillow, and your favorite comfort items.', is18Plus: false},
-                {id: 'c158', title: 'Mindful Breathing/Meditation Session', description: 'Redeem for a guided mindful breathing or short meditation session to help you find inner peace.', is18Plus: false},
-                {id: 'c159', title: 'Soothing Hand Massage', description: 'Redeem for a gentle and moisturizing hand massage to relax your hands after a long day.', is18Plus: false},
-                {id: 'c160', title: 'Relaxing Head & Neck Massage', description: 'Redeem for a targeted head and neck massage to release tension and promote relaxation.', is18Plus: false},
-                {id: 'c161', title: 'Warm Oil Hair Treatment', description: 'Redeem for a nourishing warm oil treatment for your hair, followed by a gentle wash.', is18Plus: false},
-                {id: 'c162', title: 'Epsom Salt Bath Ritual', description: 'Redeem for a luxurious Epsom salt bath, prepared with soothing essential oils and candles.', is18Plus: false},
-                {id: 'c163', title: 'Comfy PJs & Chill Session', description: 'Redeem for an evening dedicated to wearing your comfiest pajamas and just relaxing, no agenda.', is18Plus: false},
-                {id: 'c164', title: 'Scented Candle Lighting Service', description: 'Redeem for me to light all your favorite scented candles and set a relaxing ambiance.', is18Plus: false},
-                {id: 'c165', title: 'A Day Free from Decisions', description: 'Redeem for a day where all decisions are made for you (meals, activities) so you can simply relax.', is18Plus: false},
-                {id: 'c166', title: 'Sound Bath Experience (via music)', description: 'Redeem for a calming sound bath experience using relaxing music, binaural beats, or nature sounds.', is18Plus: false},
-                {id: 'c167', title: 'Heated Eye Mask & Quiet Time', description: 'Redeem for a heated eye mask and a period of absolute quiet for ultimate eye relaxation.', is18Plus: false},
-                {id: 'c168', title: 'Tension-Relief Shoulder Rub', description: 'Redeem for a focused shoulder rub to work out any knots and tension you might have.', is18Plus: false},
-                {id: 'c169', title: 'Warm Drink & Cozy Fireplace (if applicable)', description: 'Redeem for a warm drink and a cozy spot by the fireplace (real or virtual) for ultimate comfort.', is18Plus: false},
-                {id: 'c170', title: 'Post-Workout Stretch Assistance', description: 'Redeem for my help guiding you through a relaxing post-workout stretching routine.', is18Plus: false},
-                {id: 'c171', title: 'The "No Talk" Zone Hour', description: 'Redeem for an hour of complete silence and peace, where no conversation or noise is allowed, just quiet.', is18Plus: false},
-                {id: 'c172', title: 'Listen to Calming Music Together', description: 'Redeem for a session where we just listen to calming, relaxing music together without distraction.', is18Plus: false},
-                {id: 'c173', title: 'Sunlight Therapy Session', description: 'Redeem for a relaxing moment soaking in the natural sunlight, perhaps with a warm drink.', is18Plus: false},
-                {id: 'c174', title: 'Aromatherapy Diffuser Setup', description: 'Redeem for me to set up your aromatherapy diffuser with your favorite calming essential oils.', is18Plus: false},
-                {id: 'c175', title: 'Hot Compress for Aches', description: 'Redeem for me to prepare and apply a warm compress to any aching muscles or areas.', is18Plus: false},
-                {id: 'c176', title: 'Calm Breathing Exercise Leader', description: 'Redeem for me to gently lead you through a relaxing breathing exercise to calm your nervous system.', is18Plus: false},
-                {id: 'c177', title: 'The "Everything Is Handled" Moment', description: 'Redeem for a moment where I assure you that everything is taken care of, so you have nothing to worry about.', is18Plus: false},
-                {id: 'c178', title: 'Gentle Hair Brushing/Combing', description: 'Redeem for a soothing session of me gently brushing or combing your hair.', is18Plus: false},
-                {id: 'c179', title: 'Acupressure Point Release (basic)', description: 'Redeem for me to gently apply pressure to basic acupressure points for relaxation.', is18Plus: false},
-                {id: 'c180', title: 'Bedtime Story Reading', description: 'Redeem for me to read you a relaxing story or a chapter from a book before bed.', is18Plus: false},
-                {id: 'c181', title: 'Warm Towel Face Wrap', description: 'Redeem for a soothing warm towel wrap for your face, like at a spa.', is18Plus: false},
-                {id: 'c182', title: 'Cooling Eye Mask Application', description: 'Redeem for a refreshing cool eye mask application to de-puff and soothe your eyes.', is18Plus: false},
-                {id: 'c183', title: 'A Moment of Deep Listening', description: 'Redeem for a quiet moment where I solely listen to your thoughts, feelings, or stories without interruption.', is18Plus: false},
-                {id: 'c184', title: 'Hand-Holding During Nap', description: 'Redeem for me to quietly hold your hand while you drift off for a relaxing nap.', is18Plus: false},
-                {id: 'c185', title: 'Soothing Temple Rub', description: 'Redeem for a gentle and relieving temple rub to alleviate headaches or tension.', is18Plus: false},
-                {id: 'c186', title: 'Quiet Time with No Screens', description: 'Redeem for a dedicated period of time with no phones, TV, or computers, just quiet connection.', is18Plus: false},
-                {id: 'c187', title: 'Warm Cozy Socks Delivery', description: 'Redeem for me to bring you your favorite pair of warm, cozy socks to wear while relaxing.', is18Plus: false},
-                {id: 'c188', title: 'A Moment to Just Breathe', description: 'Redeem for me to help you take a few deep, calming breaths together when you feel overwhelmed.', is18Plus: false},
-                {id: 'c189', title: 'The "Everything\'s Alright" Hug', description: 'Redeem for a long, comforting hug that reassures you everything will be okay, no matter what.', is18Plus: false},
-                {id: 'c190', title: 'Warm Milk/Herbal Tea Before Bed', description: 'Redeem for a soothing warm milk or herbal tea prepared for you before bedtime for better sleep.', is18Plus: false},
-                {id: 'c191', title: 'Gentle Forehead Kisses', description: 'Redeem for a series of gentle, comforting kisses on your forehead to help you relax.', is18Plus: false},
-                {id: 'c192', title: 'Quiet Reading Session Together', description: 'Redeem for a time where we both read our own books quietly in the same room, enjoying mutual peace.', is18Plus: false},
-                {id: 'c193', title: 'Sun Salutation (Yoga) Session', description: 'Redeem for a calming Sun Salutation yoga session led by me, perfect for gentle stretching.', is18Plus: false},
-                {id: 'c194', title: 'Soft Blanket & Pillow Fluffing', description: 'Redeem for me to meticulously fluff your pillows and arrange blankets for ultimate comfort.', is18Plus: false},
-                {id: 'c195', title: 'A Moment of Just Listening to Nature Sounds', description: 'Redeem for a time to sit together and listen to calming nature sounds, either real or recorded.', is18Plus: false},
-                {id: 'c196', title: 'The "No Rush" Morning', description: 'Redeem for a morning where there\'s absolutely no rush, no alarms, just slow, peaceful start to the day.', is18Plus: false},
-                {id: 'c197', title: 'A Comforting Hand Squeeze', description: 'Redeem for a reassuring hand squeeze whenever you need a silent show of support.', is18Plus: false},
-                {id: 'c198', title: 'The "Sweet Dreams" Wish', description: 'Redeem for a special, heartfelt "sweet dreams" wish from me before you fall asleep.', is18Plus: false},
-                {id: 'c199', title: 'Gentle Back Patting for Comfort', description: 'Redeem for soothing, gentle back patting to provide comfort and relaxation.', is18Plus: false},
-                {id: 'c200', title: 'Your Favorite Comfort Item Delivery', description: 'Redeem for me to retrieve and bring you your absolute favorite comfort item (e.g., blanket, stuffed animal).', is18Plus: false},
-
-                // FOOD & DRINK (50 Coupons)
-                {id: 'c201', title: 'Chef\'s Choice Dinner', description: 'Redeem for a delicious, multi-course dinner prepared by me, featuring my best culinary skills.', is18Plus: false},
-                {id: 'c202', title: 'Gourmet Breakfast in Bed', description: 'Redeem for a decadent breakfast spread, prepared and served to you in bed, with all your favorites.', is18Plus: false},
-                {id: 'c203', title: 'Your Favorite Homemade Dessert', description: 'Redeem for a freshly baked batch of your absolute favorite dessert, made with love and precision.', is18Plus: false},
-                {id: 'c204', title: 'Custom Cocktail/Mocktail Bar', description: 'Redeem for me to create a personalized menu of cocktails or mocktails, shaken or stirred just for you.', is18Plus: false},
-                {id: 'c205', title: 'Midnight Snack Delivery', description: 'Redeem for a surprise delivery of your favorite midnight snack, no matter the hour.', is18Plus: false},
-                {id: 'c206', title: 'Taste Test Challenge', description: 'Redeem for a fun blind taste test of various snacks, chocolates, or drinks, seeing if you can guess them.', is18Plus: false},
-                {id: 'c207', title: 'Picnic Basket for Two', description: 'Redeem for a beautifully packed picnic basket filled with gourmet treats for an outdoor (or indoor) adventure.', is18Plus: false},
-                {id: 'c208', title: 'Themed Dinner Night', description: 'Redeem for a dinner night centered around a specific cuisine or theme (e.g., Italian, Mexican, "breakfast for dinner").', is18Plus: false},
-                {id: 'c209', title: 'Homemade Pizza Night', description: 'Redeem for a fun evening making homemade pizzas together, with all your favorite toppings.', is18Plus: false},
-                {id: 'c210', title: 'Baking/Cooking Class (for us)', description: 'Redeem for us to take a virtual or in-person baking or cooking class together, learning new skills.', is18Plus: false},
-                {id: 'c211', title: 'Smoothie Bar Creation', description: 'Redeem for a customizable smoothie bar setup, with all the fruits, veggies, and add-ins you desire.', is18Plus: false},
-                {id: 'c212', title: 'Gourmet Coffee/Tea Tasting', description: 'Redeem for a refined tasting session of different gourmet coffees or exotic teas, presented beautifully.', is18Plus: false},
-                {id: 'c213', title: 'Snack Attack Prepared', description: 'Redeem for a platter of all your favorite savory and sweet snacks, ready for immediate consumption.', is18Plus: false},
-                {id: 'c214', title: 'Experimental Recipe Night', description: 'Redeem for a fun culinary adventure trying out a new, experimental recipe together.', is18Plus: false},
-                {id: 'c215', title: 'Farmers Market Fresh Meal', description: 'Redeem for a meal created entirely from fresh ingredients sourced from a local farmers market.', is18Plus: false},
-                {id: 'c216', title: 'Ice Cream Sundae Bar', description: 'Redeem for a delightful ice cream sundae bar, with all your favorite ice cream flavors and toppings.', is18Plus: false},
-                {id: 'c217', title: 'Late Night Hot Chocolate Bar', description: 'Redeem for a cozy late-night hot chocolate bar, complete with marshmallows, whipped cream, and drizzles.', is18Plus: false},
-                {id: 'c218', title: 'Charcuterie Board Masterpiece', description: 'Redeem for a beautifully assembled charcuterie board, filled with cheeses, meats, fruits, and crackers.', is18Plus: false},
-                {id: 'c219', title: 'Homemade Bread & Spreads', description: 'Redeem for a fresh loaf of homemade bread, served with various delicious spreads or dips.', is18Plus: false},
-                {id: 'c220', title: 'Cereal Bar Extravaganza', description: 'Redeem for a fun "cereal bar" setup with multiple cereal options, milks, and toppings for a nostalgic breakfast.', is18Plus: false},
-                {id: 'c221', title: 'Your Favorite Takeout, On Me', description: 'Redeem for a delicious takeout meal from your absolute favorite restaurant, entirely on my treat.', is18Plus: false},
-                {id: 'c222', title: 'Brunch Date at Your Chosen Cafe', description: 'Redeem for a lovely brunch date at your favorite cafe or a new one you\'ve been wanting to try.', is18Plus: false},
-                {id: 'c223', title: 'Cupcake Decorating Party for Two', description: 'Redeem for a fun and creative session decorating cupcakes with various frostings and sprinkles.', is18Plus: false},
-                {id: 'c224', title: 'Homemade Pasta Night', description: 'Redeem for an authentic Italian night making fresh homemade pasta together, from scratch.', is18Plus: false},
-                {id: 'c225', title: '"Mystery Meal" Challenge', description: 'Redeem for a fun "mystery meal" where I cook something delicious and surprising, and you have to guess ingredients.', is18Plus: false},
-                {id: 'c226', title: 'BBQ / Grill Master Night', description: 'Redeem for a delicious BBQ or grilled meal prepared by me, with all your favorite grilled foods.', is18Plus: false},
-                {id: 'c227', title: 'Freshly Baked Cookies & Milk', description: 'Redeem for a batch of warm, freshly baked cookies, served with a cold glass of milk, anytime.', is18Plus: false},
-                {id: 'c228', title: 'Hot Dog/Burger Bar', description: 'Redeem for a customizable hot dog or burger bar with all the toppings you could dream of.', is18Plus: false},
-                {id: 'c229', title: 'Fruit Platter Extravaganza', description: 'Redeem for a beautifully arranged platter of fresh, seasonal fruits for a healthy and delicious snack.', is18Plus: false},
-                {id: 'c230', title: 'DIY Sushi Night', description: 'Redeem for a fun and interactive DIY sushi night, where we make our own sushi rolls together.', is18Plus: false},
-                {id: 'c231', title: 'Waffle/Pancake Station', description: 'Redeem for a delightful breakfast station with freshly made waffles or pancakes and various toppings.', is18Plus: false},
-                {id: 'c232', title: 'Homemade Soup & Grilled Cheese', description: 'Redeem for a comforting meal of homemade soup paired with a perfectly grilled cheese sandwich.', is18Plus: false},
-                {id: 'c233', title: 'Chocolate Fondue Experience', description: 'Redeem for a sweet and romantic chocolate fondue experience with fruits, marshmallows, and other dippers.', is18Plus: false},
-                {id: 'c234', title: '"Breakfast for Dinner" Treat', description: 'Redeem for a fun and unconventional "breakfast for dinner" night, with pancakes, eggs, and bacon.', is18Plus: false},
-                {id: 'c235', title: 'Gourmet Sandwich/Wrap Bar', description: 'Redeem for a customized gourmet sandwich or wrap bar with a wide array of fillings.', is18Plus: false},
-                {id: 'c236', title: 'Smoothie Bowl Creation', description: 'Redeem for a beautiful and delicious smoothie bowl made with your favorite fruits and toppings.', is18Plus: false},
-                {id: 'c237', title: 'Popcorn & Movie Night (Classic)', description: 'Redeem for a classic movie night with perfectly popped popcorn and all your favorite candy.', is18Plus: false},
-                {id: 'c238', title: 'Homemade Milkshake/Float Bar', description: 'Redeem for a nostalgic homemade milkshake or ice cream float bar with various flavors.', is18Plus: false},
-                {id: 'c239', title: '"Clean Out the Fridge" Dinner', description: 'Redeem for a surprisingly delicious meal created by me using only ingredients already in our fridge.', is18Plus: false},
-                {id: 'c240', title: 'Juice Bar Creation', description: 'Redeem for a fresh juice bar where I create custom fresh-pressed juices for you.', is18Plus: false},
-                {id: 'c241', title: 'Fresh Salad Bar', description: 'Redeem for a fresh and customizable salad bar with all your preferred greens, veggies, and dressings.', is18Plus: false},
-                {id: 'c242', title: 'Taco Tuesday (Any Day)', description: 'Redeem for a fun and flavorful taco night, complete with all the fixings, any day of the week.', is18Plus: false},
-                {id: 'c243', title: 'Homemade Soup & Breadsticks', description: 'Redeem for a comforting homemade soup served with warm, crispy breadsticks.', is18Plus: false},
-                {id: 'c244', title: 'Gourmet Hot Dogs', description: 'Redeem for a creative and gourmet hot dog night, with unique toppings and condiments.', is18Plus: false},
-                {id: 'c245', title: 'DIY Ramen/Noodle Bar', description: 'Redeem for a fun build-your-own ramen or noodle bowl night with various broths and toppings.', is18Plus: false},
-                {id: 'c246', title: 'Fresh Baked Muffins/Scones', description: 'Redeem for a batch of warm, freshly baked muffins or scones for breakfast or a snack.', is18Plus: false},
-                {id: 'c247', title: 'Dessert Pizza Night', description: 'Redeem for a unique and sweet dessert pizza creation, with fruity or chocolatey toppings.', is18Plus: false},
-                {id: 'c248', title: 'Hot Toddy/Warm Drink for a Cold Night', description: 'Redeem for a comforting hot toddy or other warm drink prepared for you on a chilly evening.', is18Plus: false},
-                {id: 'c249', title: '"Around the World" Snack Sampler', description: 'Redeem for a fun snack sampler featuring unique treats from different countries.', is18Plus: false},
-                {id: 'c250', title: 'Your Favorite Canned Drink (Chilled)', description: 'Redeem for your favorite canned soda or beverage, perfectly chilled and delivered to you.', is18Plus: false},
-
-                // IOU / FUTURE PLANS (50 Coupons)
-                {id: 'c251', title: 'IOU: Dream Weekend Getaway', description: 'Redeem for me to meticulously plan and take you on a surprise weekend getaway to a destination of your dreams (or one I choose you\'ll love!).', is18Plus: false},
-                {id: 'c252', title: 'IOU: Concert/Show Tickets', description: 'Redeem for tickets to see your favorite artist, band, or a compelling live show you\'ve been wanting to experience.', is18Plus: false},
-                {id: 'c253', title: 'IOU: That Special Item You Covet', description: 'Redeem for me to purchase that specific item you\'ve been wanting for a while (up to a pre-discussed budget).', is18Plus: false},
-                {id: 'c254', title: 'IOU: A Day Trip to a Charming City', description: 'Redeem for a delightful day trip to a charming nearby city or unique town, with all the planning handled by me.', is18Plus: false},
-                {id: 'c255', title: 'IOU: Tech Gadget Upgrade', description: 'Redeem for an upgrade or accessory for one of your favorite tech gadgets, enhancing your daily life.', is18Plus: false},
-                {id: 'c256', title: 'IOU: Donation to Your Chosen Charity', description: 'Redeem for a meaningful donation to be made in your name to a charity or cause that is close to your heart.', is18Plus: false},
-                {id: 'c257', title: 'IOU: Professional Photo Album of Us', description: 'Redeem for me to design and order a beautiful, high-quality physical photo album showcasing our cherished memories.', is18Plus: false},
-                {id: 'c258', title: 'IOU: Enrollment in a Workshop/Class', description: 'Redeem for enrollment in a workshop or class you\'re interested in (e.g., painting, pottery, cooking, photography).', is18Plus: false},
-                {id: 'c259', title: 'IOU: Hobby Supply Shopping Spree', description: 'Redeem for a dedicated shopping trip to get new tools, supplies, or items related to one of your beloved hobbies.', is18Plus: false},
-                {id: 'c260', title: 'IOU: A Gourmet Restaurant Experience', description: 'Redeem for a reservation at a fancy or highly-rated restaurant you\'ve been wanting to try, on me.', is18Plus: false},
-                {id: 'c261', title: 'IOU: Weekend of No Plans', description: 'Redeem for a full weekend with absolutely no plans, allowing for spontaneous adventures or ultimate relaxation.', is18Plus: false},
-                {id: 'c262', title: 'IOU: A Cozy Book/Movie Shopping Trip', description: 'Redeem for a leisurely trip to a bookstore or movie store to pick out new reads or films for our collection.', is18Plus: false},
-                {id: 'c263', title: 'IOU: Spa Day Package', description: 'Redeem for a luxurious spa day package, including massages, facials, or other pampering treatments for you.', is18Plus: false},
-                {id: 'c264', title: 'IOU: New Piece of Jewelry', description: 'Redeem for a special piece of jewelry picked by you, symbolizing our bond and your unique style.', is18Plus: false},
-                {id: 'c265', title: 'IOU: Custom Artwork Commission', description: 'Redeem for me to commission a piece of art from an artist you admire, tailored to your tastes.', is18Plus: false},
-                {id: 'c266', title: 'IOU: A Contribution to Your Big Dream', description: 'Redeem for a financial contribution towards a long-term goal or big dream you have (e.g., travel fund, education).', is18Plus: false},
-                {id: 'c267', title: 'IOU: Home Decor Refresh', description: 'Redeem for a mini home decor shopping trip to pick out new items to refresh a room or area you choose.', is18Plus: false},
-                {id: 'c268', title: 'IOU: Personal Styling Session', description: 'Redeem for a professional personal styling session, either virtual or in-person, to refresh your wardrobe.', is18Plus: false},
-                {id: 'c269', title: 'IOU: A Visit to a Museum/Gallery', description: 'Redeem for a thoughtful date exploring a museum or art gallery that aligns with your interests.', is18Plus: false},
-                {id: 'c270', title: 'IOU: New Workout Gear', description: 'Redeem for a new piece of workout gear or activewear that you\'ve been wanting to get.', is18Plus: false},
-                {id: 'c271', title: 'IOU: A Special Bottle of Wine/Spirit', description: 'Redeem for a fine bottle of wine, spirit, or a unique non-alcoholic beverage you\'ve wanted to try.', is18Plus: false},
-                {id: 'c272', title: 'IOU: A Professional Photo Shoot for You', description: 'Redeem for a professional photoshoot focused on capturing your beauty and personality.', is18Plus: false},
-                {id: 'c273', title: 'IOU: Subscription Box of Your Choice', description: 'Redeem for a subscription box tailored to your interests (e.g., beauty, books, snacks) for X months.', is18Plus: false},
-                {id: 'c274', title: 'IOU: A Day of Volunteering Together', description: 'Redeem for us to spend a day volunteering for a cause you care deeply about.', is18Plus: false},
-                {id: 'c275', title: 'IOU: A New Board Game/Video Game', description: 'Redeem for a new board game or video game that you\'ve been eager to play.', is18Plus: false},
-                {id: 'c276', title: 'IOU: Concert Merch from Your Favorite Band', description: 'Redeem for a piece of merchandise from your favorite band or artist\'s official store.', is18Plus: false},
-                {id: 'c277', title: 'IOU: A Guided Tour (Historical/Food)', description: 'Redeem for a guided tour of a historical site or a food tour in our city/a nearby city.', is18Plus: false},
-                {id: 'c278', title: 'IOU: A New Plant for Our Home', description: 'Redeem for a beautiful new houseplant that you can choose to add to our home.', is18Plus: false},
-                {id: 'c279', title: 'IOU: Donation to Animal Shelter', description: 'Redeem for a donation to be made to an animal shelter or rescue organization in your honor.', is18Plus: false},
-                {id: 'c280', title: 'IOU: Outdoor Gear for an Adventure', description: 'Redeem for a new piece of outdoor gear (e.g., hiking boots, camping hammock) for our next adventure.', is18Plus: false},
-                {id: 'c281', title: 'IOU: A Cozy Reading Nook Setup', description: 'Redeem for help setting up a perfect cozy reading nook in our home, complete with new decor.', is18Plus: false},
-                {id: 'c282', title: 'IOU: A Collection of Your Favorite Teas/Coffees', description: 'Redeem for a curated collection of gourmet teas or exotic coffees for you to enjoy.', is18Plus: false},
-                {id: 'c283', title: 'IOU: A Day at a Theme Park', description: 'Redeem for an exciting day out at a theme park or amusement park, all tickets and treats on me.', is18Plus: false},
-                {id: 'c284', title: 'IOU: A New Piece of Art for Our Wall', description: 'Redeem for a new piece of artwork or a framed print to adorn our walls, chosen by you.', is18Plus: false},
-                {id: 'c285', title: 'IOU: A Record Player & First Record', description: 'Redeem for a record player and your first vinyl record to start a collection.', is18Plus: false},
-                {id: 'c286', title: 'IOU: Personalized Stationery Set', description: 'Redeem for a beautiful, personalized stationery set with your name or initials.', is18Plus: false},
-                {id: 'c287', title: 'IOU: A New Book Bag/Backpack', description: 'Redeem for a stylish new book bag or backpack for your daily adventures or studies.', is18Plus: false},
-                {id: 'c288', title: 'IOU: A High-Quality Candle/Diffuser', description: 'Redeem for a luxurious, high-quality scented candle or essential oil diffuser for your space.', is18Plus: false},
-                {id: 'c289', title: 'IOU: A Day at the Beach/Lake', description: 'Redeem for a relaxing day trip to the beach or a lake, complete with snacks and sun protection.', is18Plus: false},
-                {id: 'c290', title: 'IOU: A Gift Card to Your Favorite Store', description: 'Redeem for a gift card to your absolute favorite store, so you can pick out whatever you like.', is18Plus: false},
-                {id: 'c291', title: 'IOU: A New Pair of Cozy Slippers', description: 'Redeem for a super soft and cozy new pair of slippers for ultimate comfort at home.', is18Plus: false},
-                {id: 'c292', title: 'IOU: A Subscription to a Magazine/Service', description: 'Redeem for a subscription to a magazine or online service you\'ve been eyeing.', is18Plus: false},
-                {id: 'c293', title: 'IOU: A New Piece of Kitchenware', description: 'Redeem for a new piece of kitchenware or appliance that would make your cooking easier or more fun.', is18Plus: false},
-                {id: 'c294', title: 'IOU: A Ticket to a Sporting Event', description: 'Redeem for tickets to a sporting event for your favorite team or sport.', is18Plus: false},
-                {id: 'c295', title: 'IOU: A Donation to an Environmental Cause', description: 'Redeem for a donation to be made to an environmental conservation organization in your name.', is18Plus: false},
-                {id: 'c296', title: 'IOU: A Personalized Photo Frame', description: 'Redeem for a beautiful personalized photo frame with a special picture of us.', is18Plus: false},
-                {id: 'c297', title: 'IOU: A New Travel Mug/Water Bottle', description: 'Redeem for a high-quality travel mug or water bottle for your daily hydration needs.', is18Plus: false},
-                {id: 'c298', title: 'IOU: A Beginner\'s Kit for a New Hobby', description: 'Redeem for a complete beginner\'s kit for a new hobby you\'ve shown interest in (e.g., knitting, calligraphy).', is18Plus: false},
-                {id: 'c299', title: 'IOU: A Visit to a Local Winery/Brewery', description: 'Redeem for a fun outing to a local winery or brewery for a tasting experience.', is18Plus: false},
-                {id: 'c300', title: 'IOU: A Comfortable Throw Blanket', description: 'Redeem for a super soft and cozy throw blanket for snuggling on the sofa.', is18Plus: false},
-
-                // INTIMATE / 18+ (200 Coupons)
-                {id: 'c301', title: '💖 Sensual Full-Body Oil Massage', description: 'Redeem for a long, deeply sensual full-body massage using warm, aromatic oils to relax and arouse every inch of you. (Consent required for initiation & boundaries)', is18Plus: true},
-                {id: 'c302', title: '💖 A Night Dedicated to Your Desires', description: 'Redeem for an entire night where your intimate pleasures and desires are the absolute priority. Tell me what you crave. (Consent required for each act)', is18Plus: true},
-                {id: 'c303', title: '💖 Intimate Role Play Adventure', description: 'Redeem for a thrilling and imaginative role play session where we explore a fantasy of your choosing. (Pre-discussion & consent vital)', is18Plus: true},
-                {id: 'c304', title: '💖 Sensual Shower/Bath Together', description: 'Redeem for a deeply relaxing and intimate shared shower or bath, complete with candles, music, and gentle touches. (Consent required for intimacy escalation)', is18Plus: true},
-                {id: 'c305', title: '💖 Lingerie/Outfit of Your Choice Night', description: 'Redeem for me to wear something special you choose, just for our eyes, or vice-versa. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c306', title: '💖 Blindfolded Taste & Touch Game', description: 'Redeem for a playful and sensual game where one of us is blindfolded and experiences tastes and textures on their body. (Clear boundaries & consent)', is18Plus: true},
-                {id: 'c307', title: '💖 Explore New Sensations Together', description: 'Redeem for an evening dedicated to exploring new forms of physical intimacy and pleasure, at your pace. (Open communication & consent)', is18Plus: true},
-                {id: 'c308', title: '💖 Private Lap Dance', description: 'Redeem for a seductive and personalized lap dance, designed to excite and tease, just for you. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c309', title: '💖 Intimate Poetry Reading (by me)', description: 'Redeem for me to read you erotic poetry or write a sensual poem just for you, setting a passionate mood. (Mood setting, no forced intimacy)', is18Plus: true},
-                {id: 'c310', title: '💖 Body Paint Fun', description: 'Redeem for a creative and playful session using body paint on each other, exploring art and touch. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c311', title: '💖 "Command Me" Game', description: 'Redeem for a playful game where you get to issue commands for me to follow (within mutually agreed-upon boundaries). (Clear boundaries & consent)', is18Plus: true},
-                {id: 'c312', title: '💖 A Night of Mutual Exploration', description: 'Redeem for an entire evening where we both focus on exploring each other\'s bodies and pleasure points in new ways. (Open communication & consent)', is18Plus: true},
-                {id: 'c313', title: '💖 Hot Wax Play (Safe & Consensual)', description: 'Redeem for a session of safe and consensual hot wax play, exploring new sensations. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c314', title: '💖 Edible Body Treats', description: 'Redeem for a playful session using edible body treats (e.g., chocolate sauce, whipped cream) for sensual exploration. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c315', title: '💖 Intimate Photo Session (Private)', description: 'Redeem for a private, tasteful, and intimate photo session of you (or us) for our eyes only, capturing your sensuality. (Absolute consent & trust)', is18Plus: true},
-                {id: 'c316', title: '💖 Tantric Breathwork Session', description: 'Redeem for a guided tantric breathwork session to deepen our connection and energy together. (Focus on connection, not forced intimacy)', is18Plus: true},
-                {id: 'c317', title: '💖 Sensory Deprivation Play', description: 'Redeem for a gentle sensory deprivation game (e.g., blindfolding, earplugs) to heighten other senses during intimacy. (HIGH consent & trust)', is18Plus: true},
-                {id: 'c318', title: '💖 "Anything Goes" Date Night', description: 'Redeem for a spontaneous date night where we agree "anything goes" (within mutual agreed boundaries and safety). (VERY HIGH consent & discussion)', is18Plus: true},
-                {id: 'c319', title: '💖 Fetish Exploration Discussion', description: 'Redeem for an open and honest discussion about any fetishes or kinks you\'re curious about, with no judgment. (Discussion, not mandatory action)', is18Plus: true},
-                {id: 'c320', title: '💖 Strip Poker/Game', description: 'Redeem for a playful game of strip poker or another game, with mutually agreed-upon rules and boundaries. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c321', title: '💖 Submissive/Dominant Play (Trial)', description: 'Redeem for a gentle, introductory session exploring submissive or dominant dynamics, with clear safe words. (EXTREMELY HIGH consent & boundaries)', is18Plus: true},
-                {id: 'c322', title: '💖 Bondage Play (Safe & Consensual)', description: 'Redeem for a session of safe and consensual bondage play, exploring restraint with clear safe words. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c323', title: '💖 Waxing Service (by me)', description: 'Redeem for a private waxing service performed by me, in an area of your choosing. (Clear comfort & consent)', is18Plus: true},
-                {id: 'c324', title: '💖 Themed Fantasies Discussion', description: 'Redeem for an open discussion about any themed sexual fantasies you have, exploring scenarios and desires. (Discussion, not mandatory action)', is18Plus: true},
-                {id: 'c325', title: '💖 Erotic Body Drawing', description: 'Redeem for a sensual session where I draw on your body with non-toxic, skin-safe markers, creating temporary art. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c326', title: '💖 Private Dance Performance', description: 'Redeem for me to perform a private, seductive dance just for your eyes, with music of your choice. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c327', title: '💖 Whisper & Tease Session', description: 'Redeem for an intimate session filled with whispers, light touches, and teasing to heighten anticipation.', is18Plus: true},
-                {id: 'c328', title: '💖 Ice Play on Body', description: 'Redeem for a sensual exploration using ice on the body, creating tingling sensations. (Clear boundaries & consent)', is18Plus: true},
-                {id: 'c329', title: '💖 Intimate Question & Answer', description: 'Redeem for a deep and intimate Q&A session, where we ask each other revealing questions about our desires and experiences.', is18Plus: true},
-                {id: 'c330', title: '💖 Sensual Foot Massage & Worship', description: 'Redeem for a deeply sensual foot massage, combined with elements of foot worship, if mutually desired. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c331', title: '💖 Strip Tease from Me', description: 'Redeem for a personalized strip tease performance from me, tailored to your preferences.', is18Plus: true},
-                {id: 'c332', title: '💖 Intimate Story Reading (Erotic)', description: 'Redeem for me to read you an erotic story aloud, setting a passionate and imaginative mood.', is18Plus: true},
-                {id: 'c333', title: '💖 Experiment with a New Toy', description: 'Redeem for us to acquire and experiment with a new intimate toy together, exploring its pleasures. (Mutual choice & consent)', is18Plus: true},
-                {id: 'c334', title: '💖 "What Do You Want?" Night', description: 'Redeem for a night entirely dedicated to open communication about what you want intimately, and me doing my best to fulfill it. (Open communication & consent)', is18Plus: true},
-                {id: 'c335', title: '💖 Guided Orgasm Meditation', description: 'Redeem for a guided meditation focusing on enhancing pleasure and leading to a deeper orgasm, together or individually. (Focus on mind-body connection)', is18Plus: true},
-                {id: 'c336', title: '💖 Candlelit Intimate Dinner', description: 'Redeem for a romantic, candlelit dinner where we dine with minimal clothing, increasing intimacy. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c337', title: '💖 Sensual Kissing Practice', description: 'Redeem for a dedicated session of deep, sensual kissing, exploring different styles and intensities.', is18Plus: true},
-                {id: 'c338', title: '💖 Teasing & Denial Play', description: 'Redeem for a playful session of teasing and consensual denial to build intense anticipation and pleasure. (Clear safe words & boundaries)', is18Plus: true},
-                {id: 'c339', title: '💖 Body Licking/Tracing', description: 'Redeem for a sensual session of me licking or tracing patterns on your body, exploring new sensations. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c340', title: '💖 "Yes/No/Maybe" Game (Intimate)', description: 'Redeem for a game where we discuss various intimate acts using "yes," "no," and "maybe" to explore boundaries and desires. (Discussion, not mandatory action)', is18Plus: true},
-                {id: 'c341', title: '💖 Handcuff Play (Soft & Consensual)', description: 'Redeem for light, consensual handcuff play with clear safe words and boundaries, focusing on playful restraint. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c342', title: '💖 Erotic Massage with Focus Areas', description: 'Redeem for an erotic massage specifically focusing on areas of your body that bring you intense pleasure. (Clear communication & consent)', is18Plus: true},
-                {id: 'c343', title: '💖 Intimate Blindfold Game', description: 'Redeem for a game involving blindfolds to heighten other senses during intimate moments. (HIGH consent & trust)', is18Plus: true},
-                {id: 'c344', title: '💖 Wax Play (Warm, Drip)', description: 'Redeem for a sensual session of warm (not hot) wax play, exploring new sensations. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c345', title: '💖 Role Reversal Night', description: 'Redeem for a night where we switch traditional roles, exploring new dynamics and power plays in the bedroom. (Clear boundaries & consent)', is18Plus: true},
-                {id: 'c346', title: '💖 Dirty Talk Practice', description: 'Redeem for a session where we practice and explore different types of dirty talk, finding what excites us. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c347', title: '💖 Erotic Shaving Service', description: 'Redeem for a sensual shaving service in an intimate area, performed by me with care. (Clear comfort & consent)', is18Plus: true},
-                {id: 'c348', title: '💖 Nipple Play Focus', description: 'Redeem for a session entirely dedicated to playful and sensual nipple stimulation. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c349', title: '💖 Clothespin Play (Gentle)', description: 'Redeem for gentle clothespin play on non-sensitive areas for light teasing and sensation. (Clear safe words & boundaries)', is18Plus: true},
-                {id: 'c350', title: '💖 Orgasm Race', description: 'Redeem for a playful challenge to see who can reach orgasm first, with lots of teasing and fun. (Mutual desire & consent)', is18Plus: true},
-                {id: 'c351', title: '💖 Feather Teasing', description: 'Redeem for a light, playful, and teasing session using a feather to tickle and excite sensitive areas.', is18Plus: true},
-                {id: 'c352', title: '💖 Sensory Box Exploration', description: 'Redeem for an intimate game where we explore different textures and sensations from a mystery box on each other\'s bodies.', is18Plus: true},
-                {id: 'c353', title: '💖 Deep Kissing Contest', description: 'Redeem for a playful contest of who can give the most passionate, deep, and satisfying kisses.', is18Plus: true},
-                {id: 'c354', title: '💖 Lick & Blow Game', description: 'Redeem for a sensual game involving licking a spot on your skin and then blowing on it to create shivers.', is18Plus: true},
-                {id: 'c355', title: '💖 Erotic Card Game', description: 'Redeem for a card game designed with erotic prompts or dares to deepen intimacy.', is18Plus: true},
-                {id: 'c356', title: '💖 Private Striptease from You', description: 'Redeem for a private striptease performance from you, for my eyes only, if you feel comfortable.', is18Plus: true},
-                {id: 'c357', title: '💖 Learn a New Intimate Position', description: 'Redeem for us to playfully try and master a new intimate position you\'ve been curious about.', is18Plus: true},
-                {id: 'c358', title: '💖 Sensual Body Painting (Abstract)', description: 'Redeem for a sensual session of abstract body painting, using non-toxic paints and brushes on each other.', is18Plus: true},
-                {id: 'c359', title: '💖 Whisper Your Deepest Desires', description: 'Redeem for a quiet moment where we whisper our deepest, most private desires to each other, no judgment.', is18Plus: true},
-                {id: 'c360', title: '💖 Heated Massage Oil Exploration', description: 'Redeem for a massage using specially heated massage oil to enhance relaxation and sensuality.', is18Plus: true},
-                {id: 'c361', title: '💖 Pillow Talk & Cuddle Session', description: 'Redeem for a long, intimate session of pillow talk and cuddling, sharing thoughts and feelings in bed.', is18Plus: true},
-                {id: 'c362', title: '💖 Blindfolded Feeding Game', description: 'Redeem for a playful game where I blindfold you and feed you various treats, heightening your senses.', is18Plus: true},
-                {id: 'c363', title: '💖 Gentle Rope Tie (Intro)', description: 'Redeem for an introductory session of gentle, non-restrictive rope ties, with focus on sensation. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c364', title: '💖 Explore Erogenous Zones', description: 'Redeem for a focused session of me finding and stimulating all your erogenous zones you didn\'t even know existed.', is18Plus: true},
-                {id: 'c365', title: '💖 "What Turns Me On" Guide', description: 'Redeem for a candid discussion where we each share a detailed guide of what truly turns us on, physically and mentally.', is18Plus: true},
-                {id: 'c366', title: '💖 Couples Yoga (Intimate Poses)', description: 'Redeem for a session of couples yoga focusing on poses that bring us closer and build intimacy.', is18Plus: true},
-                {id: 'c367', title: '💖 Hair Pulling (Consensual)', description: 'Redeem for consensual hair pulling during intimacy, if you find it arousing. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c368', title: '💖 "Forbidden" Touch', description: 'Redeem for a playful game where certain areas are "forbidden" to touch until a special signal. (Clear safe words & boundaries)', is18Plus: true},
-                {id: 'c369', title: '💖 Shared Hot Tub/Sauna Time', description: 'Redeem for a relaxing and intimate session in a hot tub or sauna, just the two of us. (If applicable)', is18Plus: true},
-                {id: 'c370', title: '💖 Tantric Massage (Intro)', description: 'Redeem for an introductory tantric massage focusing on energy flow and sensual connection, not just physical pleasure. (Deep trust & consent)', is18Plus: true},
-                {id: 'c371', title: '💖 Breath Play (Safe & Gentle)', description: 'Redeem for a gentle, consensual exploration of breath play, with strict safety protocols. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c372', title: '💖 Private Poetry Recital', description: 'Redeem for a private recital of erotic poetry, spoken with passion and intent to arouse.', is18Plus: true},
-                {id: 'c373', title: '💖 Candlelit Intimate Bathtub Picnics', description: 'Redeem for a romantic bathtub "picnic" with snacks, drinks, and plenty of candles, all while in the tub.', is18Plus: true},
-                {id: 'c374', title: '💖 Erotic Hypnosis/Meditation', description: 'Redeem for a guided erotic hypnosis or meditation session to deepen our intimate experience. (Focus on mind, no forced acts)', is18Plus: true},
-                {id: 'c375', title: '💖 Wet & Wild Play', description: 'Redeem for a playful and messy intimate session involving water, bubbles, or other safe liquids.', is18Plus: true},
-                {id: 'c376', title: '💖 Wax Drip Art on Body (Cool Wax)', description: 'Redeem for a creative and sensual session creating art on your body with cool, safe wax drips. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c377', title: '💖 Intimate Card/Dice Game', description: 'Redeem for a game using cards or dice that dictates intimate actions or challenges.', is18Plus: true},
-                {id: 'c378', title: '💖 Nipple Clamps (Gentle)', description: 'Redeem for a gentle introduction to nipple clamps for playful teasing and sensation. (Clear safe words & boundaries)', is18Plus: true},
-                {id: 'c379', title: '💖 Exploring Biting (Gentle)', description: 'Redeem for a consensual exploration of gentle biting during intimacy, on mutually agreed-upon areas. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c380', title: '💖 Hot/Cold Sensation Play', description: 'Redeem for an adventurous session using hot and cold elements (e.g., ice, warm cloth) on the body for heightened sensation.', is18Plus: true},
-                {id: 'c381', title: '💖 Intimate Blindfolded Cuisine', description: 'Redeem for a sensual experience of being blindfolded while I feed you delicious, unexpected foods and treats.', is18Plus: true},
-                {id: 'c382', title: '💖 Feather Tickle Challenge', description: 'Redeem for a playful challenge to see who can withstand feather tickles on sensitive areas the longest without breaking.', is18Plus: true},
-                {id: 'c383', title: '💖 Waxing Body Hair (Area of Choice)', description: 'Redeem for a private waxing service for a larger area of your body, performed by me with care. (Clear comfort & consent)', is18Plus: true},
-                {id: 'c384', title: '💖 Intimate Story Exchange', description: 'Redeem for a session where we both share an intimate story from our past, strengthening our bond.', is18Plus: true},
-                {id: 'c385', title: '💖 Lingerie/Body Stocking Fashion Show', description: 'Redeem for a private fashion show where you (or we) try on various intimate apparel for each other.', is18Plus: true},
-                {id: 'c386', title: '💖 Spanking Play (Consensual & Gentle)', description: 'Redeem for a consensual session of light spanking play, with clear safe words and boundaries. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c387', title: '💖 Body Writing (Erotic Messages)', description: 'Redeem for me to write erotic messages or drawings on your body with safe, temporary markers or fingers. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c388', title: '💖 Dirty Haiku/Poem Exchange', description: 'Redeem for a creative session where we write and exchange short, erotic haikus or poems.', is18Plus: true},
-                {id: 'c389', title: '💖 "What If" Intimate Scenarios', description: 'Redeem for a playful discussion exploring "what if" scenarios for various intimate situations or fantasies.', is18Plus: true},
-                {id: 'c390', title: '💖 Private Photo Booth Fun (Intimate Props)', description: 'Redeem for a playful and intimate photo booth session with fun props, just for our private collection.', is18Plus: true},
-                {id: 'c391', title: '💖 Intimate Body Mapping', description: 'Redeem for a session where we map out each other\'s most sensitive and arousing spots on a drawing of the body.', is18Plus: true},
-                {id: 'c392', title: '💖 Playful Pinching/Squeeze (Consensual)', description: 'Redeem for playful, gentle pinching or squeezing on mutually agreed-upon areas for added sensation. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c393', title: '💖 Erotic Whisper Game', description: 'Redeem for a game where we whisper increasingly erotic or suggestive things in each other\'s ears.', is18Plus: true},
-                {id: 'c394', title: '💖 Sensory Box - Textures', description: 'Redeem for an intimate exploration using various soft, rough, smooth textures on each other\'s bodies.', is18Plus: true},
-                {id: 'c395', title: '💖 Intimate "Never Have I Ever"', description: 'Redeem for a revealing game of "Never Have I Ever" focusing on intimate experiences and desires.', is18Plus: true},
-                {id: 'c396', title: '💖 Lingerie/Underwear Swap', description: 'Redeem for a playful moment of swapping and trying on each other\'s intimate apparel, if comfortable.', is18Plus: true},
-                {id: 'c397', title: '💖 Nude Cooking/Baking', description: 'Redeem for a fun and intimate session of cooking or baking together in the nude, just for us. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c398', title: '💖 Erotic Reading Session (Turn-Based)', description: 'Redeem for a sensual reading session where we take turns reading aloud from an erotic novel or story.', is18Plus: true},
-                {id: 'c399', title: '💖 Private Dance Club (at Home)', description: 'Redeem for us to create a private dance club atmosphere at home, with music, lights, and sexy moves.', is18Plus: true},
-                {id: 'c400', title: '💖 Intimate Bubble Wrap Pop', description: 'Redeem for a playful and sensual session popping bubble wrap on each other\'s bodies for unique sensations.', is18Plus: true},
-                {id: 'c401', title: '💖 Erotic Scavenger Hunt', description: 'Redeem for a playful scavenger hunt leading to an intimate reward or revelation.', is18Plus: true},
-                {id: 'c402', title: '💖 Hand-Over-Hand Guided Touch', description: 'Redeem for a sensual session where I guide your hand to touch me, or vice versa, exploring touch together.', is18Plus: true},
-                {id: 'c403', title: '💖 Intimate Card Reading (Tarot/Oracle)', description: 'Redeem for an intimate card reading session (e.g., tarot or oracle cards) focused on love and desire.', is18Plus: true},
-                {id: 'c404', title: '💖 Body Slap Play (Gentle & Consensual)', description: 'Redeem for a playful, consensual session of light body slapping on mutually agreed-upon areas. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c405', title: '💖 Explore a New Location for Intimacy', description: 'Redeem for us to try being intimate in a new, exciting (and safe) location around the house.', is18Plus: true},
-                {id: 'c406', title: '💖 Intimate Shower/Bath Role Play', description: 'Redeem for a themed role play scenario specifically for our shared shower or bath time.', is18Plus: true},
-                {id: 'c407', title: '💖 Blindfolded Sensual Massage', description: 'Redeem for a deeply sensual massage where you are blindfolded to heighten other senses.', is18Plus: true},
-                {id: 'c408', title: '💖 Erotic "Would You Rather" Game', description: 'Redeem for a playful game of "Would You Rather" with a focus on intimate and erotic scenarios.', is18Plus: true},
-                {id: 'c409', title: '💖 Nipple Tickle with Feathers', description: 'Redeem for a teasing session of feather tickles focused purely on your nipples.', is18Plus: true},
-                {id: 'c410', title: '💖 Body Icing Challenge', description: 'Redeem for a playful challenge where we take turns using ice cubes on each other\'s bodies for thrilling sensations.', is18Plus: true},
-                {id: 'c411', title: '💖 "What I Want to Do To You" List', description: 'Redeem for me to write a detailed, explicit list of all the things I want to do to you intimately.', is18Plus: true},
-                {id: 'c412', title: '💖 Sensual Perfume/Cologne Application', description: 'Redeem for a sensual moment where I apply your favorite perfume/cologne to your pulse points, with kisses.', is18Plus: true},
-                {id: 'c413', title: '💖 Intimate Story Creation', description: 'Redeem for a session where we collaborate on writing an erotic short story together.', is18Plus: true},
-                {id: 'c414', title: '💖 Body Temperature Play (Warm/Cool)', description: 'Redeem for a sensual exploration using varying temperatures (e.g., warm cloths, cool breezes) on your skin.', is18Plus: true},
-                {id: 'c415', title: '💖 Sensual Hair Styling (by me)', description: 'Redeem for a sensual hair styling session, with gentle touches and teasing words.', is18Plus: true},
-                {id: 'c416', title: '💖 Intimate Wax Drip Art (Warm Wax)', description: 'Redeem for a creative and sensual session where I create art on your body with warm, safe wax drips. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c417', title: '💖 Erotic Role Dice Game', description: 'Redeem for a game using special erotic dice to determine actions or scenarios for our intimate time.', is18Plus: true},
-                {id: 'c418', title: '💖 Teasing Touch on Inner Thighs', description: 'Redeem for a session of slow, teasing touches focused on your inner thighs, building anticipation.', is18Plus: true},
-                {id: 'c419', title: '💖 Nipple Clamps (Light & Playful)', description: 'Redeem for a light and playful introduction to nipple clamps, with immediate removal if desired. (Clear safe words & boundaries)', is18Plus: true},
-                {id: 'c420', title: '💖 Sensory Box - Scents', description: 'Redeem for an intimate game where we use blindfolds and try to guess different sensual scents on each other.', is18Plus: true},
-                {id: 'c421', title: '💖 Erotic Drawing of You', description: 'Redeem for me to create an erotic sketch or drawing of you, capturing your beauty and sensuality.', is18Plus: true},
-                {id: 'c422', title: '💖 Intimate Foot Fetish Exploration', description: 'Redeem for a session dedicated to exploring foot fetish play, if you\'re curious and comfortable. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c423', title: '💖 Blindfolded Hand Exploration', description: 'Redeem for a sensual game where I blindfold you and explore your body using only my hands, building anticipation.', is18Plus: true},
-                {id: 'c424', title: '💖 Wet T-Shirt/Clothes Fun', description: 'Redeem for a playful and messy intimate session involving getting clothes wet for added sensuality. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c425', title: '💖 Private Erotic Dance Lesson', description: 'Redeem for a private lesson where I teach you a sexy dance routine, or you teach me one.', is18Plus: true},
-                {id: 'c426', title: '💖 Consensual Hair Pulling (Playful)', description: 'Redeem for playful hair pulling during intimacy, only if explicitly desired and with boundaries.', is18Plus: true},
-                {id: 'c427', title: '💖 Body Writing (Erotic Messages) with Edible Paint', description: 'Redeem for me to write erotic messages on your body using edible body paint, for playful consumption.', is18Plus: true},
-                {id: 'c428', title: '💖 Erotic Role Play (Costume Optional)', description: 'Redeem for a full-fledged erotic role play scenario, with or without costumes, exploring a new dynamic.', is18Plus: true},
-                {id: 'c429', title: '💖 Intimate Blindfold Game with Mystery Object', description: 'Redeem for a blindfolded game where I use a mystery object (safe) to stimulate your skin, and you guess it.', is18Plus: true},
-                {id: 'c430', title: '💖 Teasing Strip Show for Me', description: 'Redeem for a slow, teasing strip show from you, tailored to my desires, if you feel comfortable.', is18Plus: true},
-                {id: 'c431', title: '💖 Bondage Play (Silken Ties, Gentle)', description: 'Redeem for gentle, consensual bondage using soft silk ties, with clear safe words and boundaries. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c432', title: '💖 Erotic Massage with Pressure Points', description: 'Redeem for an erotic massage focusing on specific pressure points to maximize pleasure and relaxation.', is18Plus: true},
-                {id: 'c433', title: '💖 Intimate Whisper & Nibble', description: 'Redeem for a sensual combination of soft whispers and gentle nibbles on your neck, ears, or shoulders.', is18Plus: true},
-                {id: 'c434', title: '💖 Body Tracing with Feather/Ice', description: 'Redeem for a sensual game where I trace patterns on your body using a feather or ice, exploring different sensations.', is18Plus: true},
-                {id: 'c435', title: '💖 Erotic Photo Booth Fun (Themed)', description: 'Redeem for a themed erotic photo booth session, with props and outfits that align with a fantasy.', is18Plus: true},
-                {id: 'c436', title: '💖 Blindfolded Sensual Feeding', description: 'Redeem for a luxurious experience of being blindfolded and sensually fed various aphrodisiac foods.', is18Plus: true},
-                {id: 'c437', title: '💖 Intimate Scavenger Hunt with Clues', description: 'Redeem for a fun and exciting intimate scavenger hunt, with clues leading to a sensual discovery.', is18Plus: true},
-                {id: 'c438', title: '💖 Gentle Discipline Play (Consensual)', description: 'Redeem for an exploration of gentle discipline play, with clear safe words and boundaries for comfort. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c439', title: '💖 Body Painting with Edible Paint', description: 'Redeem for a fun and sensual session of body painting using edible, body-safe paints. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c440', title: '💖 Erotic Storytelling (Interactive)', description: 'Redeem for an interactive erotic storytelling session where we take turns building a sensual narrative.', is18Plus: true},
-                {id: 'c441', title: '💖 Private Burlesque Show (by you)', description: 'Redeem for a private burlesque-style performance from you, if you feel comfortable and want to surprise me.', is18Plus: true},
-                {id: 'c442', title: '💖 Explore G-Spot/P-Spot Pleasure', description: 'Redeem for a dedicated session focused on discovering and maximizing pleasure from the G-spot/P-spot.', is18Plus: true},
-                {id: 'c443', title: '💖 Edible Body Dusting', description: 'Redeem for a playful application of edible shimmering body dust, followed by sensual licking.', is18Plus: true},
-                {id: 'c444', title: '💖 Sensual Chocolate Painting', description: 'Redeem for a fun and delicious session of painting on each other\'s bodies with melted chocolate.', is18Plus: true},
-                {id: 'c445', title: '💖 Whisper "Dirty" Secrets', description: 'Redeem for a private moment where we whisper our deepest "dirty" secrets or fantasies to each other.', is18Plus: true},
-                {id: 'c446', title: '💖 Intimate "Truth or Dare" (with a Twist)', description: 'Redeem for a game of "Truth or Dare" with intimate and sensual twists, always consensual and fun.', is18Plus: true},
-                {id: 'c447', title: '💖 Blindfolded Massage with Mystery Oils', description: 'Redeem for a deeply sensual blindfolded massage using various mystery massage oils, guessing scents.', is18Plus: true},
-                {id: 'c448', title: '💖 Erotic Sound Play (Whispers, Moans)', description: 'Redeem for an intimate session focusing on the power of erotic sounds, whispers, and moans to arouse.', is18Plus: true},
-                {id: 'c449', title: '💖 Consensual Biting (Teasing)', description: 'Redeem for playful, teasing bites on non-sensitive areas, only if explicitly desired and with boundaries.', is18Plus: true},
-                {id: 'c450', title: '💖 Intimate Strip Dice Game', description: 'Redeem for a playful strip dice game where actions are determined by the roll, always with consent.', is18Plus: true},
-                {id: 'c451', title: '💖 Scented Lube Exploration', description: 'Redeem for a sensual exploration using different scented or flavored lubricants to heighten pleasure.', is18Plus: true},
-                {id: 'c452', title: '💖 Erotic "Would You Rather" - Deep Dive', description: 'Redeem for an extended "Would You Rather" game focusing on deeper, more explicit intimate scenarios.', is18Plus: true},
-                {id: 'c453', title: '💖 Light Scratching Play (Consensual)', description: 'Redeem for consensual, light scratching on the back or other areas, if you find it arousing. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c454', title: '💖 Intimate Foot Massage with Tickling', description: 'Redeem for a deeply sensual foot massage combined with playful tickling for added sensation.', is18Plus: true},
-                {id: 'c455', title: '💖 Body Mapping with Kisses', description: 'Redeem for a sensual exploration where I map out your body\'s sensitive spots using only kisses.', is18Plus: true},
-                {id: 'c456', title: '💖 Sensual Meditation for Two', description: 'Redeem for a guided meditation focusing on enhancing sensual awareness and connection between us.', is18Plus: true},
-                {id: 'c457', title: '💖 Private "Dare" Challenge', description: 'Redeem for a private "dare" challenge that we come up with for each other, always consensual.', is18Plus: true},
-                {id: 'c458', title: '💖 Erotic Storytelling (Your Scenario)', description: 'Redeem for me to tell you an erotic story based on a scenario or fantasy you describe.', is18Plus: true},
-                {id: 'c459', title: '💖 Warm Oil Drip on Body', description: 'Redeem for a sensual experience of warm, edible oil slowly dripped onto your body, followed by kisses.', is18Plus: true},
-                {id: 'c460', title: '💖 Blindfolded Body Exploration (No Words)', description: 'Redeem for a sensual experience where I blindfold you and explore your body in silence, relying on touch alone.', is18Plus: true},
-                {id: 'c461', title: '💖 Intimate Breath & Touch Dance', description: 'Redeem for a synchronized dance of breath and touch, moving together to deepen our connection.', is18Plus: true},
-                {id: 'c462', title: '💖 Erotic Drawing on Body with Feather', description: 'Redeem for me to draw erotic patterns on your body using a feather, for light, teasing sensations.', is18Plus: true},
-                {id: 'c463', title: '💖 "Spicy" Truth or Dare', description: 'Redeem for an extra "spicy" game of truth or dare, pushing boundaries within our comfort zones.', is18Plus: true},
-                {id: 'c464', title: '💖 Sensual Licking/Kissing Game', description: 'Redeem for a playful game of sensual licking and kissing different parts of your body, exploring what you love.', is18Plus: true},
-                {id: 'c465', title: '💖 Intimate Question/Answer Game (Deep)', description: 'Redeem for a game of deep, intimate Q&A to explore our deepest desires and fantasies with honesty.', is18Plus: true},
-                {id: 'c466', title: '💖 Warm Bath/Shower with Intimate Wash', description: 'Redeem for a sensual shared bath/shower using intimate body washes and scrubs, for heightened sensation.', is18Plus: true},
-                {id: 'c467', title: '💖 Erotic Reading - Your Pick', description: 'Redeem for me to read aloud from an erotic book or story of your choosing.', is18Plus: true},
-                {id: 'c468', title: '💖 Private Nude Dance Party', description: 'Redeem for a private dance party in the nude, just for the two of us, letting loose and having fun. (Mutual comfort & consent)', is18Plus: true},
-                {id: 'c469', title: '💖 Body Paint Challenge (Abstract Erotic)', description: 'Redeem for a challenge to create abstract erotic art on each other\'s bodies using safe paints.', is18Plus: true},
-                {id: 'c470', title: '💖 Sensual Ice Cube Meltdown', description: 'Redeem for a sensual game involving melting ice cubes on each other\'s bodies, exploring the cool sensation.', is18Plus: true},
-                {id: 'c471', title: '💖 Intimate "Would You Rather" - Scenario Building', description: 'Redeem for a "Would You Rather" game where we build elaborate erotic scenarios based on our choices.', is18Plus: true},
-                {id: 'c472', title: '💖 Light Discipline Play (Playful & Gentle)', description: 'Redeem for a playful and very gentle introduction to discipline play, with clear safe words. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c473', title: '💖 Blindfolded Food & Drink Game', description: 'Redeem for a sensual game where I blindfold you and feed you various delicious and surprising foods and drinks.', is18Plus: true},
-                {id: 'c474', title: '💖 Erotic Whisper Scavenger Hunt', description: 'Redeem for a scavenger hunt where clues are whispered sensually, leading to an intimate prize.', is18Plus: true},
-                {id: 'c475', title: '💖 Sensual Licking/Tracing with Warm Chocolate', description: 'Redeem for a delicious and sensual session of licking and tracing patterns with warm chocolate on your body.', is18Plus: true},
-                {id: 'c476', title: '💖 Intimate Photo Challenge (Theme)', description: 'Redeem for a private photo challenge with a specific intimate theme or pose, just for us.', is18Plus: true},
-                {id: 'c477', title: '💖 Couples Tantric Meditation (Deep)', description: 'Redeem for a deeper guided tantric meditation session focused on energy exchange and profound connection.', is18Plus: true},
-                {id: 'c478', title: '💖 Feather Trail Teasing', description: 'Redeem for a teasing session where I use a feather to create a sensual trail on your skin, leading to a surprise.', is18Plus: true},
-                {id: 'c479', title: '💖 Intimate Body Paint Game (Guess the Shape)', description: 'Redeem for a game where I paint shapes on your body while you\'re blindfolded, and you guess what it is.', is18Plus: true},
-                {id: 'c480', title: '💖 Erotic Storytelling (Your Character)', description: 'Redeem for me to tell you an erotic story where you are the main character, exploring your desires.', is18Plus: true},
-                {id: 'c481', title: '💖 Blindfolded Sensual Feeding (Mystery Flavors)', description: 'Redeem for a playful blindfolded feeding experience with mystery flavors to tease your taste buds.', is18Plus: true},
-                {id: 'c482', title: '💖 Intimate "Dare" with Consequences', description: 'Redeem for a daring intimate challenge with mutually agreed-upon playful consequences. (Clear consent & boundaries)', is18Plus: true},
-                {id: 'c483', title: '💖 Body Oil Painting', description: 'Redeem for a sensual and artistic session of painting on each other\'s bodies using safe massage oils.', is18Plus: true},
-                {id: 'c484', title: '💖 Nipple Tickle & Nibble Combo', description: 'Redeem for a combination of gentle nipple tickles and playful nibbles for heightened sensation.', is18Plus: true},
-                {id: 'c485', title: '💖 Erotic Whisper Game (Deep Secrets)', description: 'Redeem for a game where we whisper increasingly deep and intimate "dirty" secrets to each other.', is18Plus: true},
-                {id: 'c486', title: '💖 Couples Orgasm Control Practice', description: 'Redeem for a consensual session focused on practicing orgasm control together, building anticipation.', is18Plus: true},
-                {id: 'c487', title: '💖 Sensual Wax Drip Art (Colorful Wax)', description: 'Redeem for a creative and sensual session creating colorful art on your body with warm, safe wax drips. (EXTREMELY HIGH consent & safety req.)', is18Plus: true},
-                {id: 'c488', title: '💖 Intimate Body Tracing with Feather & Kisses', description: 'Redeem for a sensual combination of tracing patterns with a feather and following with soft kisses.', is18Plus: true},
-                {id: 'c489', title: '💖 Erotic Poetry Recital - Your Favorite', description: 'Redeem for me to recite your favorite erotic poem or a selection of poems you love.', is18Plus: true},
-                {id: 'c490', title: '💖 Blindfolded Sensory Board Game', description: 'Redeem for an intimate board game played blindfolded, with squares dictating different sensual touches or actions.', is18Plus: true},
-                {id: 'c491', title: '💖 Sensual Bubble Bath with Edible Foam', description: 'Redeem for a romantic bubble bath with special edible bath foam for playful consumption.', is18Plus: true},
-                {id: 'c492', title: '💖 Intimate "Never Have I Ever" - Spicy Edition', description: 'Redeem for a very spicy "Never Have I Ever" game, exploring our most adventurous intimate experiences.', is18Plus: true},
-                {id: 'c493', title: '💖 Body Painting with Fingers (No Brush)', description: 'Redeem for a more intimate session of body painting using only our fingers, for direct skin-to-skin contact.', is18Plus: true},
-                {id: 'c494', title: '💖 Erotic Storytelling (Choose Your Own Adventure)', description: 'Redeem for an interactive erotic story where you make choices that guide the narrative and its intimacy.', is18Plus: true},
-                {id: 'c495', title: '💖 Blindfolded Sensual Touch - Mystery Object', description: 'Redeem for a blindfolded game where I use a mystery object (safe) to stimulate your skin, and you guess it while aroused.', is18Plus: true},
-                {id: 'c496', title: '💖 Intimate Photography - Mood Lighting', description: 'Redeem for a private intimate photography session using special mood lighting to enhance sensuality.', is18Plus: true},
-                {id: 'c497', title: '💖 Erotic Body Tracing - Warm/Cool Contrast', description: 'Redeem for a sensual game where I trace patterns on your body using objects with contrasting warm/cool temperatures.', is18Plus: true},
-                {id: 'c498', title: '💖 "What I Want to Feel" Exploration', description: 'Redeem for a session focused purely on you communicating what sensations and feelings you want to experience, and me delivering.', is18Plus: true},
-                {id: 'c499', title: '💖 Consensual Pinching/Twisting (Teasing)', description: 'Redeem for playful, teasing pinching or twisting on mutually agreed-upon areas, for heightened sensation. (Clear boundaries & communication)', is18Plus: true},
-                {id: 'c500', title: '💖 Ultimate Intimate Desire Fulfillment', description: 'Redeem for me to fulfill one of your deepest, most intimate desires, after thorough discussion and enthusiastic consent.', is18Plus: true}
+                // 18+ COUPONS (50 Coupons)
+                {id: 'c101', title: 'Passionate Kiss Extravaganza', description: 'Redeem for an extended, deeply passionate kissing session, leaving you breathless.', is18Plus: true},
+                {id: 'c102', title: 'Sensual Full Body Massage', description: 'Redeem for a tension-releasing, sensual full body massage, focusing on your pleasure.', is18Plus: true},
+                {id: 'c103', title: 'Naughty Night In', description: 'Redeem for a night dedicated to exploring our desires, with no limits on our intimacy and fun.', is18Plus: true},
+                {id: 'c104', title: 'Undivided Attention (and more)', description: 'Redeem for an hour of my absolute, undivided attention, leading wherever your desires take us.', is18Plus: true},
+                {id: 'c105', title: 'Shower Together, Slowly', description: 'Redeem for a shared, steamy shower experience, with lots of lingering touches and playful moments.', is18Plus: true},
+                {id: 'c106', title: 'Strip Tease for Your Eyes Only', description: 'Redeem for a private, personalized strip tease performance, choreographed just for you.', is18Plus: true},
+                {id: 'c107', title: 'Midnight Rendezvous', description: 'Redeem for a spontaneous, secret midnight meet-up for some thrilling, unexpected intimacy.', is18Plus: true},
+                {id: 'c108', title: 'Fantasy Fulfillment', description: 'Redeem for me to bring one of your unspoken (or spoken!) fantasies to life, within safe boundaries.', is18Plus: true},
+                {id: 'c109', title: 'Blindfolded Touch Exploration', description: 'Redeem for a sensory journey where you explore my body by touch while blindfolded, heightening intimacy.', is18Plus: true},
+                {id: 'c110', title: 'Dessert Body Paint', description: 'Redeem for a playful session of painting each other with edible body paint and licking it off.', is18Plus: true},
+                {id: 'c111', title: 'Role Play of Your Choice', description: 'Redeem for a fun and engaging role-play scenario, where I become your chosen character.', is18Plus: true},
+                {id: 'c112', title: 'Lingerie Show', description: 'Redeem for a private fashion show of new or favorite lingerie, performed just for your enjoyment.', is18Plus: true},
+                {id: 'c113', title: 'Truth or Dare (Adult Edition)', description: 'Redeem for a game of Truth or Dare, focused on intimate and revealing questions/challenges.', is18Plus: true},
+                {id: 'c114', title: 'Personal Erotic Story', description: 'Redeem for me to write and read you a personalized erotic story starring us.', is18Plus: true},
+                {id: 'c115', title: 'Lap Dance Just For You', description: 'Redeem for a private, seductive lap dance, designed to ignite your passion.', is18Plus: true},
+                {id: 'c116', title: 'Kiss Every Inch', description: 'Redeem for me to slowly and sensually kiss every inch of your body.', is18Plus: true},
+                {id: 'c117', title: 'Body Shot Fun', description: 'Redeem for a playful body shot experience using your favorite drink.', is18Plus: true},
+                {id: 'c118', title: 'Nude Art Session (You as the Artist)', description: 'Redeem for me to pose nude while you sketch, paint, or simply admire, no judgment.', is18Plus: true},
+                {id: 'c119', title: 'Shared Bath with Bubbles & Wine', description: 'Redeem for a romantic and relaxing shared bath, complete with bubbles, wine, and intimacy.', is18Plus: true},
+                {id: 'c120', title: 'Couples Yoga (Sensual Flow)', description: 'Redeem for a private couples yoga session, focused on deep stretches, connection, and sensual flow.', is18Plus: true},
+                {id: 'c121', title: 'Late Night Conversation & Cuddles', description: 'Redeem for an evening of deep, heartfelt conversation that lasts until we fall asleep in each other\'s arms.', is18Plus: false},
+                {id: 'c122', title: 'Breakfast in Bed (Your Choice)', description: 'Redeem for a delicious breakfast, made to your specifications, and served to you in bed.', is18Plus: false},
+                {id: 'c123', title: 'Personalized Playlist for Any Mood', description: 'Redeem for a custom music playlist curated by me, perfect for your current mood or a specific activity.', is18Plus: false},
+                {id: 'c124', title: 'A Day of Complete Relaxation (No Chores)', description: 'Redeem for a full day where you are exempt from all chores and responsibilities; I\'ll handle everything.', is18Plus: false},
+                {id: 'c125', title: 'The Ultimate Back Scratch', description: 'Redeem for an extended, deeply satisfying back scratch session that will make you melt.', is18Plus: false},
+                {id: 'c126', title: 'Shared Video Game Adventure', description: 'Redeem for an epic gaming session where we embark on a new cooperative video game adventure together.', is18Plus: false},
+                {id: 'c127', title: 'Picnic in the Park (Prepared by Me)', description: 'Redeem for a charming picnic in a beautiful park, complete with all your favorite snacks and drinks, prepared by me.', is18Plus: false},
+                {id: 'c128', title: 'Hand-Held Movie Marathon', description: 'Redeem for a cozy movie marathon at home, where we hold hands the entire time, even during scary parts!', is18Plus: false},
+                {id: 'c129', title: 'Learning a New Skill Together', description: 'Redeem for us to dedicate time to learning a new skill together, like basic coding, a foreign language, or a craft.', is18Plus: false},
+                {id: 'c130', title: 'DIY Spa Night at Home', description: 'Redeem for a relaxing home spa night, complete with face masks, soothing music, and gentle massages.', is18Plus: false},
+                {id: 'c131', title: 'A Custom Illustrated Card', description: 'Redeem for a unique, hand-drawn or digitally illustrated card, just for you, featuring a special memory or inside joke.', is18Plus: false},
+                {id: 'c132', title: 'Story Time (Any Story You Choose)', description: 'Redeem for me to read aloud any book, short story, or even a fanfiction you desire, with character voices!', is18Plus: false},
+                {id: 'c133', title: 'A Walk Down Memory Lane', description: 'Redeem for a dedicated time to look through old photos and videos, reminiscing about our favorite memories.', is18Plus: false},
+                {id: 'c134', title: 'Build a Fort (Adult Edition)', description: 'Redeem for us to construct an epic blanket or pillow fort, perfect for cozying up and watching movies.', is18Plus: false},
+                {id: 'c135', title: 'The Ultimate Comfort Snack Platter', description: 'Redeem for a beautifully arranged platter of all your favorite comfort snacks, ready for indulgence.', is18Plus: false},
+                {id: 'c136', title: 'An Hour of Uninterrupted Compliments', description: 'Redeem for me to shower you with genuine, specific compliments for an entire hour, no interruptions.', is18Plus: false},
+                {id: 'c137', title: 'Cook Your Favorite Meal Together', description: 'Redeem for a fun, collaborative cooking session where we prepare your absolute favorite meal together.', is18Plus: false},
+                {id: 'c138', title: 'The "Yes, Dear" Day', description: 'Redeem for one day where I will cheerfully agree to all your non-outrageous requests, no questions asked.', is18Plus: false},
+                {id: 'c139', title: 'A Digital Detox Day Together', description: 'Redeem for a full day where we both unplug from all screens and enjoy each other\'s company offline.', is18Plus: false},
+                {id: 'c140', title: 'Shared Creative Project', description: 'Redeem for us to embark on a small creative project together, like painting, writing, or crafting.', is18Plus: false},
+                {id: 'c141', title: 'Surprise Home-Baked Treat', description: 'Redeem for a delicious homemade treat, baked just for you, whenever you least expect it.', is18Plus: false},
+                {id: 'c142', title: 'A Sincere Apology (if needed)', description: 'Redeem for a heartfelt and sincere apology for any past misstep, delivered with full understanding.', is18Plus: false},
+                {id: 'c143', title: 'Custom-Made Playlist (Acoustic/Chill)', description: 'Redeem for a soothing acoustic or chill playlist specially curated for your relaxation.', is18Plus: false},
+                {id: 'c144', title: 'Long Hug & Comfort Session', description: 'Redeem for a long, comforting hug and a session where I listen to anything on your mind, offering solace.', is18Plus: false},
+                {id: 'c145', title: 'A Day of Mutual Appreciation', description: 'Redeem for a day where we both make a conscious effort to express our appreciation for each other constantly.', is18Plus: false},
+                {id: 'c146', title: 'Movie Character Marathon (Costumes Encouraged)', description: 'Redeem for a movie marathon where we dress up as characters from your favorite film series.', is18Plus: false},
+                {id: 'c147', title: 'Shared Online Course/Workshop', description: 'Redeem for us to enroll in and complete an online course or workshop together on a topic of interest.', is18Plus: false},
+                {id: 'c148', title: 'A Handwritten "Reasons I Love You" Card', description: 'Redeem for a beautifully handwritten card detailing new and specific reasons why I love you.', is18Plus: false},
+                {id: 'c149', title: 'Relaxing Head Massage', description: 'Redeem for a soothing and tension-relieving head massage, perfect for unwinding.', is18Plus: false},
+                {id: 'c150', title: 'Spontaneous Adventure (Day Trip)', description: 'Redeem for an unplanned, exciting day trip to a new place or a favorite spot, just for us.', is18Plus: false},
+                // Even more 18+ coupons
+                {id: 'c151', title: 'Intimate Game Night', description: 'Redeem for a night of board games or card games, where the stakes (and clothing) get progressively lower.', is18Plus: true},
+                {id: 'c152', title: 'Sensory Exploration Session', description: 'Redeem for an intimate session focusing on heightened senses: touch, taste, smell, just for us.', is18Plus: true},
+                {id: 'c153', title: 'Private Dance Performance', description: 'Redeem for a personal, sensual dance performance in your favorite outfit, designed to captivate.', is18Plus: true},
+                {id: 'c154', title: 'Extended Lingerie Show', description: 'Redeem for an extended, detailed showcase of my most alluring lingerie, with commentary and poses for you.', is18Plus: true},
+                {id: 'c155', title: 'Tantric Touch Experience', description: 'Redeem for an introduction to sensual, connection-focused tantric touch, for deepening our bond.', is18Plus: true},
+                {id: 'c156', title: 'Bedroom Scavenger Hunt', description: 'Redeem for a playful scavenger hunt leading to an intimate surprise in the bedroom.', is18Plus: true},
+                {id: 'c157', title: 'Body Icing & Licking', description: 'Redeem for a playful and cooling session of applying ice to skin and licking it off.', is18Plus: true},
+                {id: 'c158', title: 'Role Play: Master/Servant', description: 'Redeem for a role-play scenario where you are the master and I am your willing servant for an hour.', is18Plus: true},
+                {id: 'c159', title: 'Private Photo Shoot (Intimate)', description: 'Redeem for a private, intimate photo shoot where I pose for your eyes only, capturing raw sensuality.', is18Plus: true},
+                {id: 'c160', title: 'Blindfolded Tasting & Teasing', description: 'Redeem for a blindfolded experience involving delicious (and sometimes surprising) tastes and teasing touches.', is18Plus: true},
+                {id: 'c161', title: 'Truth or Dare: No Limits', description: 'Redeem for an adult version of Truth or Dare with truly no limits on questions or challenges.', is18Plus: true},
+                {id: 'c162', title: 'Bondage Play Introduction', description: 'Redeem for a consensual and safe introduction to light bondage play, exploring new sensations.', is18Plus: true},
+                {id: 'c163', title: 'Wax Play (Safe & Consensual)', description: 'Redeem for a controlled and consensual wax play session, exploring temperature and sensation.', is18Plus: true},
+                {id: 'c164', title: 'Sensual Reading for Two', description: 'Redeem for me to read aloud from an erotic novel or poetry, setting a sensual mood.', is18Plus: true},
+                {id: 'c165', title: 'Custom Bedroom Playlist', description: 'Redeem for a special playlist curated for intimacy and passion, designed to enhance our private moments.', is18Plus: true},
+                {id: 'c166', title: 'Tied Up & Teased', description: 'Redeem for a consensual session where I am tied up (safely) and teased, with your full control.', is18Plus: true},
+                {id: 'c167', title: 'Body Paint Art (Interactive)', description: 'Redeem for a session where we both get to apply body paint on each other and then play.', is18Plus: true},
+                {id: 'c168', title: 'Foreplay Focus Session', description: 'Redeem for an entire session dedicated purely to foreplay, exploring every touch and sensation slowly.', is18Plus: true},
+                {id: 'c169', title: 'Pleasure Tool Exploration', description: 'Redeem for a guided session exploring pleasure tools together, discovering new ways to delight.', is18Plus: true},
+                {id: 'c170', title: 'Erotic Hypnosis (Guided)', description: 'Redeem for a guided erotic hypnosis session designed to deepen pleasure and connection.', is18Plus: true},
+                // Even more coupons to reach 170+
+                {id: 'c171', title: 'A Week of Good Morning Kisses', description: 'Redeem for a heartfelt, lingering good morning kiss every day for a full week.', is18Plus: false},
+                {id: 'c172', title: 'Personal Coffee Barista', description: 'Redeem for me to be your personal coffee barista, making your favorite coffee drinks on demand for a day.', is18Plus: false},
+                {id: 'c173', title: 'Custom-Made Dessert', description: 'Redeem for a homemade dessert of your choice, crafted with love and your favorite ingredients.', is18Plus: false},
+                {id: 'c174', title: 'Organize Your Digital Photos', description: 'Redeem for my help organizing your digital photo collection into albums and folders.', is18Plus: false},
+                {id: 'c175', title: 'A Day of Nostalgia (Recreate a Favorite Memory)', description: 'Redeem for us to recreate a cherished memory or a favorite past activity together.', is18Plus: false},
+                {id: 'c176', title: 'Private Acapella Concert', description: 'Redeem for a small, intimate acapella concert performed by me, featuring your favorite songs.', is18Plus: false},
+                {id: 'c177', title: 'Shared Art Class (Online or Local)', description: 'Redeem for us to take an art class together, exploring painting, pottery, or drawing.', is18Plus: false},
+                {id: 'c178', title: 'A Month of No Laundry Folding', description: 'Redeem for one entire month where I handle all laundry folding, from dryer to drawer.', is18Plus: false},
+                {id: 'c179', title: 'Personalized Bedtime Story', description: 'Redeem for me to read or invent a personalized bedtime story for you, to help you drift off to sleep.', is18Plus: false},
+                {id: 'c180', title: 'Cozy Fireplace Reading Session', description: 'Redeem for a cozy evening by a fireplace (real or digital) reading books or stories together.', is18Plus: false},
+                {id: 'c181', title: 'Sensual Shower Play', description: 'Redeem for a playful and intimate session during our shower, focusing on touch and exploration.', is18Plus: true},
+                {id: 'c182', title: 'Desire-Driven Kissing', description: 'Redeem for a kissing session where every kiss is driven by your specific desires and cues.', is18Plus: true},
+                {id: 'c183', title: 'Bound & Blindfolded (Consensual)', description: 'Redeem for a consensual session where I am safely bound and blindfolded, enhancing your control.', is18Plus: true},
+                {id: 'c184', title: 'Strip Poker Night', description: 'Redeem for a fun and exciting game of strip poker, where we play to lose (our clothes!).', is18Plus: true},
+                {id: 'c185', title: 'Erotic Scene Recreation', description: 'Redeem for us to recreate a favorite erotic scene from a movie, book, or fantasy, with full commitment.', is18Plus: true},
+                {id: 'c186', title: 'Body Painting Session (Full Body)', description: 'Redeem for a full body painting session where we get creative with paints and then clean up intimately.', is18Plus: true},
+                {id: 'c187', title: 'Outdoor Interlude (Private Location)', description: 'Redeem for a thrilling and private intimate encounter in a secluded outdoor location, if safe and consensual.', is18Plus: true},
+                {id: 'c188', title: 'Whispers of Desire', description: 'Redeem for a session where I whisper your deepest desires and fantasies into your ear, bringing them to life.', is18Plus: true},
+                {id: 'c189', title: 'The Ultimate Tease', description: 'Redeem for a session dedicated purely to teasing, building anticipation and desire without immediate release.', is18Plus: true},
+                {id: 'c190', title: 'Interactive Erotic Storytelling', description: 'Redeem for a co-created erotic story where we take turns adding to the narrative, making it truly ours.', is18Plus: true},
             ];
-            // --- END COUPON DATA ---
 
-            // Load redeemed coupons from Local Storage
-            const redeemedCoupons = new Set(JSON.parse(localStorage.getItem('redeemedCoupons')) || []);
+            // --- LOCAL STORAGE KEY ---
+            const REDEEMED_COUPONS_KEY = 'myLoveCouponsRedeemed';
+            // Load redeemed coupons from localStorage
+            let redeemedCouponIds = JSON.parse(localStorage.getItem(REDEEMED_COUPONS_KEY) || '[]');
 
-            // Function to save redeemed coupons to Local Storage
-            const saveRedeemedCoupons = () => {
-                localStorage.setItem('redeemedCoupons', JSON.stringify(Array.from(redeemedCoupons)));
-            };
+            // --- FUNCTIONS ---
 
-            // Function to render coupons
-            const renderCoupons = () => {
+            /**
+             * Renders all coupons onto the page.
+             */
+            function renderCoupons() {
                 couponContainer.innerHTML = ''; // Clear existing coupons
+                // Array of soft pastel background colors for the coupons
+                const couponBgColors = ['var(--coupon-bg-1)', 'var(--coupon-bg-2)', 'var(--coupon-bg-3)', 'var(--coupon-bg-4)', 'var(--coupon-bg-5)', 'var(--coupon-bg-6)'];
+
                 coupons.forEach((coupon, index) => {
                     const couponCard = document.createElement('div');
                     couponCard.classList.add('coupon-card');
-                    couponCard.dataset.id = coupon.id; // Store ID for easy lookup
+                    couponCard.dataset.id = coupon.id; // Store coupon ID on the element
+                    // Apply rotating background color from the pastel palette
+                    couponCard.style.backgroundColor = couponBgColors[index % couponBgColors.length];
 
-                    // Add fade-in animation delay
-                    couponCard.style.animationDelay = `${index * 0.03}s`; // Faster for more coupons
-
-                    if (redeemedCoupons.has(coupon.id)) {
-                        couponCard.classList.add('redeemed');
+                    let tagsHtml = '';
+                    if (coupon.is18Plus) {
+                        tagsHtml += `<span class="tag-18plus">18+</span>`;
                     }
 
                     couponCard.innerHTML = `
+                        ${tagsHtml}
                         <h2>${coupon.title}</h2>
                         <p>${coupon.description}</p>
-                        <button class="btn redeem-btn" data-id="${coupon.id}">Redeem!</button>
-                        ${coupon.is18Plus ? '<span class="tag-18plus">18+ 💖</span>' : ''}
+                        <button class="btn" data-coupon-id="${coupon.id}">Redeem</button>
                     `;
+
+                    // Check if coupon is already redeemed and apply class
+                    if (redeemedCouponIds.includes(coupon.id)) {
+                        couponCard.classList.add('redeemed');
+                    }
+
                     couponContainer.appendChild(couponCard);
                 });
 
-                // Add event listeners to newly created redeem buttons
-                document.querySelectorAll('.redeem-btn').forEach(button => {
+                // Attach event listeners after all cards are added to DOM
+                attachRedeemListeners();
+            }
+
+            /**
+             * Attaches click event listeners to all "Redeem" buttons.
+             */
+            function attachRedeemListeners() {
+                document.querySelectorAll('.coupon-card .btn').forEach(button => {
                     button.addEventListener('click', (event) => {
-                        currentCouponId = event.target.dataset.id;
-                        redeemModal.style.display = 'flex'; // Show the modal
+                        currentCouponId = event.target.dataset.couponId;
+                        redeemModal.style.display = 'flex'; // Show modal
                     });
+                });
+            }
+
+            /**
+             * Handles the confirmation of coupon redemption.
+             */
+            function confirmRedemption() {
+                if (currentCouponId) {
+                    // Find the coupon card element
+                    const couponCard = document.querySelector(`.coupon-card[data-id="${currentCouponId}"]`);
+                    if (couponCard && !redeemedCouponIds.includes(currentCouponId)) {
+                        couponCard.classList.add('redeemed');
+                        redeemedCouponIds.push(currentCouponId); // Add to redeemed list
+                        localStorage.setItem(REDEEMED_COUPONS_KEY, JSON.stringify(redeemedCouponIds)); // Save to localStorage
+                    }
+                }
+                redeemModal.style.display = 'none'; // Hide modal
+                currentCouponId = null; // Reset current coupon ID
+            }
+
+            /**
+             * Handles cancellation of coupon redemption.
+             */
+            function cancelRedemption() {
+                redeemModal.style.display = 'none'; // Hide modal
+                currentCouponId = null; // Reset current coupon ID
+            }
+
+            // --- MODAL EVENT LISTENERS ---
+            confirmRedeemBtn.addEventListener('click', confirmRedemption);
+            cancelRedeemBtn.addEventListener('click', cancelRedemption);
+            closeModalBtn.addEventListener('click', cancelRedemption);
+            // Close modal if clicking outside the modal content
+            window.addEventListener('click', (event) => {
+                if (event.target == redeemModal) {
+                    cancelRedemption();
+                }
+            });
+
+            // --- CARD ENTRANCE ANIMATION LOGIC (Intersection Observer) ---
+            // Select all coupon cards for animation
+            const allCouponCards = document.querySelectorAll('.coupon-card');
+
+            // Options for the Intersection Observer
+            const observerOptions = {
+                root: null, // Use the viewport as the root
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the item is visible
+            };
+
+            // Callback function for when an observed element enters/leaves the viewport
+            const cardObserverCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Element is visible, add the 'card-visible' class
+                        const card = entry.target;
+                        // Calculate index for staggered delay (assuming cards are in DOM order)
+                        const index = Array.from(allCouponCards).indexOf(card);
+                        card.style.setProperty('--card-delay', `${index * 0.08}s`); // Staggered delay (0.08s per card)
+                        card.classList.add('card-visible');
+                        // Stop observing once the animation is triggered
+                        observer.unobserve(card);
+                    }
                 });
             };
 
-            // Modal button event listeners
-            confirmRedeemBtn.addEventListener('click', () => {
-                if (currentCouponId) {
-                    redeemedCoupons.add(currentCouponId);
-                    saveRedeemedCoupons();
-                    renderCoupons(); // Re-render to update the coupon's state
-                    redeemModal.style.display = 'none'; // Hide modal
-                    currentCouponId = null; // Reset
-                }
-            });
+            // Create a new Intersection Observer
+            const cardObserver = new IntersectionObserver(cardObserverCallback, observerOptions);
 
-            cancelRedeemBtn.addEventListener('click', () => {
-                redeemModal.style.display = 'none'; // Hide modal
-                currentCouponId = null; // Reset
-            });
+            // --- INITIALIZATION ---
+            renderCoupons(); // Render coupons when the page loads
 
-            closeModalBtn.addEventListener('click', () => {
-                redeemModal.style.display = 'none'; // Hide modal
-                currentCouponId = null; // Reset
+            // Observe each coupon card for entrance animation
+            document.querySelectorAll('.coupon-card').forEach(card => {
+                cardObserver.observe(card);
             });
-
-            // Close modal if clicked outside of content
-            window.addEventListener('click', (event) => {
-                if (event.target == redeemModal) {
-                    redeemModal.style.display = 'none';
-                    currentCouponId = null;
-                }
-            });
-
-            // Initial render when the page loads
-            renderCoupons();
         });
     </script>
 </body>
