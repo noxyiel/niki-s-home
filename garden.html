@@ -3,25 +3,881 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Niki's Eternal Garden 🌸</title>
-  <link rel="stylesheet" href="gardenstyle.css">
+  <!-- Tailwind CSS for utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Import the Inter font for a modern look */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    /* Base styles for the body */
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      /* Prevent horizontal scrollbar */
+      min-height: 100vh;
+      /* Ensure full viewport height */
+      transition: background 2s ease-in-out;
+      /* Smooth background transitions for day/night */
+      /* Disable text selection for a more app-like feel */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Day background gradient */
+    body.day {
+      background: linear-gradient(to top, #87CEEB 0%, #B0E0E6 50%, #ADD8E6 100%);
+    }
+
+    /* Night background gradient */
+    body.night {
+      background: linear-gradient(to top, #0A0A2A 0%, #2C3E50 70%, #526B7E 100%);
+    }
+
+    /* Keyframe animation for flowers blooming when planted */
+    @keyframes bloom {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    /* Keyframe animation for clouds moving across the sky */
+    @keyframes moveClouds {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    /* Styling for individual flower elements */
+    .flower {
+      position: absolute;
+      font-size: 3rem;
+      /* Large enough for emojis */
+      line-height: 1;
+      cursor: grab;
+      /* Indicate it's draggable */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      /* Subtle shadow for depth */
+      transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+      /* Smooth transitions for state changes */
+      animation: bloom 2s ease-out forwards;
+      /* Apply bloom animation */
+    }
+
+    /* Visual effect for drying flowers */
+    .flower.drying {
+      animation: none;
+      /* Stop bloom animation if already drying */
+      filter: grayscale(70%) sepia(20%) brightness(80%);
+      /* Desaturate and darken */
+    }
+
+    /* Temporary animation when a flower is watered */
+    .flower.watering-effect {
+      animation: waterSplash 0.5s ease-out;
+    }
+
+    /* Keyframe animation for the watering splash */
+    @keyframes waterSplash {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(-10px) scale(1.1);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Custom cursor when in watering mode */
+    .water-cursor {
+      /* Using a base64 encoded SVG for a simple water droplet cursor */
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-12h2v6h-2z"/></svg>') 16 16, auto;
+    }
+
+    /* Styling for animated cloud elements */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      /* Semi-transparent white */
+      border-radius: 50%;
+      opacity: 0;
+      animation: moveClouds linear infinite;
+      pointer-events: none;
+      /* Do not block interaction with garden */
+    }
+
+    /* Styling for the loading spinner */
+    .loader {
+      border: 4px solid #f3f3f3;
+      /* Light grey base */
+      border-top: 4px solid #3498db;
+      /* Blue spinning part */
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+      /* Spin animation */
+    }
+
+    /* Keyframe animation for the loading spinner */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Modal overlay for messages */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay on top */
+      z-index: 10000;
+      /* Highest z-index */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Semi-transparent black background */
+      justify-content: center;
+      /* Center content horizontally */
+      align-items: center;
+      /* Center content vertically */
+    }
+
+    /* Content area of the modal */
+    .modal-content {
+      background-color: #fefefe;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Responsive width */
+      max-width: 400px;
+      /* Max width for readability */
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    /* Close button for the modal */
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: black;
+      text-decoration: none;
+    }
+
+    /* Styling for the celestial body (Sun/Moon) */
+    #celestialBody {
+      position: absolute;
+      border-radius: 50%;
+      transition: all 2s ease-in-out;
+      /* Smooth transition for day/night change */
+      width: 80px;
+      height: 80px;
+      top: 10%;
+      right: 10%;
+      z-index: 5;
+    }
+
+    /* Sun appearance */
+    #celestialBody.sun {
+      background: radial-gradient(circle at 50% 50%, #FFD700, #FFA500);
+      /* Yellow to orange gradient */
+      box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.8);
+      /* Glow effect */
+    }
+
+    /* Moon appearance */
+    #celestialBody.moon {
+      background: radial-gradient(circle at 50% 50%, #F5F5DC, #C0C0C0);
+      /* Off-white to silver gradient */
+      box-shadow: 0 0 15px #F5F5DC;
+      /* Subtle glow */
+    }
+
+    /* Stars container for night sky */
+    #stars {
+      position: absolute;
+      inset: 0;
+      /* Cover entire sky */
+      pointer-events: none;
+      /* Do not block interaction */
+      background: transparent;
+    }
+
+    /* Keyframe animation for twinkling stars */
+    @keyframes twinkle {
+      0% {
+        opacity: 0.5;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Raindrop styling */
+    @keyframes raindrop {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .raindrop {
+      position: fixed;
+      /* Fixed to viewport for full screen rain */
+      background-color: rgba(173, 216, 230, 0.7);
+      /* Light blue, semi-transparent */
+      width: 2px;
+      height: 15px;
+      border-radius: 50%;
+      animation: raindrop linear infinite;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
 </head>
 
 <body>
-  <header>
-    <h1>🌼 Niki's Eternal Garden</h1>
-    <p>Plant your love, let it bloom forever 💖</p>
-  </header>
-
-  <div class="controls">
-    <button onclick="plantFlower()">Plant Flower</button>
-    <button onclick="waterGarden()">💧 Water</button>
+  <!-- Loading Overlay: Shown while the garden data loads -->
+  <div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[10000]">
+    <div class="loader"></div>
+    <p class="text-white text-lg ml-4">Loading Niki's Garden...</p>
   </div>
 
-  <div class="garden" id="garden"></div>
-  <div class="sky" id="sky"></div>
+  <!-- Message Modal: Custom modal for all messages and confirmations -->
+  <div id="messageModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeMessageModal()">&times;</span>
+      <p id="modalMessage"></p>
+      <button onclick="closeMessageModal()"
+        class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">OK</button>
+    </div>
+  </div>
 
-  <script src="script1.js"></script>
+  <!-- Header Section -->
+  <header
+    class="text-center p-4 bg-gradient-to-r from-pink-300 to-green-200 text-gray-800 sticky top-0 z-10 rounded-b-xl shadow-lg relative">
+    <!-- Home Button: Provides a simple welcome message -->
+    <button onclick="showMessageModal('Welcome to Niki\'s Eternal Garden! 🏡')"
+      class="absolute top-4 left-4 text-lg px-4 py-2 bg-purple-200 rounded-xl shadow-md hover:bg-purple-300 transition duration-300 ease-in-out transform hover:scale-105">
+      🏡 Home
+    </button>
+    <h1 class="text-4xl font-bold mb-2">🌼 Niki's Eternal Garden</h1>
+    <p class="text-lg">Plant your love, let it bloom forever 💖</p>
+    <!-- Tracking Monitor: Displays current flower counts -->
+    <div id="trackingMonitor"
+      class="absolute top-4 right-4 bg-white bg-opacity-80 p-3 rounded-xl shadow-md text-sm text-left">
+      <h3 class="font-semibold mb-1">Garden Status:</h3>
+      <p>Normal Flowers: <span id="normalCount">0</span></p>
+      <p>Dry Flowers: <span id="dryCount">0</span></p>
+      <p>Very Dry Flowers: <span id="veryDryCount">0</span></p>
+    </div>
+    <!-- User ID Display: Indicates offline mode -->
+    <div id="userIdDisplay" class="absolute bottom-2 left-4 text-gray-600 text-xs">Offline Mode</div>
+  </header>
+
+  <!-- Controls Section: Buttons for garden actions -->
+  <div class="controls text-center my-4">
+    <button id="plantButton"
+      class="text-lg px-6 py-3 border-none bg-pink-200 rounded-xl mx-2 cursor-pointer shadow-md hover:bg-pink-300 transition duration-300 ease-in-out transform hover:scale-105">
+      Plant Flower
+    </button>
+    <button id="waterButton"
+      class="text-lg px-6 py-3 border-none bg-blue-200 rounded-xl mx-2 cursor-pointer shadow-md hover:bg-blue-300 transition duration-300 ease-in-out transform hover:scale-105">
+      💧 Water
+    </button>
+    <button id="rainButton"
+      class="text-lg px-6 py-3 border-none bg-indigo-200 rounded-xl mx-2 cursor-pointer shadow-md hover:bg-indigo-300 transition duration-300 ease-in-out transform hover:scale-105">
+      🌧️ Rain
+    </button>
+  </div>
+
+  <!-- Garden Area: Where flowers are displayed and interacted with -->
+  <div id="garden"
+    class="relative w-full h-[60vh] overflow-hidden bg-gradient-to-b from-green-300 to-lime-500 rounded-xl shadow-inner mx-auto my-4 max-w-7xl">
+  </div>
+
+  <!-- Sky Area: Contains dynamic clouds and celestial bodies -->
+  <div id="sky" class="fixed top-0 left-0 w-full h-full pointer-events-none z-[-1]">
+    <div id="celestialBody" class="absolute rounded-full shadow-lg"></div>
+    <div id="stars" class="absolute inset-0 pointer-events-none"></div>
+  </div>
+
+  <script>
+    // --- DOM Element References ---
+    const garden = document.getElementById('garden');
+    const sky = document.getElementById('sky');
+    const plantButton = document.getElementById('plantButton');
+    const waterButton = document.getElementById('waterButton');
+    const rainButton = document.getElementById('rainButton');
+    const normalCountSpan = document.getElementById('normalCount');
+    const dryCountSpan = document.getElementById('dryCount');
+    const veryDryCountSpan = document.getElementById('veryDryCount');
+    const celestialBody = document.getElementById('celestialBody');
+    const starsContainer = document.getElementById('stars');
+
+    // --- Global State Variables ---
+    let flowers = []; // Array to hold all flower objects
+    let isWateringMode = false; // Flag for watering interaction
+    let isDay = true; // Tracks day/night cycle
+    let rainingInterval = null; // Holds timeout for rain effect
+
+    // --- Flower Emojis for Different States ---
+    const normalFlowerEmojis = ['🌺', '🌸', '🌼', '🌷', '🌻', '🌹', '💐', '🪷'];
+    const dryFlowerEmojis = ['🥀', '🍂', '🍁'];
+    const veryDryFlowerEmojis = ['🍂'];
+
+    // --- Time Thresholds for Flower States (in milliseconds) ---
+    // Adjusted for demonstration: 1, 2, 3 minutes respectively.
+    // For "realistic days," these would be much larger (e.g., 24 * 60 * 60 * 1000 for a day).
+    const DRY_THRESHOLD = 1 * 60 * 1000;
+    const VERY_DRY_THRESHOLD = 2 * 60 * 1000;
+    const VANISH_THRESHOLD = 3 * 60 * 1000;
+
+    let flowerIdCounter = 0; // Ensures unique IDs for new flowers
+
+    // --- Drag and Drop Variables ---
+    let draggedFlower = null;
+    let offsetX, offsetY; // Offset for smooth dragging
+
+    const LOCAL_STORAGE_KEY = 'nikiGardenFlowers'; // Key for storing data in localStorage
+
+    // --- Modal Functions (for user messages, replacing alert/confirm) ---
+    function showMessageModal(message) {
+      const modal = document.getElementById('messageModal');
+      const modalMessage = document.getElementById('modalMessage');
+      modalMessage.textContent = message;
+      modal.style.display = 'flex'; /* Use flexbox for centering */
+    }
+
+    function closeMessageModal() {
+      document.getElementById('messageModal').style.display = 'none';
+    }
+
+    // --- Local Storage Management ---
+
+    /**
+     * Saves the current state of all flowers to localStorage.
+     * Only essential, serializable data is stored.
+     */
+    function saveFlowersToLocalStorage() {
+      try {
+        // Map to create a clean array of objects for storage
+        const serializableFlowers = flowers.map(f => ({
+          id: f.id,
+          x: f.x,
+          y: f.y,
+          emoji: f.emoji,
+          state: f.state,
+          lastWatered: f.lastWatered,
+        }));
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(serializableFlowers));
+        console.log("Flowers saved to localStorage.");
+      } catch (e) {
+        console.error("Error saving to localStorage:", e);
+        showMessageModal("Failed to save garden progress. Please ensure your browser allows local storage. Error: " + e.message);
+      }
+    }
+
+    /**
+     * Loads flowers from localStorage and initializes the garden display.
+     * Clears existing DOM elements and recreates them based on stored data.
+     */
+    function loadFlowersFromLocalStorage() {
+      try {
+        const storedFlowers = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (storedFlowers) {
+          const parsedFlowers = JSON.parse(storedFlowers);
+          // Clear all existing flowers from the DOM and stop their intervals
+          flowers.forEach(f => {
+            if (f.element) f.element.remove();
+            if (f.checkInterval) clearInterval(f.checkInterval);
+          });
+          flowers = []; // Reset local array
+
+          // Recreate flower objects and DOM elements from loaded data
+          parsedFlowers.forEach(data => {
+            const newFlower = {
+              id: data.id,
+              x: data.x,
+              y: data.y,
+              emoji: data.emoji,
+              state: data.state,
+              lastWatered: data.lastWatered,
+              element: null, // DOM element will be set by createFlowerDOMElement
+              checkInterval: null,
+            };
+            flowers.push(newFlower);
+            // Ensure flowerIdCounter is greater than any loaded ID to avoid conflicts
+            if (newFlower.id >= flowerIdCounter) {
+              flowerIdCounter = newFlower.id + 1;
+            }
+            createFlowerDOMElement(newFlower); // Render flower in DOM
+            // Re-establish the interval for state checking
+            newFlower.checkInterval = setInterval(() => checkFlowerState(newFlower), 1000);
+          });
+          console.log("Flowers loaded from localStorage.");
+        } else {
+          console.log("No flowers found in localStorage. Starting with an empty garden.");
+        }
+      } catch (e) {
+        console.error("Error loading from localStorage:", e);
+        showMessageModal("Failed to load garden progress. Your saved garden might be corrupted. Error: " + e.message);
+      }
+      updateFlowerMonitor(); // Update the display counts
+    }
+
+    // --- Flower Management Functions ---
+
+    /**
+     * Creates and appends a flower's DOM element to the garden.
+     * Links the DOM element back to its corresponding flower object.
+     * @param {object} flowerObj - The flower object whose DOM element needs to be created.
+     */
+    function createFlowerDOMElement(flowerObj) {
+      const flowerElement = document.createElement('div');
+      flowerElement.className = 'flower';
+      flowerElement.style.left = `${flowerObj.x}px`;
+      flowerElement.style.top = `${flowerObj.y}px`;
+      flowerElement.style.zIndex = Math.floor(flowerObj.y); // Creates a faux-3D depth effect
+      flowerElement.setAttribute('data-id', flowerObj.id); // Store the flower's unique ID
+
+      flowerElement.textContent = flowerObj.emoji;
+      garden.appendChild(flowerElement);
+      flowerObj.element = flowerElement; // Link the DOM element to the flower object
+      updateFlowerDOMElement(flowerObj); // Apply initial visual state
+    }
+
+    /**
+     * Updates a flower's visual appearance based on its current state (emoji and drying class).
+     * @param {object} flower - The flower object to update.
+     */
+    function updateFlowerDOMElement(flower) {
+      if (flower.element) {
+        flower.element.textContent = flower.emoji;
+        if (flower.state === 'dry' || flower.state === 'very_dry') {
+          flower.element.classList.add('drying');
+        } else {
+          flower.element.classList.remove('drying');
+        }
+      }
+    }
+
+    /**
+     * Plants a new flower at a random position in the garden and saves it.
+     */
+    function plantFlower() {
+      const gardenRect = garden.getBoundingClientRect();
+      const flowerSize = 50; // Approximate size of the flower emoji
+
+      // Calculate random coordinates within the garden bounds
+      const randomX = Math.random() * (gardenRect.width - flowerSize);
+      const randomY = Math.random() * (gardenRect.height - flowerSize);
+
+      const initialEmoji = normalFlowerEmojis[Math.floor(Math.random() * normalFlowerEmojis.length)];
+
+      const newFlower = {
+        id: flowerIdCounter++,
+        x: randomX,
+        y: randomY,
+        emoji: initialEmoji,
+        state: 'normal',
+        lastWatered: Date.now(),
+        element: null,
+        checkInterval: null
+      };
+      flowers.push(newFlower);
+      createFlowerDOMElement(newFlower); // Render the new flower
+
+      // Start the periodic check for this flower's state
+      newFlower.checkInterval = setInterval(() => checkFlowerState(newFlower), 1000);
+      saveFlowersToLocalStorage(); // Save the garden state
+      updateFlowerMonitor(); // Update the display
+    }
+
+    /**
+     * Checks a flower's state based on how long it's been since it was last watered.
+     * Transitions it through normal, dry, very_dry, and eventually vanishes it.
+     * @param {object} flower - The flower object to check.
+     */
+    function checkFlowerState(flower) {
+      if (!flower.lastWatered) return; // Ensure timestamp exists
+
+      const timeElapsed = Date.now() - flower.lastWatered;
+      let newState = flower.state;
+      let newEmoji = flower.emoji;
+      let stateChanged = false;
+
+      if (flower.state === 'normal' && timeElapsed > DRY_THRESHOLD) {
+        newState = 'dry';
+        newEmoji = dryFlowerEmojis[Math.floor(Math.random() * dryFlowerEmojis.length)];
+        stateChanged = true;
+      } else if (flower.state === 'dry' && timeElapsed > VERY_DRY_THRESHOLD) {
+        newState = 'very_dry';
+        newEmoji = veryDryFlowerEmojis[0];
+        stateChanged = true;
+      } else if (flower.state === 'very_dry' && timeElapsed > VANISH_THRESHOLD) {
+        // If the flower is very dry and past the vanish threshold, remove it
+        flower.element.style.opacity = '0';
+        flower.element.style.transform = 'scale(0.5)';
+        setTimeout(() => {
+          flower.element.remove(); // Remove from DOM
+          clearInterval(flower.checkInterval); // Stop its state check interval
+          flowers = flowers.filter(f => f.id !== flower.id); // Remove from array
+          saveFlowersToLocalStorage(); // Save changes after removal
+          updateFlowerMonitor(); // Update counts
+        }, 500); // Allow for a fade-out visual effect
+        return; // Exit as flower is being removed
+      }
+
+      // If a state change occurred, update the flower and save
+      if (stateChanged) {
+        flower.state = newState;
+        flower.emoji = newEmoji;
+        updateFlowerDOMElement(flower);
+        saveFlowersToLocalStorage();
+        updateFlowerMonitor();
+      }
+    }
+
+    /**
+     * Toggles the watering mode, changing the cursor and button appearance.
+     */
+    function waterGarden() {
+      isWateringMode = !isWateringMode;
+      if (isWateringMode) {
+        waterButton.classList.add('bg-blue-400', 'ring-2', 'ring-blue-600');
+        garden.classList.add('water-cursor');
+        garden.style.cursor = 'crosshair'; // Change garden cursor for watering
+      } else {
+        waterButton.classList.remove('bg-blue-400', 'ring-2', 'ring-blue-600');
+        garden.classList.remove('water-cursor');
+        garden.style.cursor = 'default'; // Reset garden cursor
+      }
+    }
+
+    /**
+     * Waters a specific flower, resetting its state to normal and updating its appearance.
+     * @param {object} flower - The flower object to water.
+     */
+    function waterFlower(flower) {
+      if (flower.state !== 'normal') {
+        flower.state = 'normal';
+        flower.lastWatered = Date.now(); // Reset the 'last watered' time
+        flower.emoji = normalFlowerEmojis[Math.floor(Math.random() * normalFlowerEmojis.length)];
+        updateFlowerDOMElement(flower);
+        saveFlowersToLocalStorage(); // Save the updated state
+        updateFlowerMonitor(); // Update the display counts
+
+        // Apply a temporary visual watering effect
+        flower.element.classList.add('watering-effect');
+        setTimeout(() => {
+          flower.element.classList.remove('watering-effect');
+        }, 500);
+      }
+    }
+
+    /**
+     * Updates the flower count on the tracking monitor display.
+     */
+    function updateFlowerMonitor() {
+      let normal = 0;
+      let dry = 0;
+      let veryDry = 0;
+
+      flowers.forEach(flower => {
+        // Re-evaluate state based on current time elapsed for accurate display
+        const timeElapsed = Date.now() - flower.lastWatered;
+        if (timeElapsed <= DRY_THRESHOLD) {
+          normal++;
+        } else if (timeElapsed <= VERY_DRY_THRESHOLD) {
+          dry++;
+        } else if (timeElapsed <= VANISH_THRESHOLD) { // Only count if not yet vanished
+          veryDry++;
+        }
+      });
+
+      normalCountSpan.textContent = normal;
+      dryCountSpan.textContent = dry;
+      veryDryCountSpan.textContent = veryDry;
+    }
+
+    // --- Event Listeners ---
+
+    // Button click handlers
+    plantButton.addEventListener('click', plantFlower);
+    waterButton.addEventListener('click', waterGarden);
+    rainButton.addEventListener('click', startRain);
+
+    // Garden click handler for watering individual flowers
+    garden.addEventListener('click', (event) => {
+      if (isWateringMode) {
+        const clickedFlowerElement = event.target.closest('.flower');
+        if (clickedFlowerElement) {
+          const flowerId = parseInt(clickedFlowerElement.getAttribute('data-id'));
+          const flowerToWater = flowers.find(f => f.id === flowerId);
+          if (flowerToWater) {
+            waterFlower(flowerToWater);
+          }
+        }
+      }
+    });
+
+    // --- Drag and Drop Logic (Mouse Events) ---
+    garden.addEventListener('mousedown', (e) => {
+      if (isWateringMode) return; // Disable dragging if in watering mode
+
+      const targetFlower = e.target.closest('.flower');
+      if (targetFlower) {
+        draggedFlower = flowers.find(f => f.element === targetFlower);
+        if (draggedFlower) {
+          draggedFlower.element.style.cursor = 'grabbing';
+          // Calculate offset from mouse pointer to flower's top-left corner
+          offsetX = e.clientX - draggedFlower.element.getBoundingClientRect().left;
+          offsetY = e.clientY - draggedFlower.element.getBoundingClientRect().top;
+          draggedFlower.element.style.zIndex = 999; // Bring to front while dragging
+        }
+      }
+    });
+
+    garden.addEventListener('mousemove', (e) => {
+      if (!draggedFlower) return;
+
+      const gardenRect = garden.getBoundingClientRect();
+      // Calculate new position relative to the garden container
+      let newX = e.clientX - gardenRect.left - offsetX;
+      let newY = e.clientY - gardenRect.top - offsetY;
+
+      // Clamp the flower's position within the garden boundaries
+      newX = Math.max(0, Math.min(newX, gardenRect.width - draggedFlower.element.offsetWidth));
+      newY = Math.max(0, Math.min(newY, gardenRect.height - draggedFlower.element.offsetHeight));
+
+      draggedFlower.element.style.left = `${newX}px`;
+      draggedFlower.element.style.top = `${newY}px`;
+    });
+
+    garden.addEventListener('mouseup', () => {
+      if (draggedFlower) {
+        draggedFlower.element.style.cursor = 'grab'; // Reset cursor
+        // Reset z-index based on its new Y position for correct depth simulation
+        draggedFlower.element.style.zIndex = Math.floor(parseFloat(draggedFlower.element.style.top));
+        // Update flower object's position and save to localStorage
+        draggedFlower.x = parseFloat(draggedFlower.element.style.left);
+        draggedFlower.y = parseFloat(draggedFlower.element.style.top);
+        saveFlowersToLocalStorage();
+        draggedFlower = null;
+      }
+    });
+
+    // --- Drag and Drop Logic (Touch Events for Mobile) ---
+    garden.addEventListener('touchstart', (e) => {
+      if (isWateringMode) return;
+      const touch = e.touches[0];
+      const targetFlower = touch.target.closest('.flower');
+      if (targetFlower) {
+        e.preventDefault(); // Prevent scrolling while dragging
+        draggedFlower = flowers.find(f => f.element === targetFlower);
+        if (draggedFlower) {
+          draggedFlower.element.style.cursor = 'grabbing';
+          const rect = draggedFlower.element.getBoundingClientRect();
+          offsetX = touch.clientX - rect.left;
+          offsetY = touch.clientY - rect.top;
+          draggedFlower.element.style.zIndex = 999;
+        }
+      }
+    });
+
+    garden.addEventListener('touchmove', (e) => {
+      if (!draggedFlower) return;
+      e.preventDefault(); // Prevent scrolling
+      const touch = e.touches[0];
+      const gardenRect = garden.getBoundingClientRect();
+
+      let newX = touch.clientX - gardenRect.left - offsetX;
+      let newY = touch.clientY - gardenRect.top - offsetY;
+
+      newX = Math.max(0, Math.min(newX, gardenRect.width - draggedFlower.element.offsetWidth));
+      newY = Math.max(0, Math.min(newY, gardenRect.height - draggedFlower.element.offsetHeight));
+
+      draggedFlower.element.style.left = `${newX}px`;
+      draggedFlower.element.style.top = `${newY}px`;
+    });
+
+    garden.addEventListener('touchend', () => {
+      if (draggedFlower) {
+        draggedFlower.element.style.cursor = 'grab';
+        draggedFlower.element.style.zIndex = Math.floor(parseFloat(draggedFlower.element.style.top));
+        draggedFlower.x = parseFloat(draggedFlower.element.style.left);
+        draggedFlower.y = parseFloat(draggedFlower.element.style.top);
+        saveFlowersToLocalStorage();
+        draggedFlower = null;
+      }
+    });
+
+    // --- Cloud Animation Logic ---
+    function createCloud() {
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+      const size = Math.random() * 100 + 50; // Random size for clouds
+      cloud.style.width = `${size}px`;
+      cloud.style.height = `${size * 0.6}px`;
+      cloud.style.top = `${Math.random() * 30}vh`; // Position in upper 30% of viewport
+      cloud.style.animationDuration = `${Math.random() * 30 + 20}s`; // Random speed
+      cloud.style.animationDelay = `${Math.random() * -30}s`; // Stagger initial appearance
+      cloud.style.left = `${Math.random() * 100}%`; // Random starting horizontal position
+      cloud.style.opacity = `${Math.random() * 0.5 + 0.3}`; // Random transparency
+
+      sky.appendChild(cloud);
+
+      // Remove cloud and create a new one once animation ends for continuous effect
+      cloud.addEventListener('animationend', () => {
+        cloud.remove();
+        createCloud();
+      });
+    }
+
+    // Generate an initial set of clouds
+    for (let i = 0; i < 5; i++) {
+      createCloud();
+    }
+
+    // --- Day/Night Cycle Logic ---
+    function createStars() {
+      starsContainer.innerHTML = ''; // Clear existing stars
+      for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.className = 'absolute bg-white rounded-full';
+        star.style.width = star.style.height = `${Math.random() * 2 + 0.5}px`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * 60}%`; // Stars appear in upper part of sky
+        star.style.opacity = `${Math.random()}`;
+        star.style.animation = `twinkle ${Math.random() * 3 + 1}s infinite alternate`; // Twinkle effect
+        starsContainer.appendChild(star);
+      }
+    }
+
+    function toggleDayNight() {
+      isDay = !isDay;
+      if (isDay) {
+        document.body.classList.remove('night');
+        document.body.classList.add('day');
+        celestialBody.classList.remove('moon');
+        celestialBody.classList.add('sun');
+        starsContainer.style.display = 'none'; // Hide stars during the day
+        sky.style.background = 'transparent'; // Ensure sky is transparent for day
+      } else {
+        document.body.classList.remove('day');
+        document.body.classList.add('night');
+        celestialBody.classList.remove('sun');
+        celestialBody.classList.add('moon');
+        starsContainer.style.display = 'block'; // Show stars at night
+        createStars(); // Recreate stars for fresh twinkle
+        sky.style.background = 'linear-gradient(rgba(0,0,0,0.3), transparent)'; // Darker sky overlay for night
+      }
+    }
+
+    // Set initial state (day) and start the cycle
+    document.body.classList.add('day');
+    celestialBody.classList.add('sun');
+    setInterval(toggleDayNight, 60 * 1000); // Toggle day/night every minute
+
+    // --- Rain Feature Logic ---
+    function startRain() {
+      if (rainingInterval) {
+        stopRain(); // If already raining, stop it
+        return;
+      }
+
+      showMessageModal("It's raining! All flowers are getting watered. 🌧️");
+      // Water all existing flowers
+      flowers.forEach(flower => {
+        if (flower.state !== 'normal') {
+          waterFlower(flower);
+        }
+      });
+
+      // Create raindrops for visual effect
+      let drops = [];
+      for (let i = 0; i < 50; i++) { // Generate 50 raindrops
+        const drop = document.createElement('div');
+        drop.className = 'raindrop';
+        drop.style.left = `${Math.random() * 100}vw`;
+        drop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+        drop.style.animationDelay = `${Math.random() * -2}s`;
+        document.body.appendChild(drop);
+        drops.push(drop);
+      }
+
+      // Stop rain effect after 5 seconds
+      rainingInterval = setTimeout(() => {
+        drops.forEach(drop => drop.remove()); // Remove raindrops
+        rainingInterval = null;
+        showMessageModal("The rain has stopped. 🌦️");
+      }, 5000);
+    }
+
+    function stopRain() {
+      clearTimeout(rainingInterval);
+      rainingInterval = null;
+      const raindrops = document.querySelectorAll('.raindrop');
+      raindrops.forEach(drop => drop.remove());
+    }
+
+    // --- Initialization on DOM Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('loadingOverlay').style.display = 'flex'; // Show loading screen
+      loadFlowersFromLocalStorage(); // Load saved garden state
+      document.getElementById('loadingOverlay').style.display = 'none'; // Hide loading screen
+    });
+  </script>
 </body>
 
 </html>
