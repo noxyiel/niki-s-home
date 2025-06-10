@@ -3,136 +3,778 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Niki's Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niki's Home ✨💖</title>
+
+
   <style>
-    /* Reset and basics */
+    /* --- Global Reset and Base Styles --- */
+    /* Apply a universal box-sizing for consistent layout */
     * {
       box-sizing: border-box;
-      font-family: 'Comic Sans MS', cursive, sans-serif !important;
       margin: 0;
       padding: 0;
+      /* Using a fallback font stack for offline consistency */
+      font-family: 'Comic Sans MS', cursive, 'Segoe UI Emoji', sans-serif;
     }
 
+
+    /* Basic body styles, responsive height, and overflow control */
     body {
       background: linear-gradient(145deg, #ffe0f0, #ffeae3);
+      /* Soft, warm gradient for day mode */
       color: #333;
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.6;
       overflow-x: hidden;
-      /* prevent horizontal scroll */
+      /* Prevent horizontal scroll */
+      position: relative;
+      /* Essential for absolutely positioned animations */
+      transition: background 1.5s ease, color 1.5s ease;
+      /* Smooth transition for theme changes */
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="%23ff69b4" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') 10 10, auto;
+      /* Custom pink heart cursor */
     }
 
-    /* Header */
+
+    /* --- Custom Scrollbar Styling for a delightful feel --- */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+      background: #ffafbd;
+      /* Soft pink */
+      border-radius: 10px;
+      border: 3px solid #f1f1f1;
+    }
+
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff85a2;
+      /* Darker pink on hover */
+    }
+
+
+    /* Night mode scrollbar adjustments */
+    body.night-mode ::-webkit-scrollbar-track {
+      background: #1a2c3a;
+    }
+
+
+    body.night-mode ::-webkit-scrollbar-thumb {
+      background: #5a7d9a;
+      border: 3px solid #1a2c3a;
+    }
+
+
+    body.night-mode ::-webkit-scrollbar-thumb:hover {
+      background: #4a6c8e;
+    }
+
+
+    /* --- Night Mode Specific Styles --- */
+    body.night-mode {
+      background: linear-gradient(145deg, #1c2a38, #3a5c7e);
+      /* Darker, calm gradient */
+      color: #e0e0e0;
+    }
+
+
+    /* Header Section Styling */
     header {
       background: linear-gradient(to right, #ff85a2, #ffafbd);
+      /* Vibrant pink-red gradient */
       color: white;
       padding: 2.5rem 1rem 2rem;
       text-align: center;
-      font-size: 2.2rem;
+      font-family: 'Comic Sans MS', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      /* Responsive font size for large text */
       font-weight: 900;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      /* Deeper shadow */
       user-select: none;
+      position: relative;
+      z-index: 10;
+      border-bottom-left-radius: 35px;
+      border-bottom-right-radius: 35px;
+      overflow: hidden;
+      /* For internal header animations */
     }
 
-    /* Navbar */
+
+    /* Header glow animation */
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 70%);
+      transform: rotate(45deg);
+      animation: headerGlow 15s linear infinite;
+      opacity: 0.7;
+    }
+
+
+    @keyframes headerGlow {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    /* Night mode header adjustments */
+    body.night-mode header {
+      background: linear-gradient(to right, #34495e, #5a7d9a);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+
+    /* Navigation Bar Styling */
     nav {
       background: #fff0f5;
+      /* Light pink background */
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      padding: 1rem 0;
-      box-shadow: 0 3px 8px rgba(255, 182, 193, 0.5);
+      flex-wrap: wrap;
+      /* Allow wrapping on smaller screens */
+      gap: 1.5rem 1rem;
+      /* Row and column gap */
+      padding: 1rem 0.5rem;
+      box-shadow: 0 5px 15px rgba(255, 182, 193, 0.7);
+      /* More prominent shadow */
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+      animation: navEntrance 1s ease-out forwards;
+      /* Entrance animation for nav */
+      transform: translateY(-100%);
     }
+
+
+    @keyframes navEntrance {
+      to {
+        transform: translateY(0);
+      }
+    }
+
+
+    /* Night mode navigation adjustments */
+    body.night-mode nav {
+      background: #2a3e50;
+      /* Darker blue for night mode nav */
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
 
     nav a {
       font-weight: 700;
       color: #ff5c8a;
+      /* Vibrant pink link color */
       text-decoration: none;
-      font-size: 1.1rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 12px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      /* More rounded buttons */
+      transition: background-color 0.4s ease, color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
+
 
     nav a:hover,
     nav a:focus {
       background: #ffafbd;
+      /* Lighter pink on hover */
       color: white;
+      transform: translateY(-5px) scale(1.05);
+      /* Lift and slight scale on hover */
       outline: none;
+      box-shadow: 0 8px 15px rgba(255, 105, 180, 0.4);
     }
 
-    /* Main content - clean Pinterest style collage */
+
+    /* Subtle glitter effect on hover */
+    nav a::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+      z-index: 1;
+    }
+
+
+    nav a:hover::before {
+      width: 200%;
+      height: 200%;
+      opacity: 1;
+    }
+
+
+    nav a span {
+      position: relative;
+      z-index: 2;
+    }
+
+
+    /* Night mode link adjustments */
+    body.night-mode nav a {
+      color: #87ceeb;
+      /* Lighter blue for night mode links */
+      background: #3a5c7e;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+
+    body.night-mode nav a:hover {
+      background: #5a7d9a;
+      color: white;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6);
+    }
+
+
+    /* Theme Toggle Button */
+    .theme-toggle {
+      background: #ffafbd;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease, color 0.4s ease;
+      box-shadow: 0 5px 12px rgba(255, 182, 193, 0.6);
+      margin: 1.5rem auto 0;
+      /* Center and space from nav */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+
+    .theme-toggle:hover {
+      background: #ff85a2;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 10px 20px rgba(255, 105, 180, 0.5);
+    }
+
+
+    body.night-mode .theme-toggle {
+      background: #5a7d9a;
+      color: #f5f5f5;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
+    }
+
+
+    body.night-mode .theme-toggle:hover {
+      background: #4a6c8e;
+      color: white;
+    }
+
+
+    .theme-toggle .icon {
+      font-size: 1.3rem;
+    }
+
+
+    /* Main Content Area (Pinterest-style collage with 2 columns) */
     main {
-      max-width: 900px;
-      margin: 3.5rem auto 5rem;
-      padding: 0 1rem;
+      max-width: 1200px;
+      /* Wider main area */
+      margin: 4.5rem auto 6rem;
+      padding: 0 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2.8rem 2rem;
+      /* Ensure 2 columns on larger screens, responsively adapt */
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      /* This will create 2 columns when space allows, or 1 if not */
+      gap: 3.5rem 3rem;
+      /* Increased gap between cards */
     }
 
-    /* Card styles */
+
+    /* Card Styles */
     section.card {
       background: white;
-      border-radius: 18px;
-      box-shadow: 0 10px 20px rgba(255, 182, 193, 0.2);
+      border-radius: 30px;
+      /* Even more rounded corners */
+      box-shadow: 0 15px 30px rgba(255, 182, 193, 0.4);
+      /* Deeper, softer shadow */
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      padding: 1.8rem 2rem 2.5rem;
+      padding: 2.5rem 2.8rem 3.5rem;
       overflow: hidden;
       position: relative;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease, color 0.4s ease;
+      border: 2px solid transparent;
+      /* For subtle border animation */
     }
+
+
+    body.night-mode section.card {
+      background: #2a3e50;
+      /* Darker card background for night mode */
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      color: #e0e0e0;
+    }
+
 
     section.card:hover {
-      transform: translateY(-6px) scale(1.02);
-      box-shadow: 0 18px 35px rgba(255, 105, 180, 0.3);
+      transform: translateY(-10px) scale(1.03);
+      /* Lift and scale more on hover */
+      box-shadow: 0 25px 50px rgba(255, 105, 180, 0.5);
+      /* Stronger hover shadow */
+      border-color: #ffafbd;
+      /* Pink border on hover */
     }
 
-    /* Card headings */
+
+    /* Card Headings */
     section.card h2 {
-      font-size: 1.6rem;
+      font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+      /* Larger responsive font size */
       color: #ff5c8a;
-      margin-bottom: 0.8rem;
+      /* Vibrant pink */
+      margin-bottom: 1.2rem;
       font-weight: 900;
+      font-family: 'Comic Sans MS', cursive;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    /* Card text */
+
+    body.night-mode section.card h2 {
+      color: #87ceeb;
+      /* Lighter blue for night mode headings */
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+
+    /* Card Text - Enhanced for Reveal Effect */
     section.card p {
-      font-size: 1rem;
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
       color: #555;
-      line-height: 1.5;
+      line-height: 1.7;
       white-space: pre-line;
-      /* respect line breaks */
       flex-grow: 1;
-      margin-bottom: 1rem;
+      margin-bottom: 1.8rem;
+      transition: max-height 0.8s ease-in-out, opacity 0.8s ease-in-out, color 0.4s ease;
+      overflow: hidden;
+      max-height: 150px;
+      /* Initial collapsed state for paragraphs */
+      opacity: 0.8;
     }
 
-    /* Card images */
+
+    body.night-mode section.card p {
+      color: #c0c0c0;
+    }
+
+
+    section.card:hover p {
+      max-height: 500px;
+      /* Expand on hover */
+      opacity: 1;
+    }
+
+
+    /* Card Images - Using original paths */
     section.card img {
       width: 100%;
-      max-height: 180px;
-      border-radius: 14px;
+      max-height: 220px;
+      /* Taller images */
+      border-radius: 20px;
+      /* More rounded */
       object-fit: cover;
-      box-shadow: 0 6px 18px rgba(255, 182, 193, 0.25);
+      box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
       user-select: none;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
+
 
     section.card img:hover {
-      transform: scale(1.04);
+      transform: scale(1.06) rotate(2deg);
+      /* More pronounced rotation */
+      box-shadow: 0 15px 35px rgba(255, 105, 180, 0.6);
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 480px) {
+
+    /* --- Animation Styles --- */
+
+
+    /* Floating Hearts & Sparkle Particles (fixed position for background effect) */
+    .heart,
+    .sparkle {
+      position: fixed;
+      font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+      color: #ff69b4;
+      /* Hot pink */
+      pointer-events: none;
+      z-index: -1;
+      /* Furthest back, behind everything */
+      animation: floatAnimation 10s linear infinite forwards;
+      opacity: 0;
+      will-change: transform, opacity;
+      text-shadow: 0 0 8px rgba(255, 105, 180, 0.6);
+    }
+
+
+    .sparkle {
+      color: #ffd700;
+      /* Gold for sparkles */
+      font-size: clamp(1rem, 2vw, 2rem);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    }
+
+
+    @keyframes floatAnimation {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 0.8;
+        transform: translateY(-20vh) rotate(30deg) scale(0.8);
+      }
+
+      80% {
+        opacity: 0.8;
+        transform: translateY(-80vh) rotate(330deg) scale(1);
+      }
+
+      100% {
+        transform: translateY(-100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+
+    /* Bubble Trail on Cursor (fixed position, subtle effect) */
+    .bubble-trail {
+      position: fixed;
+      width: clamp(8px, 1.5vw, 15px);
+      height: clamp(8px, 1.5vw, 15px);
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 192, 203, 0.7) 100%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 50;
+      /* Above content */
+      opacity: 0;
+      animation: bubbleFade 0.6s ease-out forwards;
+      will-change: transform, opacity;
+      box-shadow: 0 0 10px rgba(255, 192, 203, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+
+    @keyframes bubbleFade {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+
+
+    /* Flying Birds / Butterflies (fixed position, animated paths) */
+    .flying-entity {
+      position: fixed;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      pointer-events: none;
+      z-index: 2;
+      will-change: transform;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      animation: flyPath 20s linear infinite forwards;
+    }
+
+
+    .flying-entity.butterfly {
+      color: #dda0dd;
+      /* Plum color for butterfly */
+      animation: flyPathButterfly 25s linear infinite forwards;
+    }
+
+
+    .flying-entity.bird {
+      color: #87ceeb;
+      /* Sky blue for bird */
+      animation: flyPathBird 20s linear infinite forwards;
+    }
+
+
+    /* Example complex path for butterflies */
+    @keyframes flyPathButterfly {
+      0% {
+        left: -10%;
+        top: 70%;
+        transform: translateY(0px) rotateY(0deg) scale(1);
+      }
+
+      20% {
+        left: 20%;
+        top: 30%;
+        transform: translateY(-50px) rotateY(0deg) scale(0.9);
+      }
+
+      40% {
+        left: 50%;
+        top: 60%;
+        transform: translateY(20px) rotateY(180deg) scale(1.1);
+      }
+
+      60% {
+        left: 80%;
+        top: 20%;
+        transform: translateY(-30px) rotateY(180deg) scale(0.9);
+      }
+
+      80% {
+        left: 100%;
+        top: 50%;
+        transform: translateY(10px) rotateY(0deg) scale(1.2);
+      }
+
+      100% {
+        left: 110%;
+        top: 70%;
+        transform: translateY(0px) rotateY(0deg) scale(1);
+      }
+    }
+
+
+    /* Example complex path for birds */
+    @keyframes flyPathBird {
+      0% {
+        left: -15%;
+        top: 20%;
+        transform: translateY(0px) rotateY(0deg) scale(1);
+      }
+
+      25% {
+        left: 30%;
+        top: 10%;
+        transform: translateY(-20px) rotateY(0deg) scale(0.9);
+      }
+
+      50% {
+        left: 70%;
+        top: 30%;
+        transform: translateY(10px) rotateY(180deg) scale(1.1);
+      }
+
+      75% {
+        left: 100%;
+        top: 0%;
+        transform: translateY(-10px) rotateY(180deg) scale(0.9);
+      }
+
+      100% {
+        left: 115%;
+        top: 20%;
+        transform: translateY(0px) rotateY(0deg) scale(1);
+      }
+    }
+
+
+    /* Animated Twinkling Stars (Night Mode specific, fixed position) */
+    .star {
+      position: fixed;
+      font-size: clamp(0.7rem, 1.2vw, 1.2rem);
+      color: white;
+      pointer-events: none;
+      z-index: -2;
+      /* Furthest back */
+      opacity: 0;
+      will-change: opacity, transform;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+
+
+    body.night-mode .star {
+      animation: twinkle 3s linear infinite forwards;
+      /* Stars only twinkle in night mode */
+    }
+
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+
+    /* Confetti Effect (on load) */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: var(--confetti-color);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 101;
+      animation: confettiFall var(--duration) ease-out forwards;
+      opacity: 0;
+    }
+
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate(var(--x-start), var(--y-start)) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--x-end), var(--y-end)) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+
+    /* Pulse animation for important elements (e.g., toggle button on load) */
+    .pulse-animation {
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7);
+      }
+
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 20px rgba(255, 105, 180, 0);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+      }
+    }
+
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 992px) {
+
+      /* Adjust for tablets and smaller desktops to maintain 2 columns */
       main {
-        gap: 2rem 0;
-        padding: 0 0.8rem;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        padding: 0 1.5rem;
+        gap: 2.5rem 1.5rem;
       }
 
       section.card {
-        padding: 1.4rem 1.6rem 2rem;
+        padding: 2rem 2.2rem 3rem;
+      }
+    }
+
+
+    @media (max-width: 768px) {
+
+      /* Tablets in portrait, larger phones */
+      nav {
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+      }
+
+      .theme-toggle {
+        margin: 1rem auto;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+        /* Force single column on smaller screens */
+        padding: 0 1rem;
+        gap: 2rem;
+      }
+
+      section.card {
+        padding: 1.8rem 2rem 2.5rem;
+      }
+
+      section.card img {
+        max-height: 180px;
+      }
+
+      section.card p {
+        max-height: none;
+        /* Allow full height when in single column */
+        opacity: 1;
+      }
+    }
+
+
+    @media (max-width: 480px) {
+
+      /* Smaller phones */
+      header {
+        padding: 1.5rem 0.5rem 1rem;
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 0;
+      }
+
+      nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .theme-toggle {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+      }
+
+      main {
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+      }
+
+      section.card {
+        padding: 1.2rem 1.2rem 1.8rem;
       }
 
       section.card h2 {
@@ -140,29 +782,39 @@
       }
 
       section.card p {
-        font-size: 0.95rem;
+        font-size: 0.9rem;
       }
 
       section.card img {
-        max-height: 120px;
+        max-height: 140px;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>Welcome to Niki's Comfort Space 💖</header>
+  <!-- Header Section -->
+  <header>
+    Welcome to Niki's Comfort Space 💖
+    <button class="theme-toggle" id="themeToggle">
+      <span class="icon">🌞</span> <span class="text">Day Mode</span>
+    </button>
+  </header>
 
+
+  <!-- Navigation Bar -->
   <nav>
     <a href="games.html">Games 🎮</a>
     <a href="quiz.html">Quizzes 🧠</a>
     <a href="personality.html">Personality 🌈</a>
     <a href="reasons.html">Reasons Why I love You 💕</a>
     <a href="coupons.html">Coupons ✨</a>
-    <a href="notes.html">Notes <3 </a>
-        <a href="garden.html">Niki's Garden 🌴 </a>
+    <a href="notes.html">Notes &lt;3 </a>
+    <a href="garden.html">Niki's Garden 🌴 </a>
   </nav>
 
+
+  <!-- Main Content Area with Cards -->
   <main>
     <section class="card" id="love-poetry">
       <h2>Hi Niki! 💌</h2>
@@ -170,8 +822,11 @@
         This is your personal space, made just for you. Here you can find games we can play together, quizzes about us,
         and sweet little paragraphs about you that I’ve written. I hope you smile every time you visit this!
       </p>
-      <img src="s.png" />
+      <!-- Original image path restored -->
+      <img src="s.png" alt="Niki's Personal Space"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x180/ffc0cb/ffffff?text=Image+Missing'" />
     </section>
+
 
     <section class="card" id="mini-love-note">
       <h2>Mini Love Note 💕</h2>
@@ -179,8 +834,11 @@
         I made this site because you're special to me and I wanted to make something unique and cozy—just like you!
         You're the sunshine in my everyday, Niki 🌞
       </p>
-      <img src="g.png" alt="Sunshine" />
+      <!-- Original image path restored -->
+      <img src="g.png" alt="Sunshine"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x180/ffd9e0/ffffff?text=Image+Missing'" />
     </section>
+
 
     <section class="card" id="our-adventures">
       <h2>Our Adventures</h2>
@@ -190,44 +848,324 @@
         Side by side, come what may,<br />
         In this world, we’ll find our way.
       </p>
-      <img src="us2.png" alt="Adventure" />
+      <!-- Original image path restored -->
+      <img src="us2.png" alt="Adventures Together"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x180/ffc9e0/ffffff?text=Image+Missing'" />
     </section>
+
 
     <section class="card" id="sweet-paragraphs">
       <h2>We Core</h2>
       <p>
-        Honestly niki , we together are a great team and the most coziest any couple could be lmao. everytime im with
-        you i get the feeling of "my home" and no one else can replace you. You are the best thing that has ever
+        Honestly niki, we together are a great team and the most coziest any couple could be lmao. Every time I'm with
+        you I get the feeling of "my home" and no one else can replace you. You are the best thing that has ever
         happened.
       </p>
-      <img src="us.png" alt="US" />
+      <!-- Original image path restored -->
+      <img src="us.png" alt="Our Bond"
+        onerror="this.onerror=null;this.src='https://placehold.co/400x180/ffe3eb/ffffff?text=Image+Missing'" />
     </section>
   </main>
 
-  <div class="hearts"></div>
 
+  <!-- JavaScript for all interactive effects and animations -->
   <script>
-    const heartsContainer = document.querySelector('.hearts');
+    // --- Helper Functions for Animation Management ---
 
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
 
-      // Keep hearts inside the container (0 to container size - heart size)
-      const maxX = heartsContainer.clientWidth - 18;
-      const maxY = heartsContainer.clientHeight - 18;
-      heart.style.left = Math.random() * maxX + 'px';
-      heart.style.top = Math.random() * maxY + 'px';
+    /**
+     * Generates a random number within a given range.
+     * @param {number} min - The minimum value (inclusive).
+     * @param {number} max - The maximum value (inclusive).
+     * @returns {number} A random number.
+     */
+    const getRandom = (min, max) => Math.random() * (max - min) + min;
 
-      heart.style.animationDuration = (2 + Math.random() * 2) + 's';
-      heartsContainer.appendChild(heart);
 
+    /**
+     * Creates and appends an animated element to the body.
+     * @param {string} className - The CSS class for the element.
+     * @param {string} content - The innerHTML content (e.g., emoji).
+     * @param {number} [duration=4000] - Animation duration in ms before removal.
+     * @returns {HTMLElement} The created element.
+     */
+    const createAnimatedElement = (className, content, duration = 4000) => {
+      const el = document.createElement('div');
+      el.className = className;
+      el.innerHTML = content;
+      document.body.appendChild(el);
+
+
+      // Remove element after animation to prevent DOM clutter
       setTimeout(() => {
-        heart.remove();
-      }, 4000);
+        if (el && el.parentNode) {
+          el.remove();
+        }
+      }, duration);
+      return el;
+    };
+
+
+    // --- 1. Floating Hearts & Sparkle Particles ---
+    let heartsActive = true;
+    let sparklesActive = true;
+    let heartsInterval;
+    let sparklesInterval;
+
+
+    /**
+     * Creates a single floating heart particle with random properties.
+     */
+    function createFloatingHeart() {
+      if (!heartsActive) return;
+      const heart = createAnimatedElement('heart', '💖', getRandom(8000, 12000));
+      heart.style.left = `${getRandom(0, 100)}vw`;
+      heart.style.animationDuration = `${getRandom(8, 12)}s`;
+      heart.style.animationDelay = `${getRandom(0, 3)}s`; // Stagger animation start
+      heart.style.fontSize = `${getRandom(1.2, 2.5)}rem`;
     }
 
-    setInterval(createHeart, 300);
+
+    /**
+     * Creates a single floating sparkle particle with random properties.
+     */
+    function createFloatingSparkle() {
+      if (!sparklesActive) return;
+      const sparkle = createAnimatedElement('sparkle', '✨', getRandom(8000, 12000));
+      sparkle.style.left = `${getRandom(0, 100)}vw`;
+      sparkle.style.animationDuration = `${getRandom(8, 12)}s`;
+      sparkle.style.animationDelay = `${getRandom(0, 3)}s`;
+      sparkle.style.fontSize = `${getRandom(1, 2)}rem`;
+    }
+
+
+    // Initial generation of floating particles at regular intervals
+    heartsInterval = setInterval(createFloatingHeart, 600); // Create a heart every 0.6s
+    sparklesInterval = setInterval(createFloatingSparkle, 800); // Create a sparkle every 0.8s
+
+
+    // --- 2. Bubble Trail on Cursor ---
+    let mouseX = 0;
+    let mouseY = 0;
+    let trailInterval;
+
+
+    // Update mouse coordinates on movement
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+
+    // Function to create a single bubble trail particle
+    function createBubbleTrailParticle() {
+      const bubble = createAnimatedElement('bubble-trail', '', 600); // Bubbles last 0.6s
+      bubble.style.left = `${mouseX}px`;
+      bubble.style.top = `${mouseY}px`;
+      bubble.style.transform = `translate(-50%, -50%)`; // Center the bubble on cursor
+      bubble.style.opacity = '1';
+    }
+
+
+    // Start continuous bubble trail generation
+    trailInterval = setInterval(createBubbleTrailParticle, 40); // Generate a bubble every 40ms
+
+
+    // --- 3. Flying Birds / Butterflies ---
+    let flyingEntitiesActive = true;
+    let flyingEntitiesInterval;
+
+
+    /**
+     * Creates a single flying entity (bird or butterfly) with random flight path.
+     */
+    function createFlyingEntity() {
+      if (!flyingEntitiesActive) return;
+      const isBird = Math.random() > 0.5; // Randomly choose between bird and butterfly
+      const entity = createAnimatedElement('flying-entity', isBird ? '🐦' : '🦋', 25000); // Fly for 25 seconds
+      entity.classList.add(isBird ? 'bird' : 'butterfly');
+
+
+      // Randomize starting side (left or right)
+      const startLeft = Math.random() < 0.5;
+      entity.style.left = startLeft ? '-20%' : '120%'; // Start further off-screen
+      entity.style.top = `${getRandom(10, 80)}vh`;
+
+
+      // Randomize speed and apply the correct animation keyframe
+      const duration = getRandom(20, 30); // seconds
+      entity.style.animationDuration = `${duration}s`;
+      entity.style.animationDelay = `${getRandom(0, 8)}s`; // Stagger initial appearance
+      entity.style.animationName = isBird ? 'flyPathBird' : 'flyPathButterfly';
+
+
+      // If starting from right, flip horizontally to face left
+      if (!startLeft) {
+        entity.style.transform = 'scaleX(-1)';
+        entity.style.animationDirection = 'reverse'; // Reverse the animation direction
+      }
+      entity.style.fontSize = `${getRandom(2, 3.5)}rem`;
+    }
+
+
+    // Generate flying entities at longer, more varied intervals
+    flyingEntitiesInterval = setInterval(createFlyingEntity, 6000); // Every 6 seconds
+
+
+    // --- 4. Animated Twinkling Stars (Night Mode Specific) ---
+    let starsInterval;
+
+
+    /**
+     * Creates a single star particle for night mode with random position and animation.
+     */
+    function createStar() {
+      const star = createAnimatedElement('star', '⭐', getRandom(2500, 4000)); // Stars last 2.5-4s
+      star.style.left = `${getRandom(0, 100)}vw`;
+      star.style.top = `${getRandom(0, 100)}vh`;
+      star.style.animationDuration = `${getRandom(2.5, 4)}s`;
+      star.style.animationDelay = `${getRandom(0, 2.5)}s`;
+      star.style.fontSize = `${getRandom(0.7, 1.2)}rem`;
+    }
+
+
+    /**
+     * Toggles the night mode on/off, updating visuals and star animations.
+     */
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const toggleIcon = themeToggleBtn.querySelector('.icon');
+    const toggleText = themeToggleBtn.querySelector('.text');
+
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isNightMode = document.body.classList.toggle('night-mode');
+
+
+      // Update button text and icon based on current mode
+      toggleIcon.textContent = isNightMode ? '🌙' : '🌞';
+      toggleText.textContent = isNightMode ? 'Night Mode' : 'Day Mode';
+
+
+      // Persist theme preference in local storage for future visits
+      localStorage.setItem('theme', isNightMode ? 'night' : 'day');
+
+
+      // Manage star animations based on night mode state
+      if (isNightMode) {
+        // Create initial burst of stars
+        for (let i = 0; i < 150; i++) {
+          createStar();
+        }
+        // Continue creating stars at regular intervals
+        starsInterval = setInterval(createStar, 300);
+      } else {
+        // Stop creating stars and remove all existing star elements
+        clearInterval(starsInterval);
+        document.querySelectorAll('.star').forEach(star => {
+          star.remove();
+        });
+      }
+    });
+
+
+    // --- 5. Confetti Burst Effect ---
+    function createConfettiBurst() {
+      const colors = ['#ff69b4', '#ffd700', '#87ceeb', '#ffb6c1', '#98fb98']; // Pink, Gold, Sky Blue, Light Pink, Pale Green
+      const numConfetti = 50;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+
+      for (let i = 0; i < numConfetti; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.setProperty('--confetti-color', colors[Math.floor(Math.random() * colors.length)]);
+
+
+        // Start from random top position near the top center
+        const startX = getRandom(viewportWidth * 0.4, viewportWidth * 0.6);
+        const startY = getRandom(-50, 0); // Start slightly above viewport
+
+
+        // End at random bottom position, spread out horizontally
+        const endX = getRandom(0, viewportWidth);
+        const endY = viewportHeight + getRandom(50, 200); // End below viewport
+
+
+        confetti.style.setProperty('--x-start', `${startX}px`);
+        confetti.style.setProperty('--y-start', `${startY}px`);
+        confetti.style.setProperty('--x-end', `${endX}px`);
+        confetti.style.setProperty('--y-end', `${endY}px`);
+        confetti.style.setProperty('--duration', `${getRandom(2, 4)}s`);
+
+
+        document.body.appendChild(confetti);
+
+
+        // Remove confetti after animation
+        setTimeout(() => {
+          if (confetti && confetti.parentNode) {
+            confetti.remove();
+          }
+        }, parseFloat(confetti.style.getPropertyValue('--duration')) * 1000);
+      }
+    }
+
+
+    // --- 6. Card Text Reveal on Hover ---
+    document.querySelectorAll('.card').forEach(card => {
+      const paragraph = card.querySelector('p');
+      // Store original max-height in a data attribute
+      paragraph.dataset.originalMaxHeight = getComputedStyle(paragraph).maxHeight;
+
+
+      card.addEventListener('mouseenter', () => {
+        // Set max-height to scrollHeight to fully expand
+        paragraph.style.maxHeight = `${paragraph.scrollHeight}px`;
+        paragraph.style.opacity = '1';
+      });
+
+
+      card.addEventListener('mouseleave', () => {
+        // Revert to original max-height
+        paragraph.style.maxHeight = paragraph.dataset.originalMaxHeight;
+        paragraph.style.opacity = '0.8';
+      });
+    });
+
+
+    // --- Initial Setup on Page Load ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Apply saved theme preference
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'night') {
+        document.body.classList.add('night-mode');
+        toggleIcon.textContent = '🌙';
+        toggleText.textContent = 'Night Mode';
+        // Trigger star creation immediately if night mode is active on load
+        for (let i = 0; i < 150; i++) {
+          createStar();
+        }
+        starsInterval = setInterval(createStar, 300);
+      } else {
+        document.body.classList.remove('night-mode');
+        toggleIcon.textContent = '🌞';
+        toggleText.textContent = 'Day Mode';
+        // Ensure no stars are lingering if theme was changed in a previous session
+        document.querySelectorAll('.star').forEach(star => star.remove());
+      }
+
+
+      // Add a subtle pulse animation to the theme toggle button on load
+      themeToggleBtn.classList.add('pulse-animation');
+      setTimeout(() => {
+        themeToggleBtn.classList.remove('pulse-animation');
+      }, 4000); // Remove after a few pulses
+
+
+      // Trigger confetti burst on page load for a welcoming effect
+      createConfettiBurst();
+    });
   </script>
 </body>
 
