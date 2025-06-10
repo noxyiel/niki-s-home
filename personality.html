@@ -3,254 +3,882 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Niki's Personality</title>
+  <!-- Importing elegant fonts: Playfair Display for headings, Inter for body and lists -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet">
   <style>
-    /* Reset and basics */
+    /* --- Global Reset & Core Styles --- */
+    /* Universal box-sizing for consistent layout */
     * {
       box-sizing: border-box;
-      font-family: 'Comic Sans MS', cursive, sans-serif !important;
       margin: 0;
       padding: 0;
     }
 
+    /* Body styles: Full viewport height, subtle gradient, sophisticated color palette, and default font */
     body {
-      background: linear-gradient(145deg, #e0f7ff, #e3f2fd);
-      color: #333;
+      font-family: 'Inter', sans-serif;
+      /* Clean, modern sans-serif for body text */
+      background: linear-gradient(145deg, #f0f4ff, #e0e7f5);
+      /* Very soft, cool blue-grey gradient */
+      color: #333a4a;
+      /* Dark charcoal blue for primary text */
       min-height: 100vh;
       line-height: 1.6;
       overflow-x: hidden;
+      /* Prevent horizontal scroll for cleaner layout */
+      -webkit-font-smoothing: antialiased;
+      /* Smoother font rendering */
+      -moz-osx-font-smoothing: grayscale;
+      /* Smoother font rendering */
     }
 
-    /* Header */
+    /* --- Header Section --- */
     header {
-      background: linear-gradient(to right, #82aaff, #c2d9ff);
-      color: white;
-      padding: 2.5rem 1rem 2rem;
+      background: linear-gradient(90deg, #6a5acd, #8476d1);
+      /* Deep royal purple to lavender gradient */
+      color: #ffffff;
+      /* White text for strong contrast */
+      padding: 2.5rem 1.5rem 2rem;
       text-align: center;
-      font-size: 2.2rem;
+      font-size: 2.8rem;
+      /* Larger, more impactful font size */
       font-weight: 900;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      /* Extra bold for prominence */
+      box-shadow: 0 8px 20px rgba(106, 90, 205, 0.3);
+      /* Soft, diffused purple shadow */
       user-select: none;
+      /* Prevent text selection */
+      font-family: 'Playfair Display', serif;
+      /* Elegant serif font for header */
+      letter-spacing: 0.03em;
+      /* Subtle letter spacing for elegance */
     }
 
-    /* Navbar */
+    /* --- Navigation Bar --- */
     nav {
-      background: #f0f8ff;
+      background: #ffffff;
+      /* Clean white background */
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      padding: 1rem 0;
-      box-shadow: 0 3px 8px rgba(176, 218, 255, 0.5);
+      gap: 2.5rem;
+      /* Increased spacing between links */
+      padding: 1.2rem 0;
+      box-shadow: 0 4px 15px rgba(176, 218, 255, 0.4);
+      /* Softer, broader shadow */
+      border-bottom: 1px solid #e0e7f5;
+      /* Subtle bottom border */
     }
 
     nav a {
-      font-weight: 700;
-      color: #5c8aff;
+      font-family: 'Inter', sans-serif;
+      /* Consistent font for navigation */
+      font-weight: 600;
+      /* Semi-bold */
+      color: #6a5acd;
+      /* Deep purple color */
       text-decoration: none;
-      font-size: 1.1rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 12px;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: 1.15rem;
+      /* Slightly larger font size */
+      padding: 0.6rem 1.2rem;
+      border-radius: 20px;
+      /* More rounded pill shape */
+      transition: all 0.3s ease-in-out;
+      /* Smooth transition for all properties */
+      letter-spacing: 0.02em;
+      /* Subtle letter spacing */
     }
 
     nav a:hover,
     nav a.active {
-      background: #82aaff;
+      background: #8476d1;
+      /* Lighter purple from header gradient on hover */
       color: white;
-      outline: none;
+      transform: translateY(-3px);
+      /* Subtle lift effect */
+      box-shadow: 0 5px 12px rgba(132, 118, 209, 0.4);
+      /* Matching shadow on hover */
     }
 
-    /* Main content */
+    /* --- Main Content Grid Layout --- */
     main {
-      max-width: 1200px;
-      margin: 3.5rem auto 5rem;
-      padding: 0 1.5rem;
+      max-width: 1300px;
+      /* Wider max-width for more spacious layout */
+      margin: 4rem auto 6rem;
+      /* Increased top/bottom margins */
+      padding: 0 2rem;
+      /* More horizontal padding */
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
+      /* Responsive grid: columns adjust automatically, min size 300px, max 1fr */
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3rem;
+      /* Increased gap between cards */
     }
 
-    /* Card styles */
+    /* --- Individual Card Styles --- */
     .card {
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 12px 25px rgba(176, 218, 255, 0.3);
-      padding: 2rem 2.2rem;
+      background: #ffffff;
+      /* Clean white background for cards */
+      border-radius: 25px;
+      /* More pronounced rounded corners */
+      box-shadow: 0 15px 40px rgba(106, 90, 205, 0.1);
+      /* Soft, diffused purple shadow */
+      padding: 2.5rem 2.5rem;
+      /* Generous padding */
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      /* Smooth transitions for hover effects */
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease-in-out;
+      border: 1px solid #e6e9f5;
+      /* Very subtle light border */
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(130, 170, 255, 0.3);
+      transform: translateY(-12px);
+      /* More significant lift on hover */
+      box-shadow: 0 25px 55px rgba(106, 90, 205, 0.25);
+      /* Stronger, more diffused shadow */
     }
 
     .card h2 {
-      font-size: 1.8rem;
-      color: #5c8aff;
-      margin-bottom: 1.2rem;
-      font-weight: 900;
+      font-family: 'Playfair Display', serif;
+      /* Elegant serif for card titles */
+      font-size: 2.1rem;
+      /* Larger card title font size */
+      color: #6a5acd;
+      /* Deep purple color for titles */
+      margin-bottom: 1.5rem;
+      /* More space below title */
+      font-weight: 700;
       display: flex;
       align-items: center;
+      line-height: 1.2;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      /* Subtle text shadow */
     }
 
     .card h2 .icon {
-      margin-right: 1rem;
-      font-size: 2rem;
+      margin-right: 1.2rem;
+      /* Increased spacing for icon */
+      font-size: 2.4rem;
+      /* Larger icon size */
+      color: #8476d1;
+      /* Lighter purple for icon */
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for icons */
     }
 
-    /* List inside cards */
+    /* List styling inside cards */
     .card ul {
       list-style: none;
+      /* Remove default list styling */
       padding-left: 0;
       flex-grow: 1;
+      /* Allows lists to expand and push content down */
     }
 
     .card ul li {
-      font-size: 1.1rem;
-      color: #444;
-      padding: 0.8rem 0;
-      border-bottom: 2px dashed #eef6ff;
+      font-family: 'Inter', sans-serif;
+      /* Consistent font for list items */
+      font-size: 1.15rem;
+      /* Slightly larger list item font */
+      color: #444a5b;
+      /* Slightly darker text for contrast */
+      padding: 0.9rem 0;
+      border-bottom: 1px dashed rgba(106, 90, 205, 0.15);
+      /* Soft, transparent dashed border */
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+      /* Align items to start if text wraps */
       transition: background-color 0.2s ease;
     }
 
     .card ul li:last-child {
       border-bottom: none;
+      /* No border for the last item */
     }
 
     .card ul li:hover {
-      background-color: #f8fbff;
+      background-color: #fcfdff;
+      /* Very subtle light background on hover */
     }
 
     .card ul strong {
-      color: #82aaff;
-      min-width: 120px;
+      color: #8476d1;
+      /* Lighter purple for emphasized text */
+      min-width: 150px;
+      /* Wider min-width for labels */
       display: inline-block;
+      font-weight: 600;
+      /* Semi-bold for labels */
+      margin-right: 0.8rem;
+      /* Space between label and value */
     }
 
-    /* Special "About Her" card */
+    .card ul span {
+      flex-grow: 1;
+      /* Allow content to take remaining space */
+    }
+
+    /* Special "About Her" card - spans full width */
     #about-her-card {
       grid-column: 1 / -1;
-      /* Make this card span full width */
+      /* Make this card span full width in the grid */
       text-align: center;
+      padding: 3.5rem 3rem;
+      /* More padding for prominent card */
+    }
+
+    #about-her-card h2 {
+      font-size: 2.8rem;
+      /* Larger title for the main introductory card */
+      margin-bottom: 1.5rem;
+      justify-content: center;
+      /* Center icon and text */
     }
 
     #about-her-card p {
-      font-size: 1.2rem;
-      color: #555;
-      line-height: 1.7;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      /* Larger body text for the intro */
+      color: #555e6c;
+      /* Slightly darker body text */
+      line-height: 1.8;
+      max-width: 800px;
+      /* Constrain text width for readability */
+      margin: 0 auto;
+      /* Center paragraph */
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 768px) {
+    /* --- Interactive Elements Specific Styles --- */
+
+    /* Hidden Gem Card */
+    #hidden-gems-card {
+      grid-column: 1 / -1;
+      /* Make this card span full width */
+    }
+
+    #hidden-gems-card .fact-display {
+      font-size: 1.1rem;
+      color: #555e6c;
+      min-height: 80px;
+      /* Ensure space for facts */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: opacity 0.4s ease-in-out;
+      padding: 1rem 0;
+    }
+
+    #hidden-gems-card .btn-reveal {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 1.5rem;
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, #a797e8, #b09ee8);
+      /* Soft purple gradient */
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(167, 151, 232, 0.3);
+      transition: all 0.3s ease;
+      display: block;
+      /* Make it a block element to center with margin auto */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #hidden-gems-card .btn-reveal:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(167, 151, 232, 0.4);
+    }
+
+    /* Mood Board Card */
+    #mood-board-card .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 columns for emojis and counts */
+      gap: 1.5rem;
+      padding: 1rem 0;
+    }
+
+    .mood-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #f7f9ff;
+      /* Light background for mood items */
+      border-radius: 15px;
+      padding: 1rem;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      border: 1px solid #e0e7f5;
+    }
+
+    .mood-item:hover {
+      background-color: #eaf1ff;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(106, 90, 205, 0.1);
+    }
+
+    .mood-item.clicked-effect {
+      animation: pop 0.2s ease-out;
+      /* Pop animation on click */
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .mood-emoji {
+      font-size: 2.5rem;
+      /* Larger emojis */
+      line-height: 1;
+      /* Remove extra space around emoji */
+    }
+
+    .mood-count {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #6a5acd;
+      /* Purple count text */
+      background-color: #f0f4ff;
+      /* Light background for count */
+      border-radius: 8px;
+      padding: 0.3rem 0.6rem;
+      min-width: 40px;
+      /* Ensure consistent width */
+      text-align: center;
+    }
+
+    /* Polls Card (Removed but keeping styles for reference if needed later) */
+    .poll-container {
+      /* This section is removed from HTML, styles remain if needed for future re-addition */
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+
+    /* --- Responsive Design Adjustments --- */
+    @media (max-width: 1024px) {
       main {
-        gap: 2rem;
-        padding: 0 1rem;
+        padding: 0 1.5rem;
+        gap: 2.5rem;
+      }
+
+      .card {
+        padding: 2rem 2rem;
       }
 
       .card h2 {
-        font-size: 1.6rem;
+        font-size: 1.9rem;
+      }
+
+      .card h2 .icon {
+        font-size: 2.2rem;
+      }
+
+      .card ul li {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        font-size: 2.2rem;
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      nav {
+        gap: 1.5rem;
+        padding: 0.8rem 0;
+      }
+
+      nav a {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+      }
+
+      main {
+        margin: 3rem auto 4rem;
+        gap: 2rem;
+        padding: 0 1rem;
+        /* Adjust grid to single column on smaller screens if minmax isn't enough */
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 1.8rem 1.8rem;
+        border-radius: 20px;
+      }
+
+      .card h2 {
+        font-size: 1.7rem;
+        margin-bottom: 1rem;
+      }
+
+      .card h2 .icon {
+        font-size: 2rem;
+        margin-right: 1rem;
       }
 
       .card ul li {
         font-size: 1rem;
+        padding: 0.6rem 0;
+      }
+
+      .card ul strong {
+        min-width: 100px;
+        margin-right: 0.5rem;
+      }
+
+      #about-her-card {
+        padding: 2.5rem 2rem;
+      }
+
+      #about-her-card h2 {
+        font-size: 2.2rem;
+      }
+
+      #about-her-card p {
+        font-size: 1.1rem;
+      }
+
+      #mood-board-card .mood-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        /* More flexible on small screens */
+      }
+
+      .mood-item {
+        flex-direction: column;
+        /* Keep column layout for mood items on mobile */
+        justify-content: center;
+        /* Center content vertically */
+        padding: 0.8rem;
+        min-width: 100px;
+      }
+
+      .mood-emoji {
+        font-size: 2rem;
+      }
+
+      .mood-count {
+        padding: 0.2rem 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        font-size: 1.8rem;
+        padding: 1.5rem 0.8rem;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0.6rem;
+      }
+
+      nav a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+      }
+
+      main {
+        margin: 2rem auto 3rem;
+        gap: 1.5rem;
+        padding: 0 0.8rem;
+      }
+
+      .card {
+        padding: 1.5rem 1.5rem;
+        border-radius: 15px;
+      }
+
+      .card h2 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        /* Stack icon and text */
+        align-items: flex-start;
+        margin-bottom: 0.8rem;
+      }
+
+      .card h2 .icon {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        /* Space between stacked icon and text */
+      }
+
+      .card ul li {
+        font-size: 0.95rem;
+        flex-direction: column;
+        /* Stack strong and span on very small screens */
+        align-items: flex-start;
+      }
+
+      .card ul strong {
+        min-width: unset;
+        /* Remove min-width when stacking */
+        margin-right: 0;
+        margin-bottom: 0.2rem;
+        /* Space between stacked label and value */
+      }
+
+      #about-her-card {
+        padding: 2rem 1.5rem;
+      }
+
+      #about-her-card h2 {
+        font-size: 1.8rem;
+      }
+
+      #about-her-card p {
+        font-size: 1rem;
+      }
+
+      .mood-item {
+        padding: 0.6rem 1rem;
+      }
+
+      .mood-emoji {
+        font-size: 1.8rem;
+      }
+
+      .mood-count {
+        font-size: 1rem;
+        padding: 0.2rem 0.4rem;
+      }
+
+      /* Poll related styles (kept, but elements are removed from HTML) */
+      .poll-question {
+        font-size: 1.1rem;
+      }
+
+      .poll-option {
+        font-size: 0.95rem;
+        padding: 0.6rem 1rem;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>All About Niki 💖</header>
+  <!-- Main Header for the page -->
+  <header>All About Niki 💜</header>
 
+  <!-- Navigation Bar -->
   <nav>
+    <a href="#" class="active">Niki's World ✨</a>
     <a href="index.html">Home 🏠</a>
+    <!-- More navigation links can be added here -->
   </nav>
 
+  <!-- Main Content Area organized in a grid -->
   <main>
+    <!-- Introductory Card about Niki -->
     <section class="card" id="about-her-card">
       <h2><span class="icon">🌟</span>The One and Only Niki<span class="icon">🌟</span></h2>
       <p>
-        This is the whole bioworld that makes Niki. <br />
-        From her favorite little things to her beautiful big dreams, every detail is a piece of the amazing person she
-        is. <br />
-        Dive in and see what makes her shine so brightly!
+        Welcome to the enchanting world of Niki! This page delves into the multifaceted personality of an
+        extraordinary individual. From her cherished quirks to her grandest dreams,
+        each detail paints a vibrant picture of the amazing person she is. Explore
+        what truly makes her shine so brightly!
       </p>
     </section>
 
+    <!-- About Her Personal Details Card -->
     <section class="card" id="about-her">
-      <h2><span class="icon">✨</span>About Her</h2>
+      <h2><span class="icon">✨</span>Her Essentials</h2>
       <ul>
         <li><strong>Age:</strong><span>18</span></li>
         <li><strong>Height:</strong><span>5'2 2/3"</span></li>
         <li><strong>Zodiac:</strong><span>Aquarius</span></li>
-        <li><strong>Personality Type:</strong><span>Goofy</span></li>
-        <li><strong>Ambition:</strong><span>Rich Rich lol</span></li>
-        <li><strong>Body:</strong><span>Uff hot</span></li>
-
+        <li><strong>Personality:</strong><span>Goofy, Witty, Caring</span></li>
+        <li><strong>Ambition:</strong><span>Rich Rich (and thriving!)</span></li>
+        <li><strong>Vibe:</strong><span>Effortlessly Chic & Cozy</span></li>
       </ul>
     </section>
 
+    <!-- Her Favorites Card -->
     <section class="card" id="her-favorites">
-      <h2><span class="icon">🍔</span>Her Favorites</h2>
+      <h2><span class="icon">💖</span>Her Heart's Desires</h2>
       <ul>
-        <li><strong>Food:</strong><span>Momos</span></li>
-        <li><strong>Color:</strong><span>Lavender & Pastel pallete</span></li>
+        <li><strong>Cuisine:</strong><span>Momos (always!)</span></li>
+        <li><strong>Color:</strong><span>Lavender & Pastel Palette</span></li>
         <li><strong>Comfort Show:</strong><span>Friends</span></li>
         <li><strong>Song:</strong><span>"Perfect" By Ed Sheeran</span></li>
-        <li><strong>Flower:</strong><span>Pink lilies</span></li>
-        <li><strong>First Fav Book</strong><span>Thea Stilton</span></li>
+        <li><strong>Flower:</strong><span>Pink Lilies</span></li>
+        <li><strong>First Fav Book:</strong><span>Thea Stilton Series</span></li>
       </ul>
     </section>
 
-    <section class="card" id="her-likes">
-      <h2><span class="icon">💕</span>She Absolutely Loves...</h2>
+    <!-- Niki's Mood Board Card (New Interactive Feature) -->
+    <section class="card" id="mood-board-card">
+      <h2><span class="icon">🌈</span>Niki's Mood Board</h2>
+      <p style="text-align: center; font-size: 0.95rem; color: #777;">Click an emoji to add to the tally!</p>
+      <div class="mood-grid">
+        <div class="mood-item" data-mood="happy">
+          <span class="mood-emoji">😊</span>
+          <span class="mood-count" id="mood-count-happy">0</span>
+        </div>
+        <div class="mood-item" data-mood="sleepy">
+          <span class="mood-emoji">😴</span>
+          <span class="mood-count" id="mood-count-sleepy">0</span>
+        </div>
+        <div class="mood-item" data-mood="sassy">
+          <span class="mood-emoji">💅</span>
+          <span class="mood-count" id="mood-count-sassy">0</span>
+        </div>
+        <div class="mood-item" data-mood="chill">
+          <span class="mood-emoji">😌</span>
+          <span class="mood-count" id="mood-count-chill">0</span>
+        </div>
+        <div class="mood-item" data-mood="goofy">
+          <span class="mood-emoji">🤪</span>
+          <span class="mood-count" id="mood-count-goofy">0</span>
+        </div>
+        <div class="mood-item" data-mood="curious">
+          <span class="mood-emoji">🧐</span>
+          <span class="mood-count" id="mood-count-curious">0</span>
+        </div>
+        <div class="mood-item" data-mood="amazed">
+          <span class="mood-emoji">😞 </span>
+          <span class="mood-count" id="mood-count-amazed">0</span>
+        </div>
+        <div class="mood-item" data-mood="mischievous">
+          <span class="mood-emoji">😈</span>
+          <span class="mood-count" id="mood-count-mischievous">0</span>
+        </div>
+        <div class="mood-item" data-mood="sparkly">
+          <span class="mood-emoji">✨</span>
+          <span class="mood-count" id="mood-count-sparkly">0</span>
+        </div>
+        <div class="mood-item" data-mood="thoughtful">
+          <span class="mood-emoji">🤔</span>
+          <span class="mood-count" id="mood-count-thoughtful">0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Things She Absolutely Loves Card -->
+    <section class="card" id="her-loves">
+      <h2><span class="icon">💌</span>She Absolutely Adores...</h2>
       <ul>
-        <li>Cozy nights in with a good crime documentary</li>
-        <li>The smell of rain on a warm day</li>
-        <li>Finding the perfect vintage elegant dress</li>
-        <li>Cute, fluffy animals (especially racoons)</li>
-        <li>Home chill > Outside</li>
+        <li>Cozy nights/crime documentary</li>
+        <li>The serene scent of rain on a warm</li>
+        <li>Discovering that perfect vintage, elegant dress</li>
+        <li>cute, fluffy animals (especially racoons)</li>
+        <li>Home comfort over going out</li>
+        <li>Gossip and Tea</li>
       </ul>
     </section>
 
+    <!-- Her Unique Style Card -->
     <section class="card" id="her-style">
-      <h2><span class="icon">🎨</span>Her Unique Style</h2>
+      <h2><span class="icon">👗</span>Her Distinct Flair</h2>
       <ul>
-        <li><strong>Fashion:</strong><span>Elegant Old Money</span></li>
-        <li><strong>Aesthetic:</strong><span>Pinteresty, Girlies Girl</span></li>
-        <li><strong>Hobby:</strong><span>Shooting,Annoying, Sleeping</span></li>
-        <li><strong>Drink:</strong><span>Bf's Blood</span></li>
+        <li><strong>Fashion Sense:</strong><span>Elegant Old Money Aesthetic</span></li>
+        <li><strong>Overall Aesthetic:</strong><span>Pinterest-perfect, Girly-Girl Chic</span></li>
+        <li><strong>Top Hobbies:</strong><span>Shooting, Annoying, Sleeping</span></li>
+        <li><strong>Signature Drink:</strong><span>BF's Blood </span></li>
       </ul>
     </section>
-    <section class="card" id="her-likes">
-      <h2><span class="icon">💕</span>Things She cant stay for a day without</h2>
+
+    <!-- Things She Can't Live Without Card -->
+    <section class="card" id="her-essentials">
+      <h2><span class="icon">🔑</span>Can't Live Without...</h2>
       <ul>
         <li>Boyfriend</li>
-        <li>Momos</li>
+        <li> Momos</li>
         <li>Besties</li>
         <li>Books</li>
-        <li>Crime</li>
+        <li>Crime Series</li>
+        <li>sleep</li>
+        <li>Tea</li>
       </ul>
     </section>
 
-    <section class="card" id="about-her">
-      <h2><span class="icon">✨</span>She hates:</h2>
+    <!-- Things She Dislikes Card -->
+    <section class="card" id="her-dislikes">
+      <h2><span class="icon">🚫</span>Her Pet Peeves</h2>
       <ul>
-        <ul>
-          <li>Spiders</li>
-          <li>Narcissist/Misogynist</li>
-          <li>MultiKid parents</li>
-          <li>Teenage kids</li>
-          <li>Politicians</li>
-        </ul>
+        <li>Spiders (definitely not a fan!)</li>
+        <li>Narcissistic or Misogynistic attitudes</li>
+        <li>Overly aggressive or noisy environments</li>
+        <li>Disrespectful behavior</li>
+        <li>Unnecessary drama</li>
+        <li>Untidiness</li>
+        <li>MultiKid Parents</li>
+        <li>Teenage kids lol</li>
       </ul>
+    </section>
+
+    <!-- Placeholder for more sections, demonstrating scalability -->
+    <section class="card" id="her-aspirations">
+      <h2><span class="icon">🚀</span>Her Aspirations</h2>
+      <ul>
+        <li><strong>Future Goal:</strong><span>To Live a Peaceful life lol</span></li>
+        <li><strong>Dream Career:</strong><span>Making a significant positive impact in her field</span></li>
+        <li><strong>Personal Growth:</strong><span>Learning from Boyfriend</span></li>
+        <li><strong>Legacy:</strong><span>To be remembered for death of her bf</span></li>
+      </ul>
+    </section>
+
+    <section class="card" id="her-quirks">
+      <h2><span class="icon">🙃</span>Unique Quirks</h2>
+      <ul>
+        <li>Most Mature Decisions when she takes one (rest is stupid and dumb af)</li>
+        <li>Never compromises to annoy everyone</li>
+        <li>Loves collecting idk whatever she gets</li>
+        <li>Can fall anytime,anywhere without a reason while being healthy</li>
+      </ul>
+    </section>
+
+    <!-- Hidden Gems Card (Moved to bottom and made wide) -->
+    <section class="card" id="hidden-gems-card">
+      <h2><span class="icon">💎</span>Hidden Gems</h2>
+      <p class="fact-display" id="fun-fact-display">Click below to reveal a fun fact about Niki!</p>
+      <button class="btn-reveal" id="reveal-fact-btn">Reveal Fact</button>
     </section>
 
   </main>
 
+  <script>
+    // --- DATA FOR INTERACTIVE SECTIONS ---
+
+    // Hidden Gems (Fun Facts) Data
+    const funFacts = [
+      "Doesn't Shower for a Minimum of 2 Weeks",
+      "Completes huge ass books in 3 hrs ;-;",
+      "Can actually molest the male gender",
+      "Bro even remebers clothes from her fav series",
+      "If she cries give her momos and run away",
+      "Stay away if she's laughing for no reason",
+      "DO NOT DEBATE , I REPEAT - DO NOT DEBATE",
+      "Needs more care than a baby, can die anytime",
+      "sleeps without a pillow :/",
+      "carries a knife you never know..",
+    ];
+
+    // Mood Board Tally Data (initial state) - Expanded to 10 emojis
+    const moodCounts = {
+      happy: 0,
+      sleepy: 0,
+      sassy: 0,
+      chill: 0,
+      goofy: 0,
+      curious: 0,
+      amazed: 0,
+      mischievous: 0, // The "18+" subtle hint
+      sparkly: 0,
+      thoughtful: 0
+    };
+
+    // Polls Data (Removed)
+
+
+    // --- HELPER FUNCTIONS ---
+
+    /**
+     * Randomly shuffles an array.
+     * @param {Array} array The array to shuffle.
+     * @returns {Array} The shuffled array.
+     */
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // --- HIDDEN GEMS (FUN FACTS) LOGIC ---
+    const funFactDisplay = document.getElementById('fun-fact-display');
+    const revealFactBtn = document.getElementById('reveal-fact-btn');
+    let lastFactIndex = -1;
+
+    /**
+     * Reveals a random fun fact about Niki.
+     */
+    function revealFunFact() {
+      funFactDisplay.style.opacity = '0'; // Start fade-out
+
+      setTimeout(() => {
+        let newFactIndex;
+        do {
+          newFactIndex = Math.floor(Math.random() * funFacts.length);
+        } while (newFactIndex === lastFactIndex && funFacts.length > 1); // Ensure different fact if more than one
+
+        lastFactIndex = newFactIndex;
+        funFactDisplay.textContent = funFacts[newFactIndex];
+        funFactDisplay.style.opacity = '1'; // Fade-in new fact
+      }, 400); // Matches CSS transition duration
+    }
+
+    // --- NIKI'S MOOD BOARD LOGIC ---
+    const moodItems = document.querySelectorAll('.mood-item');
+
+    /**
+     * Initializes mood counters and sets up event listeners.
+     */
+    function initMoodTally() {
+      // Update initial display of counts
+      for (const mood in moodCounts) {
+        const moodCountEl = document.getElementById(`mood-count-${mood}`);
+        if (moodCountEl) { // Check if element exists before updating
+          moodCountEl.textContent = moodCounts[mood];
+        }
+      }
+
+      // Add click listeners to each mood emoji item
+      moodItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const moodType = item.dataset.mood; // Get mood type from data attribute
+          moodCounts[moodType]++; // Increment count
+          document.getElementById(`mood-count-${moodType}`).textContent = moodCounts[moodType]; // Update UI
+
+          // Add and remove a class for a short pop animation feedback
+          item.classList.add('clicked-effect');
+          setTimeout(() => {
+            item.classList.remove('clicked-effect');
+          }, 200);
+        });
+      });
+    }
+
+    // --- NIKI'S DEBATES (POLLS) LOGIC (Removed) ---
+    // The functions related to polls (renderPoll, handleVote, displayPollResults, initPolls) have been removed
+    // as per your request to remove the micro-polls.
+
+
+    // --- INITIALIZATION ON PAGE LOAD ---
+    document.addEventListener('DOMContentLoaded', () => {
+      revealFactBtn.addEventListener('click', revealFunFact); // Attach listener for Hidden Gem
+      revealFunFact(); // Display an initial fact on load
+
+      initMoodTally(); // Initialize mood counter
+
+      // initPolls(); // This call is now removed as polls are removed
+    });
+  </script>
 </body>
 
 </html>
