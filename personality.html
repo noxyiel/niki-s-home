@@ -22,8 +22,8 @@
     body {
       font-family: 'Inter', sans-serif;
       /* Clean, modern sans-serif for body text */
-      background: linear-gradient(145deg, #f0f4ff, #e0e7f5);
-      /* Very soft, cool blue-grey gradient */
+      background: linear-gradient(145deg, #f8faff, #eef2f9);
+      /* Very soft, cool blue-grey gradient, more ethereal */
       color: #333a4a;
       /* Dark charcoal blue for primary text */
       min-height: 100vh;
@@ -38,8 +38,8 @@
 
     /* --- Header Section --- */
     header {
-      background: linear-gradient(90deg, #6a5acd, #8476d1);
-      /* Deep royal purple to lavender gradient */
+      background: linear-gradient(90deg, #8e7cc3, #b1a6e0);
+      /* Softer, more muted royal purple to lavender gradient */
       color: #ffffff;
       /* White text for strong contrast */
       padding: 2.5rem 1.5rem 2rem;
@@ -48,8 +48,8 @@
       /* Larger, more impactful font size */
       font-weight: 900;
       /* Extra bold for prominence */
-      box-shadow: 0 8px 20px rgba(106, 90, 205, 0.3);
-      /* Soft, diffused purple shadow */
+      box-shadow: 0 8px 20px rgba(142, 124, 195, 0.3);
+      /* Soft, diffused purple shadow matching new gradient */
       user-select: none;
       /* Prevent text selection */
       font-family: 'Playfair Display', serif;
@@ -78,8 +78,8 @@
       /* Consistent font for navigation */
       font-weight: 600;
       /* Semi-bold */
-      color: #6a5acd;
-      /* Deep purple color */
+      color: #7a63c4;
+      /* Softer deep purple color */
       text-decoration: none;
       font-size: 1.15rem;
       /* Slightly larger font size */
@@ -94,12 +94,12 @@
 
     nav a:hover,
     nav a.active {
-      background: #8476d1;
-      /* Lighter purple from header gradient on hover */
+      background: #9b8edc;
+      /* Lighter, softer purple from header gradient on hover */
       color: white;
       transform: translateY(-3px);
       /* Subtle lift effect */
-      box-shadow: 0 5px 12px rgba(132, 118, 209, 0.4);
+      box-shadow: 0 5px 12px rgba(155, 142, 220, 0.4);
       /* Matching shadow on hover */
     }
 
@@ -124,7 +124,7 @@
       /* Clean white background for cards */
       border-radius: 25px;
       /* More pronounced rounded corners */
-      box-shadow: 0 15px 40px rgba(106, 90, 205, 0.1);
+      box-shadow: 0 15px 40px rgba(142, 124, 195, 0.1);
       /* Soft, diffused purple shadow */
       padding: 2.5rem 2.5rem;
       /* Generous padding */
@@ -132,14 +132,28 @@
       flex-direction: column;
       /* Smooth transitions for hover effects */
       transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease-in-out;
-      border: 1px solid #e6e9f5;
-      /* Very subtle light border */
+      border: 1px solid #eef2f9;
+      /* Very subtle light border matching new background */
+
+      /* Initial state for card entrance animation */
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
+
+    /* Class added by JS when card is visible */
+    .card.card-visible {
+      opacity: 1;
+      transform: translateY(0);
+      /* Staggered delay for sequential appearance */
+      transition-delay: var(--card-delay, 0s);
+    }
+
 
     .card:hover {
       transform: translateY(-12px);
       /* More significant lift on hover */
-      box-shadow: 0 25px 55px rgba(106, 90, 205, 0.25);
+      box-shadow: 0 25px 55px rgba(142, 124, 195, 0.25);
       /* Stronger, more diffused shadow */
     }
 
@@ -148,16 +162,16 @@
       /* Elegant serif for card titles */
       font-size: 2.1rem;
       /* Larger card title font size */
-      color: #6a5acd;
-      /* Deep purple color for titles */
+      color: #7a63c4;
+      /* Softer deep purple color for titles */
       margin-bottom: 1.5rem;
       /* More space below title */
       font-weight: 700;
       display: flex;
       align-items: center;
       line-height: 1.2;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-      /* Subtle text shadow */
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      /* Even more subtle text shadow */
     }
 
     .card h2 .icon {
@@ -165,9 +179,9 @@
       /* Increased spacing for icon */
       font-size: 2.4rem;
       /* Larger icon size */
-      color: #8476d1;
-      /* Lighter purple for icon */
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      color: #9b8edc;
+      /* Lighter, softer purple for icon */
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
       /* Subtle shadow for icons */
     }
 
@@ -188,8 +202,8 @@
       color: #444a5b;
       /* Slightly darker text for contrast */
       padding: 0.9rem 0;
-      border-bottom: 1px dashed rgba(106, 90, 205, 0.15);
-      /* Soft, transparent dashed border */
+      border-bottom: 1px dashed rgba(142, 124, 195, 0.1);
+      /* Soft, transparent dashed border using new purple */
       display: flex;
       align-items: flex-start;
       /* Align items to start if text wraps */
@@ -207,8 +221,8 @@
     }
 
     .card ul strong {
-      color: #8476d1;
-      /* Lighter purple for emphasized text */
+      color: #9b8edc;
+      /* Lighter, softer purple for emphasized text */
       min-width: 150px;
       /* Wider min-width for labels */
       display: inline-block;
@@ -319,13 +333,14 @@
       padding: 1rem;
       transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
       cursor: pointer;
-      border: 1px solid #e0e7f5;
+      border: 1px solid #eef2f9;
+      /* Softer border */
     }
 
     .mood-item:hover {
       background-color: #eaf1ff;
       transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(106, 90, 205, 0.1);
+      box-shadow: 0 5px 15px rgba(142, 124, 195, 0.1);
     }
 
     .mood-item.clicked-effect {
@@ -358,8 +373,8 @@
       font-family: 'Inter', sans-serif;
       font-size: 1.1rem;
       font-weight: 700;
-      color: #6a5acd;
-      /* Purple count text */
+      color: #7a63c4;
+      /* Softer purple count text */
       background-color: #f0f4ff;
       /* Light background for count */
       border-radius: 8px;
@@ -367,13 +382,6 @@
       min-width: 40px;
       /* Ensure consistent width */
       text-align: center;
-    }
-
-    /* Polls Card (Removed but keeping styles for reference if needed later) */
-    .poll-container {
-      /* This section is removed from HTML, styles remain if needed for future re-addition */
-      margin-bottom: 2rem;
-      display: none;
     }
 
 
@@ -565,16 +573,6 @@
       .mood-count {
         font-size: 1rem;
         padding: 0.2rem 0.4rem;
-      }
-
-      /* Poll related styles (kept, but elements are removed from HTML) */
-      .poll-question {
-        font-size: 1.1rem;
-      }
-
-      .poll-option {
-        font-size: 0.95rem;
-        padding: 0.6rem 1rem;
       }
     }
   </style>
@@ -778,8 +776,8 @@
       "carries a knife you never know..",
     ];
 
-    // Mood Board Tally Data (initial state) - Expanded to 10 emojis
-    const moodCounts = {
+    // Mood Board Tally Data (initial state) - Now loaded from localStorage
+    let moodCounts = {
       happy: 0,
       sleepy: 0,
       sassy: 0,
@@ -791,9 +789,6 @@
       sparkly: 0,
       thoughtful: 0
     };
-
-    // Polls Data (Removed)
-
 
     // --- HELPER FUNCTIONS ---
 
@@ -835,11 +830,57 @@
 
     // --- NIKI'S MOOD BOARD LOGIC ---
     const moodItems = document.querySelectorAll('.mood-item');
+    const MOOD_STORAGE_KEY = 'nikiMoodCounts'; // Key for localStorage
+
+    /**
+     * Loads mood counts from localStorage, or initializes if no data is found.
+     */
+    function loadMoodCounts() {
+      const storedCounts = localStorage.getItem(MOOD_STORAGE_KEY);
+      if (storedCounts) {
+        try {
+          // Parse stored counts. If it's an object, merge with default.
+          const parsedCounts = JSON.parse(storedCounts);
+          if (typeof parsedCounts === 'object' && parsedCounts !== null) {
+            // Iterate over default moodCounts keys to ensure all are present,
+            // and use stored values if available, otherwise keep default (0).
+            for (const moodKey in moodCounts) {
+              if (parsedCounts.hasOwnProperty(moodKey) && typeof parsedCounts[moodKey] === 'number') {
+                moodCounts[moodKey] = parsedCounts[moodKey];
+              } else {
+                moodCounts[moodKey] = 0; // Ensure new emojis are initialized to 0 if not in storage
+              }
+            }
+          } else {
+            console.warn("Stored mood counts are not a valid object. Resetting to default.");
+            // Keep default moodCounts if stored data is not an object
+          }
+        } catch (e) {
+          console.error("Error parsing mood counts from localStorage:", e);
+          // If parsing fails (e.g., malformed JSON), moodCounts remains its default initial value
+        }
+      }
+      // If no stored counts, moodCounts remains its default/initial value
+    }
+
+
+    /**
+     * Saves mood counts to localStorage.
+     */
+    function saveMoodCounts() {
+      try {
+        localStorage.setItem(MOOD_STORAGE_KEY, JSON.stringify(moodCounts));
+      } catch (e) {
+        console.error("Error saving mood counts to localStorage:", e);
+      }
+    }
 
     /**
      * Initializes mood counters and sets up event listeners.
      */
     function initMoodTally() {
+      loadMoodCounts(); // Load counts before updating UI
+
       // Update initial display of counts
       for (const mood in moodCounts) {
         const moodCountEl = document.getElementById(`mood-count-${mood}`);
@@ -852,31 +893,62 @@
       moodItems.forEach(item => {
         item.addEventListener('click', () => {
           const moodType = item.dataset.mood; // Get mood type from data attribute
-          moodCounts[moodType]++; // Increment count
-          document.getElementById(`mood-count-${moodType}`).textContent = moodCounts[moodType]; // Update UI
+          if (moodCounts.hasOwnProperty(moodType)) { // Ensure moodType is valid
+            moodCounts[moodType]++; // Increment count
+            document.getElementById(`mood-count-${moodType}`).textContent = moodCounts[moodType]; // Update UI
+            saveMoodCounts(); // Save updated counts to localStorage
 
-          // Add and remove a class for a short pop animation feedback
-          item.classList.add('clicked-effect');
-          setTimeout(() => {
-            item.classList.remove('clicked-effect');
-          }, 200);
+            // Add and remove a class for a short pop animation feedback
+            item.classList.add('clicked-effect');
+            setTimeout(() => {
+              item.classList.remove('clicked-effect');
+            }, 200);
+          }
         });
       });
     }
 
-    // --- NIKI'S DEBATES (POLLS) LOGIC (Removed) ---
-    // The functions related to polls (renderPoll, handleVote, displayPollResults, initPolls) have been removed
-    // as per your request to remove the micro-polls.
 
+    // --- CARD ENTRANCE ANIMATION LOGIC (Intersection Observer) ---
+    const cards = document.querySelectorAll('.card');
+
+    // Options for the Intersection Observer
+    const observerOptions = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 0.1 // Trigger when 10% of the item is visible
+    };
+
+    // Callback function for when an observed element enters/leaves the viewport
+    const cardObserverCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Element is visible, add the 'card-visible' class
+          const card = entry.target;
+          const index = Array.from(cards).indexOf(card);
+          // Set a staggered delay for each card
+          card.style.setProperty('--card-delay', `${index * 0.1}s`);
+          card.classList.add('card-visible');
+          // Stop observing once the animation is triggered
+          observer.unobserve(card);
+        }
+      });
+    };
+
+    // Create a new Intersection Observer
+    const cardObserver = new IntersectionObserver(cardObserverCallback, observerOptions);
 
     // --- INITIALIZATION ON PAGE LOAD ---
     document.addEventListener('DOMContentLoaded', () => {
       revealFactBtn.addEventListener('click', revealFunFact); // Attach listener for Hidden Gem
       revealFunFact(); // Display an initial fact on load
 
-      initMoodTally(); // Initialize mood counter
+      initMoodTally(); // Initialize mood counter (now with persistence)
 
-      // initPolls(); // This call is now removed as polls are removed
+      // Observe each card for entrance animation
+      cards.forEach(card => {
+        cardObserver.observe(card);
+      });
     });
   </script>
 </body>
