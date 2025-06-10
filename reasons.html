@@ -3,233 +3,363 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reasons I Love You</title>
+    <!-- Import elegant fonts for a vintage feel: Playfair Display for headings, Lora for body, Inter for buttons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;700&family=Inter:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <style>
-        /* Import a better handwriting font from Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
-        /* --- Core Styles & Fonts --- */
+        /* --- Global Reset & Core Styles --- */
+        /* Universal box-sizing for consistent layout */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        /* Body styles: Full viewport height, flexbox for centering, soft vintage background, and default font */
         body {
-            font-family: 'Georgia', 'Times New Roman', serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            /* Soft, ethereal background gradient for a vintage feel */
+            background: linear-gradient(135deg, #f8edeb, #fae1df);
+            /* Pale peach-pink to dusty rose */
             overflow: hidden;
-            color: #4f3a4b;
+            /* Hide scrollbars, especially for background animations */
+            color: #3a3a3a;
+            /* Soft dark grey for general text */
+            font-family: 'Lora', serif;
+            /* Elegant serif for body text */
             position: relative;
+            /* Needed for absolute positioning of background elements */
+            user-select: none;
+            /* Prevent text selection for a cleaner feel */
+            -webkit-font-smoothing: antialiased;
+            /* Smoother font rendering */
+            -moz-osx-font-smoothing: grayscale;
+            /* Smoother font rendering */
         }
 
-        /* Sparkle hearts behind the main hearts */
-        .sparkles-container {
+        /* --- Background Animation Containers --- */
+        /* Fixed position containers to cover the entire viewport for floating elements */
+        .sparkles-container,
+        .hearts-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
             pointer-events: none;
+            /* Allows clicks to pass through to content */
             z-index: 0;
-            overflow: visible;
+            /* Ensures they stay behind the main content */
+            overflow: hidden;
+            /* Prevents scrollbars from generated elements */
         }
 
+        /* --- Individual Sparkle (Dust/Glitter) Elements --- */
         .sparkle {
             position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #fff0f5;
+            width: 3px;
+            /* Smaller for a delicate dust effect */
+            height: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            /* Pure white, slightly transparent */
             border-radius: 50%;
-            box-shadow: 0 0 8px 3px #ffafbd;
-            opacity: 0.8;
-            animation: sparkleTwinkle 3s infinite;
+            /* Perfect circle */
+            box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.6);
+            /* Soft glow */
+            opacity: 0;
+            /* Start invisible */
+            animation: twinkle 3s infinite ease-out forwards;
+            /* Longer, gentler twinkle */
+            will-change: transform, opacity;
+            /* Performance optimization */
         }
 
-        @keyframes sparkleTwinkle {
+        /* Keyframes for the sparkle animation */
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
 
-            0%,
-            100% {
-                opacity: 0.8;
+            25% {
+                opacity: 0.9;
                 transform: scale(1);
             }
 
             50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+
+            75% {
                 opacity: 0.2;
-                transform: scale(0.5);
-            }
-        }
-
-        /* --- Animated Background Container --- */
-        .hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: visible;
-            pointer-events: none;
-        }
-
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            color: #ff6f91;
-            opacity: 0;
-            animation: floatUp 5s linear infinite;
-            transform-origin: center bottom;
-            filter: drop-shadow(0 0 3px #ff6f91);
-            will-change: transform, opacity;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 0;
-            width: 10px;
-            height: 16px;
-            background: currentColor;
-            border-radius: 10px 10px 0 0;
-            transform-origin: 0 100%;
-        }
-
-        .heart::before {
-            transform: rotate(-45deg);
-        }
-
-        .heart::after {
-            left: 0;
-            transform: rotate(45deg);
-            transform-origin: 100% 100%;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) scale(0.5) rotate(0deg);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: translateY(50vh) scale(1) rotate(15deg);
-                opacity: 0.6;
+                transform: scale(0.6);
             }
 
             100% {
-                transform: translateY(-10vh) scale(1.2) rotate(-10deg);
+                opacity: 0;
+                transform: scale(0.4);
+            }
+        }
+
+        /* --- Individual Heart Elements (Background) --- */
+        .animated-heart {
+            position: absolute;
+            /* Using CSS custom properties for dynamic color */
+            color: var(--heart-color, #e8d7d0);
+            /* Default to a soft blush */
+            opacity: 0;
+            /* Start invisible */
+            animation: floatAndDrift var(--animation-duration, 8s) linear infinite;
+            transform-origin: center center;
+            /* Ensure rotation is central */
+            will-change: transform, opacity;
+            filter: blur(0.5px);
+            /* Slightly blurred for a dreamy effect */
+        }
+
+        /* Pseudo-elements to draw the heart shape using CSS */
+        .animated-heart::before,
+        .animated-heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            /* Inherits color from parent */
+            border-radius: 50% 50% 0 0;
+            /* Rounded top corners */
+        }
+
+        .animated-heart::before {
+            left: 50%;
+            transform: translateX(-50%) rotate(-45deg);
+        }
+
+        .animated-heart::after {
+            left: 0;
+            transform: rotate(45deg);
+        }
+
+        /* Keyframes for the floating and drifting heart animation */
+        @keyframes floatAndDrift {
+            0% {
+                transform: translateY(100vh) scale(var(--initial-scale, 0.3)) rotate(var(--initial-rotate, 0deg)) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: var(--max-opacity, 0.4);
+            }
+
+            50% {
+                transform: translateY(50vh) scale(var(--mid-scale, 0.6)) rotate(var(--mid-rotate, 15deg)) translateX(var(--drift-x-mid, 10vw));
+                opacity: var(--mid-opacity, 0.3);
+            }
+
+            90% {
+                opacity: var(--min-opacity, 0.05);
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(var(--final-scale, 0.9)) rotate(var(--final-rotate, 30deg)) translateX(var(--drift-x-final, 20vw));
                 opacity: 0;
             }
         }
 
-        /* --- Main Content Structure --- */
+        /* --- Main Content Container --- */
         main {
             position: relative;
+            /* Ensures main content is above background elements */
             z-index: 10;
             text-align: center;
             padding: 2rem;
-            max-width: 600px;
+            max-width: 700px;
+            /* Wider for a more generous layout */
             width: 90vw;
+            /* Responsive width */
+            display: flex;
+            flex-direction: column;
+            /* Stack elements vertically */
+            align-items: center;
+            /* Center horizontally */
+            gap: 2.5rem;
+            /* Spacing between header, card, and button */
         }
 
+        /* --- Header Styles --- */
         header h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
-            color: #ff3c78;
+            font-family: 'Playfair Display', serif;
+            /* Elegant serif font, NOT cursive */
+            font-size: 4.0rem;
+            /* Large and impactful */
+            color: #5f4b66;
+            /* Deep muted plum/brown for a vintage, sophisticated feel */
             font-weight: 700;
             text-shadow:
-                0 0 5px #ffb6c1,
-                0 0 15px #ff3c78;
-            margin-bottom: 1.5rem;
-            user-select: none;
+                0 0 6px rgba(95, 75, 102, 0.2),
+                /* Subtle, matching shadow */
+                0 0 18px rgba(95, 75, 102, 0.1);
+            margin-bottom: 0;
+            /* Removed explicit margin, using gap from main */
+            letter-spacing: 0.03em;
+            /* Slight letter spacing for elegance */
         }
 
-        /* --- The Glass Card --- */
+        /* --- The Reason Card (Vintage Paper Look) --- */
         .reason-card {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px;
-            border: 1.5px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3);
-            padding: 3rem 2rem;
-            margin-bottom: 2rem;
-            color: #66334d;
-            font-size: 1.7rem;
-            line-height: 1.6;
-            font-weight: 500;
-            min-height: 230px;
+            background-color: #ffffff;
+            /* Clean white for the card */
+            border-radius: 18px;
+            /* Slightly more rounded corners */
+            border: 1px solid rgba(224, 224, 209, 0.7);
+            /* Very subtle, pale border */
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+            /* Soft, diffused shadow for depth */
+            padding: 3.5rem 3rem;
+            /* Generous padding for spaciousness */
+            color: #3a3a3a;
+            /* Dark charcoal for card text */
+            font-size: 1.9rem;
+            /* Larger font size for impact and readability */
+            line-height: 1.7;
+            /* Enhanced line height */
+            font-weight: 400;
+            /* Lora default weight */
+            min-height: 280px;
+            /* Increased min-height for content */
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.4s ease-in-out;
-            user-select: none;
-            text-shadow: 0 0 3px #fff0f5;
+            /* Transitions for fade and hover effects */
+            transition: opacity 0.4s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.6);
+            /* Very subtle text highlight */
+            /* Add a subtle inner border for a layered paper effect */
+            box-sizing: border-box;
+            position: relative;
         }
 
-        /* --- Fade Animation Class --- */
+        .reason-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px dashed rgba(180, 180, 180, 0.4);
+            /* Dashed inner border for vintage feel */
+            border-radius: 12px;
+            /* Matches outer border radius, adjusted */
+            pointer-events: none;
+            /* Ensures clicks go to the main card */
+        }
+
+        .reason-card:hover {
+            transform: translateY(-8px);
+            /* More noticeable lift on hover */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18);
+            /* More pronounced shadow */
+        }
+
+        /* --- Fade Animation Class for reason text --- */
         .fade-out {
             opacity: 0;
         }
 
-        /* --- The Button --- */
+        /* --- The Generator Button (Muted & Animated) --- */
         #generator-btn {
-            font-family: 'Georgia', serif;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #fff;
-            background: linear-gradient(135deg, #ff6f91, #ffafbd);
-            padding: 1.1rem 2.5rem;
+            font-family: 'Inter', sans-serif;
+            /* Clean sans-serif for button text */
+            font-size: 1.5rem;
+            /* Larger button text */
+            font-weight: 600;
+            /* Medium bold */
+            color: #ffffff;
+            /* White text for contrast */
+            /* Dusty rose/mauve gradient, softened */
+            background: linear-gradient(135deg, #a48d9d, #8c788a);
+            padding: 1.4rem 3.5rem;
+            /* Even more generous padding */
             border: none;
             border-radius: 50px;
+            /* Perfectly rounded oval */
             cursor: pointer;
+            /* Multi-layered shadows for depth */
             box-shadow:
-                0 4px 15px rgba(255, 105, 180, 0.5),
-                inset 0 -3px 10px #ff3c78;
-            transition: all 0.3s ease;
-            animation: pulse 2.5s infinite;
+                0 8px 25px rgba(164, 141, 157, 0.5),
+                /* Main shadow */
+                0 0 10px rgba(164, 141, 157, 0.3),
+                /* Halo glow */
+                inset 0 -5px 12px rgba(130, 95, 107, 0.7);
+            /* Darker inset for depth */
+            /* Smooth cubic-bezier transition for a 'bouncy' feel */
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: pulse 2.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
+            /* Slower, gentler pulse */
             display: inline-flex;
             align-items: center;
-            gap: 0.6rem;
-            user-select: none;
-            text-shadow: 0 0 5px #ffbad2;
+            justify-content: center;
+            /* Center content within button */
+            gap: 0.8rem;
+            /* Space between text and icon */
+            letter-spacing: 0.03em;
+            /* Subtle letter spacing */
+            text-transform: uppercase;
+            /* For a refined, bold look */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            /* Subtle text shadow */
         }
 
+        /* Button hover effects */
         #generator-btn:hover {
-            transform: translateY(-6px) scale(1.05);
+            transform: translateY(-10px) scale(1.03);
+            /* Significant lift and slight scale */
             box-shadow:
-                0 12px 30px rgba(255, 105, 180, 0.7),
-                inset 0 -5px 15px #ff2a5c;
+                0 20px 50px rgba(164, 141, 157, 0.7),
+                /* More pronounced shadow */
+                0 0 15px rgba(164, 141, 157, 0.5),
+                inset 0 -8px 18px rgba(130, 95, 107, 0.9);
             animation-play-state: paused;
+            /* Pause pulse on hover */
         }
 
+        /* Button active (press) effects */
         #generator-btn:active {
             transform: translateY(-3px) scale(0.98);
+            /* Press down slightly */
+            box-shadow:
+                0 4px 10px rgba(164, 141, 157, 0.4),
+                inset 0 -3px 8px rgba(130, 95, 107, 0.5);
         }
 
-        /* Heart icon in button */
+        /* Heart icon in button - styled to match the new aesthetic */
         #generator-btn .heart-icon {
-            font-size: 1.5rem;
-            animation: bounce 1.5s infinite;
+            font-size: 1.8rem;
+            /* Larger icon */
             color: #fff0f5;
-            text-shadow: 0 0 5px #ff3c78;
-            user-select: none;
+            /* Very pale pink/white for the heart */
+            text-shadow: 0 0 5px #8c788a;
+            /* Soft shadow */
+            animation: bounce 1.8s infinite ease-in-out;
+            /* Slower, more gentle bounce */
         }
 
+        /* Keyframes for the button pulse animation */
         @keyframes pulse {
             0% {
                 transform: scale(1);
             }
 
             50% {
-                transform: scale(1.05);
+                transform: scale(1.015);
+                /* Slightly less dramatic pulse */
             }
 
             100% {
@@ -237,6 +367,7 @@
             }
         }
 
+        /* Keyframes for the heart icon bounce animation */
         @keyframes bounce {
 
             0%,
@@ -245,12 +376,47 @@
             }
 
             50% {
-                transform: translateY(-6px);
+                transform: translateY(-8px);
+                /* More pronounced bounce */
             }
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 600px) {
+        /* --- Responsive Design (Mobile First Approach) --- */
+
+        /* Tablets and small desktops */
+        @media (max-width: 768px) {
+            main {
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+
+            header h1 {
+                font-size: 3.5rem;
+            }
+
+            .reason-card {
+                padding: 2.5rem 2rem;
+                font-size: 1.6rem;
+                min-height: 220px;
+            }
+
+            #generator-btn {
+                padding: 1.2rem 3rem;
+                font-size: 1.3rem;
+            }
+
+            #generator-btn .heart-icon {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Smaller mobile devices */
+        @media (max-width: 480px) {
+            main {
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
             header h1 {
                 font-size: 2.8rem;
             }
@@ -259,36 +425,55 @@
                 padding: 2rem 1.5rem;
                 font-size: 1.3rem;
                 min-height: 180px;
+                border-radius: 15px;
+            }
+
+            .reason-card::before {
+                top: 8px;
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+                border-radius: 10px;
             }
 
             #generator-btn {
-                padding: 0.9rem 2rem;
+                padding: 1rem 2.5rem;
                 font-size: 1.1rem;
+                border-radius: 40px;
+            }
+
+            #generator-btn .heart-icon {
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Background containers for animated hearts and sparkles, positioned behind main content -->
     <div class="sparkles-container" aria-hidden="true"></div>
     <div class="hearts-container" aria-hidden="true"></div>
 
+    <!-- Main content area, centered on the page -->
     <main>
         <header>
+            <!-- Main heading with elegant Playfair Display font -->
             <h1>A Few Reasons Why...</h1>
         </header>
 
+        <!-- The reason card with vintage paper aesthetic and dynamic text -->
         <div class="reason-card" aria-live="polite" aria-atomic="true">
             <p id="reason-text">I love you more than words can say.</p>
         </div>
 
+        <!-- The animated generator button -->
         <button id="generator-btn" aria-label="Generate a new reason why I love you">
             Tell me another reason <span class="heart-icon">❤️</span>
         </button>
     </main>
 
     <script>
-        // --- Reasons array (same as before) ---
+        // Array of reasons for loving someone. This list remains the same.
         const reasons = [
             "I love the way you smile when you see me.",
             "You make me feel like I'm home.",
@@ -688,70 +873,119 @@
             "You are my forever and always, now and forevermore."
         ];
 
+        // Get references to DOM elements
         const reasonText = document.getElementById('reason-text');
         const generatorBtn = document.getElementById('generator-btn');
-        let lastReasonIndex = -1;
+        let lastReasonIndex = -1; // To ensure a new reason is always displayed
 
+        // Function to generate a new reason with a smooth fade-out/fade-in effect
         function generateReason() {
-            reasonText.classList.add('fade-out');
+            reasonText.classList.add('fade-out'); // Apply fade-out class
 
+            // Wait for the fade-out transition to complete before changing text
             setTimeout(() => {
                 let newReasonIndex;
                 do {
+                    // Generate a random index for the reasons array
                     newReasonIndex = Math.floor(Math.random() * reasons.length);
-                } while (newReasonIndex === lastReasonIndex);
+                } while (newReasonIndex === lastReasonIndex); // Loop to ensure the new reason is different from the last
 
-                lastReasonIndex = newReasonIndex;
-                reasonText.textContent = reasons[newReasonIndex];
-                reasonText.classList.remove('fade-out');
-            }, 400);
+                lastReasonIndex = newReasonIndex; // Update the last reason index
+                reasonText.textContent = reasons[newReasonIndex]; // Update text content
+                reasonText.classList.remove('fade-out'); // Remove fade-out to trigger fade-in
+            }, 400); // This duration should match the CSS transition duration for .fade-out
         }
 
+        // Add event listener to the button to trigger reason generation on click
         generatorBtn.addEventListener('click', generateReason);
 
-        // Hearts animation
+        /* --- Background Hearts Animation Logic --- */
         const heartsContainer = document.querySelector('.hearts-container');
+        const heartColors = [
+            '#e8d7d0', /* Soft Blush */
+            '#b0c4de', /* Soft Steel Blue */
+            '#f0e6ef', /* Light Lavender */
+            '#dda15e', /* Faded Gold */
+            '#c4a79d'  /* Dusty Rose */
+        ];
 
         function createHeart() {
             const heart = document.createElement('div');
-            heart.innerHTML = '&#x2764;';
-            heart.className = 'heart';
+            heart.className = 'animated-heart';
 
+            // Assign a random color from the palette
+            const randomColor = heartColors[Math.floor(Math.random() * heartColors.length)];
+            heart.style.setProperty('--heart-color', randomColor);
+
+            // Randomize position across the viewport width
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 seconds
-            heart.style.opacity = Math.random() * 0.5 + 0.5;
-            heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
-            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+            // Randomize heart size for depth perception
+            const size = Math.random() * 40 + 30; // Hearts from 30px to 70px
+            heart.style.width = size + 'px';
+            heart.style.height = size + 'px';
+
+            // Randomize animation duration for varied speeds (slower for larger, further away feel)
+            const duration = Math.random() * 6 + 10; // 10-16 seconds
+            heart.style.setProperty('--animation-duration', duration + 's');
+
+            // Randomize initial and final scales, and mid-animation scale
+            heart.style.setProperty('--initial-scale', (Math.random() * 0.4 + 0.2).toFixed(2));
+            heart.style.setProperty('--mid-scale', (Math.random() * 0.4 + 0.5).toFixed(2));
+            heart.style.setProperty('--final-scale', (Math.random() * 0.4 + 0.7).toFixed(2));
+
+            // Randomize rotation for more natural movement
+            heart.style.setProperty('--initial-rotate', Math.random() * 360 + 'deg');
+            heart.style.setProperty('--mid-rotate', (Math.random() * 60 - 30) + 'deg'); // -30 to 30 degrees
+            heart.style.setProperty('--final-rotate', (Math.random() * 60 - 30) + 'deg');
+
+            // Randomize horizontal drift
+            heart.style.setProperty('--drift-x-mid', (Math.random() * 20 - 10) + 'vw'); // -10vw to 10vw
+            heart.style.setProperty('--drift-x-final', (Math.random() * 20 - 10) + 'vw');
+
+            // Randomize opacity levels for a truly ethereal feel
+            heart.style.setProperty('--max-opacity', (Math.random() * 0.2 + 0.1).toFixed(2)); // 0.1 to 0.3
+            heart.style.setProperty('--mid-opacity', (Math.random() * 0.1 + 0.05).toFixed(2)); // 0.05 to 0.15
+            heart.style.setProperty('--min-opacity', (Math.random() * 0.05 + 0.02).toFixed(2)); // 0.02 to 0.07
 
             heartsContainer.appendChild(heart);
 
+            // Remove heart after its animation finishes to prevent DOM clutter and performance issues
             setTimeout(() => {
                 heart.remove();
-            }, 5000);
+            }, duration * 1000);
         }
 
-        setInterval(createHeart, 300);
+        // Create a new heart every 800 milliseconds for a sparse, elegant flow
+        setInterval(createHeart, 800);
 
-        // Sparkles animation
+
+        /* --- Background Sparkles (Dust) Animation Logic --- */
         const sparklesContainer = document.querySelector('.sparkles-container');
 
         function createSparkle() {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
 
+            // Randomize sparkle position within the viewport
             sparkle.style.top = Math.random() * 100 + 'vh';
             sparkle.style.left = Math.random() * 100 + 'vw';
-            sparkle.style.animationDelay = (Math.random() * 3) + 's';
+
+            // Randomize animation delay for non-synchronized twinkling
+            sparkle.style.animationDelay = (Math.random() * 2) + 's';
 
             sparklesContainer.appendChild(sparkle);
 
+            // Remove sparkle after its animation to maintain performance
             setTimeout(() => {
                 sparkle.remove();
-            }, 4000);
+            }, 3000); // Matches sparkle animation duration
         }
 
-        setInterval(createSparkle, 400);
+        // Create a new sparkle every 200 milliseconds for a constant shimmer
+        setInterval(createSparkle, 200);
 
+        // Call generateReason on window load to display the initial reason immediately
         window.onload = generateReason;
     </script>
 </body>
